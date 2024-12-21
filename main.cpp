@@ -1,12 +1,59 @@
 #include "iostream"
 #include <algorithm>
 #include <cctype>
+#include <cstdlib>
+#include <ctime>
 #include <fstream>
 #include <limits>
 #include <ostream>
 #include <string>
-#include <cstdlib>
-#include <ctime>
+
+bool FileExists(std::string filename);
+void createFile();
+
+int main() {
+  std::string filename = "game.txt";
+  std::string response;
+  std::string file_content;
+
+  int iteration_num;
+  int width_num;
+  int height_num;
+
+  if (!FileExists(filename)) {
+    createFile();
+  } else {
+    do {
+      std::cout
+          << "Old file detected, do you want to use the existing file? (Y/N): ";
+      std::cin >> response;
+      std::transform(response.begin(), response.end(), response.begin(),
+                     ::toupper);
+
+      if (response != "Y" && response != "N") {
+        std::cout << "Invalid input. Please enter 'Y' or 'N' \n";
+      }
+      int x = 0;
+      std::string *file_content_array = new std::string[x];
+      if (response == "Y") {
+        std::cout << "Reading input from file \n";
+        std::ifstream file(filename);
+        while (std::getline(file, file_content)) {
+          std::cout << file_content + "\n";
+          file_content_array[x]=file_content;
+          x++;
+        }
+      }
+
+      if (response == "N") {
+        createFile();
+        break;
+      }
+
+    } while (response != "Y" && response != "N");
+  }
+}
+
 
 bool FileExists(std::string filename) {
   std::ifstream file(filename.c_str());
@@ -20,61 +67,32 @@ bool FileExists(std::string filename) {
   }
 }
 
-int main() {
+void createFile() {
   std::string filename = "game.txt";
-  std::string response;
-  std::string file_content;
-
-  int iteration_num;
-  int width_num;
-  int height_num;
-
-  if (FileExists(filename)) {
-    do {
-      std::cout << "Old file detected, do you want to use the existing file? (Y/N): ";
-      std::cin >> response;
-      std::transform(response.begin(), response.end(), response.begin(), ::toupper);
-
-      if (response != "Y" && response != "N") {
-        std::cout << "Invalid input. Please enter 'Y' or 'N' \n";
-      }
-
-      if (response == "Y") {
-        std::cout << "Reading input from file \n";
-        std::ifstream file(filename);
-        while (std::getline(file, file_content)) {
-          std::cout << file_content + "\n";
-        }
-      }
-
-      if (response == "N") {
-        break;
-      }
-
-    } while (response != "Y" && response != "N");
-  }
-
   std::cout << "Creating new file\n";
   std::ofstream file(filename);
   if (!file) {
     std::cerr << "Error Opening File!" << std::endl;
-    return 1;
   }
 
   std::cout << "Enter the following details:\n";
 
+  int iteration_num;
   while (true) {
     std::cout << "Iterations: ";
-    if (std::cin >> iteration_num && iteration_num > 0) break;
+    if (std::cin >> iteration_num && iteration_num > 0)
+      break;
     std::cout << "Invalid input. Please enter a positive integer.\n";
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
   }
   file << "iterations " << iteration_num << "\n";
 
+  int width_num, height_num;
   while (true) {
     std::cout << "Width: ";
-    if (std::cin >> width_num && width_num > 0) break;
+    if (std::cin >> width_num && width_num > 0)
+      break;
     std::cout << "Invalid input. Please enter a positive integer.\n";
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -83,7 +101,8 @@ int main() {
 
   while (true) {
     std::cout << "Height: ";
-    if (std::cin >> height_num && height_num > 0) break;
+    if (std::cin >> height_num && height_num > 0)
+      break;
     std::cout << "Invalid input. Please enter a positive integer.\n";
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -93,7 +112,8 @@ int main() {
   int group_count;
   while (true) {
     std::cout << "Enter number of groups joining: ";
-    if (std::cin >> group_count && group_count > 0) break;
+    if (std::cin >> group_count && group_count > 0)
+      break;
     std::cout << "Invalid input. Please enter a positive integer.\n";
     std::cin.clear();
     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -107,7 +127,9 @@ int main() {
     int group_total_ship_types;
     while (true) {
       std::cout << "Enter number of ship types for " << group_name << ": ";
-      if (std::cin >> group_total_ship_types && group_total_ship_types > 0 && group_total_ship_types <= 4) break;
+      if (std::cin >> group_total_ship_types && group_total_ship_types > 0 &&
+          group_total_ship_types <= 4)
+        break;
       std::cout << "Invalid input. Please enter a positive integer (1 to 4).\n";
       std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
@@ -149,22 +171,31 @@ int main() {
       }
 
       int total_ship_types = 0;
-      if (battleship_num > 0) ++total_ship_types;
-      if (cruiser_num > 0) ++total_ship_types;
-      if (destroyer_num > 0) ++total_ship_types;
-      if (frigate_num > 0) ++total_ship_types;
+      if (battleship_num > 0)
+        ++total_ship_types;
+      if (cruiser_num > 0)
+        ++total_ship_types;
+      if (destroyer_num > 0)
+        ++total_ship_types;
+      if (frigate_num > 0)
+        ++total_ship_types;
 
       if (total_ship_types != group_total_ship_types) {
-        std::cout << "Error: Total ship types must match the declared number of ship types. Please re-enter.\n";
+        std::cout << "Error: Total ship types must match the declared number "
+                     "of ship types. Please re-enter.\n";
         continue;
       }
 
-      file <<"Team "<< group_name << " " << total_ship_types << "\n";
+      file << "Team " << group_name << " " << total_ship_types << "\n";
 
-      if (battleship_num > 0) file << "Battleship * " << battleship_num << "\n";
-      if (cruiser_num > 0) file << "Cruiser $ " << cruiser_num << "\n";
-      if (destroyer_num > 0) file << "Destroyer # " << destroyer_num << "\n";
-      if (frigate_num > 0) file << "Frigate @ " << frigate_num << "\n";
+      if (battleship_num > 0)
+        file << "Battleship * " << battleship_num << "\n";
+      if (cruiser_num > 0)
+        file << "Cruiser $ " << cruiser_num << "\n";
+      if (destroyer_num > 0)
+        file << "Destroyer # " << destroyer_num << "\n";
+      if (frigate_num > 0)
+        file << "Frigate @ " << frigate_num << "\n";
 
       break;
     } while (true);
@@ -182,6 +213,5 @@ int main() {
 
   file.close();
   std::cout << "File created successfully!\n";
-
-  return 0;
 }
+
