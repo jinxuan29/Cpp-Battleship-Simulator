@@ -36,4 +36,20 @@ public:
   void setShipType(std::string shipType) { this->shipType = shipType; }
 
   std::string getShipTypes() { return shipType; }
+
+  void movingShip(){
+    std::cout << "ship moving";
+  }
+
+  void shootingShip(){
+    std::cout << "ship shooting";
+  }
+
+  void seeingRobot(){
+    std::cout << "ship seeing";
+  }
+
+  void ramShip(){
+    std::cout << "ship ramming";
+  }
 };
