@@ -1,3 +1,6 @@
+#include "ships/include/Battleship.h"
+#include "ships/include/Destroyer.h"
+#include "ships/include/Ship.h"
 #include "iostream"
 #include <algorithm>
 #include <cctype>
@@ -21,7 +24,18 @@ int main() {
   int height_num;
 
   if (!FileExists(filename)) {
-    createFile();
+    // createFile();
+    Ship* hi = new Battleship();
+    Ship* gay = new Destroyer("pop",3,4,1,3);
+
+    *hi = *gay;
+    std::cout<< gay->getShipName() << std::endl;
+    gay->movingShip();
+    hi->movingShip(); 
+    hi->setShipName("johnny");
+    std::cout << hi->getShipName() + "\n" + gay->getShipName();
+    delete hi;
+    delete gay;
   } else {
     do {
       std::cout
@@ -40,7 +54,7 @@ int main() {
         std::ifstream file(filename);
         while (std::getline(file, file_content)) {
           std::cout << file_content + "\n";
-          file_content_array[x]=file_content;
+          file_content_array[x] = file_content;
           x++;
         }
       }
@@ -53,7 +67,6 @@ int main() {
     } while (response != "Y" && response != "N");
   }
 }
-
 
 bool FileExists(std::string filename) {
   std::ifstream file(filename.c_str());
@@ -214,4 +227,3 @@ void createFile() {
   file.close();
   std::cout << "File created successfully!\n";
 }
-
