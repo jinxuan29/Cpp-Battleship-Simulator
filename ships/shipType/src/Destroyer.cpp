@@ -2,48 +2,41 @@
 #include <iostream>
 #include <string>
 
-Destroyer::Destroyer(std::string shipName, int xPosition, int yPosition,
-                     int lives, int reviveCount) {
-  setShipName(shipName);
-  setShipType("Destroyer");
-  setXPosition(xPosition);
-  setYPosition(yPosition);
-  setLives(lives = 3);
-  setReviveCount(reviveCount);
-}
 
-Destroyer::Destroyer() {};
+Destroyer::Destroyer(const Position &position, int lives, int reviveCount,
+                       int shipDestroyedCount, const std::string &shipName,
+                       const std::string &shipType, const std::string &teamName,
+                       bool isDestroyed)
+    : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
+           teamName, isDestroyed) {}
 
-//Destroyer::Destroyer(std::string name){
-//    setShipName(name);
-//}
+Destroyer::~Destroyer() { std::cout << "Destroyer Removed"; }
 
 Destroyer::Destroyer(const Destroyer &other) {
+  this->setPosition(other.getPosition());
   this->setShipName(other.getShipName());
   this->setShipType(other.getShipTypes());
   this->setLives(other.getLives());
   this->setReviveCount(other.getReviveCount());
-  this->setXPosition(other.getXPosition());
-  this->setYPosition(other.getYPosition());
-};
+  this->setShipDestroyedCount(other.getShipDestroyedCount());
+}
 
 Destroyer &Destroyer::operator=(const Destroyer &other) {
   if (this != &other) {
+    this->setPosition(other.getPosition());
     this->setShipName(other.getShipName());
     this->setShipType(other.getShipTypes());
     this->setLives(other.getLives());
     this->setReviveCount(other.getReviveCount());
-    this->setXPosition(other.getXPosition());
-    this->setYPosition(other.getYPosition());
-    return *this;
+    this->setShipDestroyedCount(other.getShipDestroyedCount());
   }
   return *this;
-};
+}
 
 void Destroyer::movingShip() { std::cout << "Destroyer move"; }
 
 void Destroyer::shootingShip() { std::cout << "Destroyer shoot"; }
 
-void Destroyer::seeingRobot() { std::cout << "Destroyer see"; }
+void Destroyer::seeingShip() { std::cout << "Destroyer see"; }
 
 void Destroyer::ramShip() { std::cout << "Destroyer ram"; }

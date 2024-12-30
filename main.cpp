@@ -25,17 +25,7 @@ int main() {
 
   if (!FileExists(filename)) {
     // createFile();
-    Ship* hi = new Battleship();
-    Ship* gay = new Destroyer("pop",3,4,1,3);
-
-    *hi = *gay;
-    std::cout<< gay->getShipName() << std::endl;
-    gay->movingShip();
-    hi->movingShip(); 
-    hi->setShipName("johnny");
-    std::cout << hi->getShipName() + "\n" + gay->getShipName();
-    delete hi;
-    delete gay;
+    
   } else {
     do {
       std::cout
