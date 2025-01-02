@@ -1,7 +1,7 @@
-#include "ships/include/Battleship.h"
-#include "ships/include/Destroyer.h"
-#include "ships/include/Ship.h"
 #include "iostream"
+#include "ships/shipType/include/Battleship.h"
+#include "ships/shipType/include/Destroyer.h"
+#include "ships/shipType/include/Ship.h"
 #include <algorithm>
 #include <cctype>
 #include <cstdlib>
@@ -25,7 +25,7 @@ int main() {
 
   if (!FileExists(filename)) {
     // createFile();
-    
+  
   } else {
     do {
       std::cout

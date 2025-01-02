@@ -8,11 +8,29 @@ class Position{
     public:
         Position(int x, int y) : x(x), y(y) {};
         
-        bool operator=(const Position& other) const{
-            return x == other.x && y==other.y;
-        }
+        bool operator=(const Position& other) const;
+        
+        Position operator+(const Position& other) const;
 
-        Position operator+(const Position& other) const{
-            return Position(x + other.x, y + other.y);
-        }
+        ~Position();
+
+        Position UpLeft();
+        
+        Position Up();
+
+        Position UpRight();
+
+        Position Left();
+
+        Position Right();
+
+        Position DownLeft();
+
+        Position Down();
+
+        Position DownRight();
+
+        Position getRandomPositionFrom4Position();
+
+        Position getRandomPositionFrom8Position();        
 };
