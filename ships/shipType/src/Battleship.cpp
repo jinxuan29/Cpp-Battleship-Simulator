@@ -1,7 +1,9 @@
 #include "../include/Battleship.h"
 #include <iostream>
 
-Battleship::Battleship() {};
+Battleship::Battleship() {
+  std::cout << "Battleship created";
+};
 
 Battleship::Battleship(const Position &position, int lives, int reviveCount,
                        int shipDestroyedCount, const std::string &shipName,

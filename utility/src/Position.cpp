@@ -11,6 +11,8 @@ Position Position::operator+(const Position &other) const {
   return Position(x + other.x, y + other.y);
 }
 
+Position::~Position(){};
+
 Position Position::Up() { return Position(0, 1); }
 
 Position Position::Down() { return Position(0, -1); }
@@ -71,3 +73,7 @@ Position Position::getRandomPositionFrom8Position() {
                "getRandomPositionFrom8Position";
   return Position(0, 0);
 };
+
+int Position::getXValuePosition() { return x; }
+
+int Position::getYValuePosition() { return y; }

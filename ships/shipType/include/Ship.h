@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../utility/include/Position.h"
+#include "../../../utility/include/Position.h"
 #include <iostream>
 
 class Ship {
@@ -48,6 +48,6 @@ public:
   void setIsDestroyed(bool isDestroyed = false);
   bool getIsDestroyed() const;
 
-  virtual void runShip() = 0; // run ship set of action.
-  virtual Ship upgradeShip()=0; // unsure to put it here ot battlefield class
+  //virtual void runShip() = 0; // run ship set of action.
+  //virtual Ship upgradeShip()=0; // unsure to put it here ot battlefield class
 };

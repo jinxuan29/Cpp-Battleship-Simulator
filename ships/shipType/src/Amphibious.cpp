@@ -19,6 +19,8 @@ Amphibious::Amphibious(const Amphibious &other) {
   this->setLives(other.getLives());
   this->setReviveCount(other.getReviveCount());
   this->setShipDestroyedCount(other.getShipDestroyedCount());
+  this->setTeamName(other.getTeamName());
+  this->setIsDestroyed(other.getIsDestroyed());
 }
 
 Amphibious &Amphibious::operator=(const Amphibious &other) {
@@ -29,6 +31,8 @@ Amphibious &Amphibious::operator=(const Amphibious &other) {
     this->setLives(other.getLives());
     this->setReviveCount(other.getReviveCount());
     this->setShipDestroyedCount(other.getShipDestroyedCount());
+    this->setTeamName(other.getTeamName());
+    this->setIsDestroyed(other.getIsDestroyed());
   }
   return *this;
 }
