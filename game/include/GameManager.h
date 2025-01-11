@@ -5,12 +5,14 @@ class GameManager {
 private:
   std::string filename;
   Battlefield *battlefield;
+  char **battlefieldMap;
+  int **islandPosition;
   int interation;
   int width;
   int height;
 
-  public:
+public:
   GameManager(std::string filename);
+  ~GameManager();
   void readFile(std::string filename);
-
 };
