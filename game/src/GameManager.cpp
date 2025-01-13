@@ -37,7 +37,8 @@ void GameManager::readFile(std::string filename) {
   }
   file.close();
 
-  int numberOfTeams = 0;
+  this->numberOfTeams = 0;
+
   for (int i = 0; i < lineCount; i++) {
     if (lines[i].find("iteration") != std::string::npos) {
       size_t pos = lines[i].find(" ");
@@ -52,19 +53,47 @@ void GameManager::readFile(std::string filename) {
       height = std::stoi(lines[i].substr(pos + 1));
     }
     if (lines[i].find("Team") != std::string::npos) {
-      int i = 0;
-      numberOfTeams++;
-      std::string *teamName = new std::string[numberOfTeams];
-      size_t pos = lines[i].find(" ");
-      teamName[i] = std::stoi(lines[i].substr(pos + 1));
-      std::cout << teamName[i];
-      i++;
+      this->numberOfTeams++;
     }
     // 1. store the ship type, symbol, and number of each ship or do i just
     // create all the object based on the class then store inside team class?
     // 2. then put inside team array
   }
 
+  // Team Variable
+  this->teamName = new std::string[numberOfTeams];
+  this->teamNumShip = new int[numberOfTeams];
+  this->numberOfPerShip = new std::string *[numberOfTeams];
+  int currentTeam = 0;
+
+  // read file again cuz last time read file are used to get the number of team
+  // to initialize the array, probably has better way of doing this
+  std::ifstream file2(filename);
+  if (!file2.is_open()) {
+    std::cerr << "Failed to open the file: " << filename << "\n";
+    return;
+  }
+
+  for (int i = 0; i < lineCount; i++) {
+    if (lines[i].find("Team") != std::string::npos) {
+      std::istringstream iss(lines[i]);
+      std::string token;
+      iss >> token; // "Team"
+      iss >> this->teamName[currentTeam];
+      iss >> this->teamNumShip[currentTeam];
+      this->numberOfPerShip[currentTeam] = new std::string[this->teamNumShip[currentTeam]];
+      for (int j = 0; j < this->teamNumShip[currentTeam]; j++) {
+        i++;
+        if (i >= lineCount) {
+          break;
+        }
+        this->numberOfPerShip[currentTeam][j] = lines[i];
+      }
+      currentTeam++;
+    }
+  }
+
+  // Battlefield Variable
   this->width = width;
   this->height = height;
 
@@ -77,20 +106,21 @@ void GameManager::readFile(std::string filename) {
     this->battlefieldMap[i] = new char[width];
   }
 
-  for (int i = lineCount-height, row = 0; i < lineCount && row < height; i++, row++) {
+  for (int i = lineCount - height, row = 0; i < lineCount && row < height;
+       i++, row++) {
     std::istringstream iss(lines[i]);
     for (int col = 0; col < width; col++) {
       iss >> this->battlefieldMap[row][col];
     }
   }
 
-  //    std::cout << "Battlefield Map:\n";
-  //    for (int i = 0; i < height; i++) {
-  //        for (int j = 0; j < width; j++) {
-  //            std::cout << this->battlefieldMap[i][j];
-  //        }
-  //        std::cout << "\n";
-  //    }
+  std::cout << "Number of Teams: " << this->numberOfTeams << std::endl;
+    for (int i = 0; i < this->numberOfTeams; ++i) {
+        std::cout << "Team " << this->teamName[i] << " has " << this->teamNumShip[i] << " ships:" << std::endl;
+        for (int j = 0; j < this->teamNumShip[i]; ++j) {
+            std::cout << "  " << this->numberOfPerShip[i][j] << std::endl;
+        }
+    }  
 
   Battlefield battlefield(battlefieldMap, width, height);
   battlefield.display();
@@ -107,4 +137,23 @@ GameManager::~GameManager() {
     delete[] battlefieldMap;
     battlefieldMap = nullptr;
   }
+
+  if(numberOfPerShip){
+     for (int i = 0; i < numberOfTeams; i++) {
+      delete [] numberOfPerShip[i];
+    }
+    delete [] numberOfPerShip;
+    numberOfPerShip = nullptr;
+  }
+
+  if(teamName){
+    delete[] teamName;
+    teamName = nullptr;
+  }
+
+  if(teamNumShip){
+    delete []  teamNumShip;
+    teamNumShip = nullptr;
+  }
+
 }
