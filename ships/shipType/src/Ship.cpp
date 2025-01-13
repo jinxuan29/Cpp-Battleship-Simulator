@@ -41,3 +41,7 @@ bool Ship::getIsDestroyed() const { return isDestroyed; }
 void Ship::setTeamName(std::string teamName) { this->teamName = teamName; }
 
 std::string Ship::getTeamName() const { return teamName; }
+
+void Ship::setSymbol(char symbol) { this->symbol = symbol; }
+
+char Ship::getSymbol() const { return symbol; }

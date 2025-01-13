@@ -13,6 +13,7 @@ private:
   std::string shipType;
   std::string teamName;
   bool isDestroyed;
+  char symbol;
 
 public:
   Ship();
@@ -47,6 +48,9 @@ public:
 
   void setIsDestroyed(bool isDestroyed = false);
   bool getIsDestroyed() const;
+
+  void setSymbol(char symbol);
+  char getSymbol() const;
 
   //virtual void runShip() = 0; // run ship set of action.
   //virtual Ship upgradeShip()=0; // unsure to put it here ot battlefield class
