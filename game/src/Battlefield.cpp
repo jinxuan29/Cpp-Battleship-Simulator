@@ -1,4 +1,5 @@
 #include "../include/Battlefield.h"
+#include <iostream>
 
 Battlefield::Battlefield(int width, int height) : width(width), height(height) {
   grid = new char *[height];

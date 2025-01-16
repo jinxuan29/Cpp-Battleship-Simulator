@@ -7,11 +7,11 @@
 
 GameManager::GameManager(std::string filename) { this->filename = filename; }
 // TODO
-//  initialize private variable accordfing to text file
 //  team class maybe?
+// initialize object using the value initialized
 void GameManager::readFile(std::string filename) {
-  int width = 0;
-  int height = 0;
+  this->width = 0;
+  this->height = 0;
 
   std::ifstream file(filename);
   if (!file.is_open()) {
@@ -42,27 +42,24 @@ void GameManager::readFile(std::string filename) {
   for (int i = 0; i < lineCount; i++) {
     if (lines[i].find("iteration") != std::string::npos) {
       size_t pos = lines[i].find(" ");
-      height = std::stoi(lines[i].substr(pos + 1));
+      this->iteration = std::stoi(lines[i].substr(pos + 1));
     }
     if (lines[i].find("width") != std::string::npos) {
       size_t pos = lines[i].find(" ");
-      width = std::stoi(lines[i].substr(pos + 1));
+      this->width = std::stoi(lines[i].substr(pos + 1));
     }
     if (lines[i].find("height") != std::string::npos) {
       size_t pos = lines[i].find(" ");
-      height = std::stoi(lines[i].substr(pos + 1));
+      this->height = std::stoi(lines[i].substr(pos + 1));
     }
     if (lines[i].find("Team") != std::string::npos) {
       this->numberOfTeams++;
     }
-    // 1. store the ship type, symbol, and number of each ship or do i just
-    // create all the object based on the class then store inside team class?
-    // 2. then put inside team array
   }
 
   // Team Variable
   this->teamName = new std::string[numberOfTeams];
-  this->teamNumShip = new int[numberOfTeams];
+  this->teamNumTypeShip = new int[numberOfTeams];
   this->numberOfPerShip = new std::string *[numberOfTeams];
   int currentTeam = 0;
 
@@ -80,9 +77,10 @@ void GameManager::readFile(std::string filename) {
       std::string token;
       iss >> token; // "Team"
       iss >> this->teamName[currentTeam];
-      iss >> this->teamNumShip[currentTeam];
-      this->numberOfPerShip[currentTeam] = new std::string[this->teamNumShip[currentTeam]];
-      for (int j = 0; j < this->teamNumShip[currentTeam]; j++) {
+      iss >> this->teamNumTypeShip[currentTeam];
+      this->numberOfPerShip[currentTeam] =
+          new std::string[this->teamNumTypeShip[currentTeam]];
+      for (int j = 0; j < this->teamNumTypeShip[currentTeam]; j++) {
         i++;
         if (i >= lineCount) {
           break;
@@ -92,10 +90,6 @@ void GameManager::readFile(std::string filename) {
       currentTeam++;
     }
   }
-
-  // Battlefield Variable
-  this->width = width;
-  this->height = height;
 
   std::cout << numberOfTeams << "\n";
   std::cout << "Width: " << width << "\n" << "Height: " << height << "\n";
@@ -113,20 +107,43 @@ void GameManager::readFile(std::string filename) {
       iss >> this->battlefieldMap[row][col];
     }
   }
-
-  std::cout << "Number of Teams: " << this->numberOfTeams << std::endl;
-    for (int i = 0; i < this->numberOfTeams; ++i) {
-        std::cout << "Team " << this->teamName[i] << " has " << this->teamNumShip[i] << " ships:" << std::endl;
-        for (int j = 0; j < this->teamNumShip[i]; ++j) {
-            std::cout << "  " << this->numberOfPerShip[i][j] << std::endl;
-        }
-    }  
-
+  /*
+    std::cout << "Number of Teams: " << this->numberOfTeams << std::endl;
+      for (int i = 0; i < this->numberOfTeams; ++i) {
+          std::cout << "Team " << this->teamName[i] << " has " <<
+    this->teamNumTypeShip[i] << " ships:" << std::endl; for (int j = 0; j <
+    this->teamNumTypeShip[i]; ++j) { std::cout << "  " <<
+    this->numberOfPerShip[i][j] << std::endl;
+          }
+      }
+  */
   Battlefield battlefield(battlefieldMap, width, height);
   battlefield.display();
   battlefield.setIslandPosition();
   battlefield.printIslandPosition();
+
   delete[] lines;
+}
+
+void GameManager::runGame() {
+  // create all objects
+  readFile(this->filename);
+  // initalize battlefield
+  Battlefield battlefield(this->battlefieldMap, this->width, this->height);
+  // initailize teams
+
+  std::cout << numberOfTeams << std::endl;
+
+  this->teams = new Team*[numberOfTeams];
+  for (int i = 0; i < numberOfTeams; i++) {
+    std::cout << "Creating team: " << teamName[i] << " with " << teamNumTypeShip[i] << " ships\n";
+    teams[i] = new Team(teamName[i], teamNumTypeShip[i]);
+  }
+
+  
+  for (int i = 0; i < numberOfTeams; i++) {
+    teams[i]->getName();
+  }
 }
 
 GameManager::~GameManager() {
@@ -138,22 +155,29 @@ GameManager::~GameManager() {
     battlefieldMap = nullptr;
   }
 
-  if(numberOfPerShip){
-     for (int i = 0; i < numberOfTeams; i++) {
-      delete [] numberOfPerShip[i];
+  if (teams) {
+    for (int i = 0; i< numberOfTeams;i++) {
+      delete teams[i];
     }
-    delete [] numberOfPerShip;
-    numberOfPerShip = nullptr;
+    delete[] teams;
+    teams = nullptr;
   }
 
-  if(teamName){
+   if (numberOfPerShip) {
+     for (int i = 0; i < numberOfTeams; i++) {
+       delete[] numberOfPerShip[i];
+     }
+     delete[] numberOfPerShip;
+     numberOfPerShip = nullptr;
+   }
+
+  if (teamName) {
     delete[] teamName;
     teamName = nullptr;
   }
 
-  if(teamNumShip){
-    delete []  teamNumShip;
-    teamNumShip = nullptr;
+  if (teamNumTypeShip) {
+    delete[] teamNumTypeShip;
+    teamNumTypeShip = nullptr;
   }
-
 }
