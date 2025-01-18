@@ -7,12 +7,12 @@ Team::Team(std::string teamName) {
   // to avoid the memory be filled if garbage memory if its not filled with any
   // object yet
   // the () in the new Ship*[numship] assigns all the pointer into nullptr.
-  //for (int i = 0; i < numShips; i++) {
+  // for (int i = 0; i < numShips; i++) {
   //  teamShips[i] = nullptr;
   //}
 }
 
-void Team::setTeamShipsArraySize(int numShips){
+void Team::setTeamShipsArraySize(int numShips) {
   this->numShip = numShips;
   this->teamShips = new Ship *[numShips]();
 }
@@ -26,21 +26,29 @@ void Team::addShip(Ship *ship) {
   }
 }
 
-void Team::getName() { std::cout << this->teamName; }
+void Team::getName() const { std::cout << this->teamName; }
 
-void Team::displayTeamShips(){
-  for (int i = 0; i<this->numShip; i++) {
-     teamShips[i]->runShip(); 
-     std::cout << "\n";
+void Team::displayTeamShips() const {
+  for (int i = 0; i < this->numShip; i++) {
+    teamShips[i]->getSymbol();
+    std::cout << teamShips[i]->getSymbol() <<"\n";
   }
+}
+
+Ship** Team::getTeamShipsArray() const{
+  return this->teamShips;
+}
+
+int Team::getNumShip() const{
+  return this->numShip;
 }
 
 Team::~Team() {
   if (teamShips) {
     for (int i = 0; i < numShip; i++) {
       if (teamShips[i]) {
-    delete teamShips[i];
-    teamShips[i] = nullptr;
+        delete teamShips[i];
+        teamShips[i] = nullptr;
       }
     }
     delete[] teamShips;

@@ -21,4 +21,5 @@ public:
   void placeIsland(int x, int y, char symbol); // place all the island into battlefield
   void setIslandPosition(); // set island position into battlefield
   void printIslandPosition(); // print all island position in (x,y) in battlefield
+  void placeShipIntoBattlefield(Ship** ship, int numShips); // place ship into the battlefield
 };

@@ -1,4 +1,5 @@
 #include "../include/Battlefield.h"
+#include <ctime>
 #include <iostream>
 
 Battlefield::Battlefield(int width, int height) : width(width), height(height) {
@@ -75,6 +76,63 @@ void Battlefield::printIslandPosition(){
 void Battlefield::placeIsland(int x, int y, char symbol) {
   grid[x][y] = symbol;
   display();
+}
+
+void Battlefield::placeShipIntoBattlefield(Ship** ships, int numShips) {
+  srand(time(0)); 
+
+  int emptyPositions = 0;
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
+      if (grid[i][j] == '0') {
+        emptyPositions++;
+      }
+    }
+  }
+
+  if (emptyPositions < numShips) {
+    std::cerr << "Error: Not enough empty positions to place all ships.\n";
+    return;
+  }
+
+  for (int i = 0; i < numShips; i++) {
+    if (!ships[i]) {
+      std::cerr << "Error: Ship at index " << i << " is null.\n";
+      continue;
+    }
+
+    bool placed = false;
+    int attempts = 0;
+    const int maxAttempts = width * height; 
+
+    while (!placed && attempts < maxAttempts) {
+      
+      int x = rand() % height; 
+      int y = rand() % width;  
+
+      bool isIsland = false;
+
+      for (int j = 0; j < numberOfIsland; j++) {
+        if (islandPosition[j][0] == x && islandPosition[j][1] == y) {
+          isIsland = true;
+          break;
+        }
+      }
+
+      if (!isIsland && grid[x][y] == '0') {
+        grid[x][y] = ships[i]->getSymbol();
+        placed = true;
+
+        ships[i]->setPosition(Position(x, y));
+      }
+
+      attempts++;
+    }
+
+    if (!placed) {
+      std::cerr << "Error: Could not place ship " << i << " after " << maxAttempts << " attempts.\n";
+    }
+  }
 }
 
 Battlefield::~Battlefield() {

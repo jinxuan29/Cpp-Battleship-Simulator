@@ -7,7 +7,7 @@
 
 GameManager::GameManager(std::string filename) { this->filename = filename; }
 // TODO
-//  assign symbol to each ships inside the ship private variable
+//  create link list (ship activity queue), create queue (respawn queue), 
 
 void GameManager::readFile(std::string filename) {
   this->width = 0;
@@ -116,12 +116,6 @@ void GameManager::readFile(std::string filename) {
       std::cout << "  " << this->numberOfPerShip[i][j] << std::endl;
     }
   }
-
-  Battlefield battlefield(battlefieldMap, width, height);
-  battlefield.display();
-  battlefield.setIslandPosition();
-  battlefield.printIslandPosition();
-
   delete[] lines;
 }
 
@@ -130,6 +124,8 @@ void GameManager::runGame() {
   readFile(this->filename);
   // initalize battlefield
   Battlefield battlefield(this->battlefieldMap, this->width, this->height);
+  battlefield.display();
+  battlefield.setIslandPosition();
 
   // initailize teams
   std::cout << numberOfTeams << std::endl;
@@ -145,7 +141,8 @@ void GameManager::runGame() {
     for (int j = 0; j < teamNumTypeShip[i]; j++) {
       std::cout << numberOfPerShip[i][j] << "\n";
       std::string shipDetails = this->numberOfPerShip[i][j];
-      std::string shipType, shipLogo;
+      std::string shipType; 
+      char shipLogo;
       int numberOfShip;
 
       std::istringstream iss(shipDetails);
@@ -163,12 +160,12 @@ void GameManager::runGame() {
     for (int j = 0; j < teamNumTypeShip[i]; j++) {
       std::cout << numberOfPerShip[i][j] << "\n";
       std::string shipDetails = this->numberOfPerShip[i][j];
-      std::string shipType, shipLogo;
+      std::string shipType;
+      char shipLogo;
       int numberOfShip;
 
       std::istringstream iss(shipDetails);
       iss >> shipType >> shipLogo >> numberOfShip;
-
       /*
        for (int k = 0; k < numberOfShip; k++) {
         if (shipType == "Amphibious") {
@@ -210,12 +207,15 @@ void GameManager::runGame() {
           std::cerr << "Unknown ship type: " << shipType << std::endl;
         }
 
-        if (ship) {                // Check if 'ship' is not nullptr
+        if (ship) { // Check if 'ship' is not nullptr
+          ship->setSymbol(shipLogo);
           teams[i]->addShip(ship); // Add the ship to the team
         }
       }
     }
     teams[i]->displayTeamShips();
+    battlefield.placeShipIntoBattlefield(teams[i]->getTeamShipsArray(), teams[i]->getNumShip());
+    battlefield.display();
   }
 }
 

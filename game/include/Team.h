@@ -10,8 +10,10 @@ class Team{
         Team(std::string teamName);
         ~Team();
 
-        void setTeamShipsArraySize(int numship);
-        void addShip(Ship* ship);
-        void getName();
-        void displayTeamShips();
+        void setTeamShipsArraySize(int numship); // set the array for the ships of a team
+        Ship** getTeamShipsArray() const; // retur the array
+        int getNumShip() const; // total number of ship inside teamShipArray
+        void addShip(Ship* ship); // add shihp into the array
+        void getName() const;
+        void displayTeamShips() const;
 };
