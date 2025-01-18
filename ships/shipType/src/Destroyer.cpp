@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 
+Destroyer::Destroyer(){}
 
 Destroyer::Destroyer(const Position &position, int lives, int reviveCount,
                        int shipDestroyedCount, const std::string &shipName,
@@ -40,3 +41,7 @@ void Destroyer::shootingShip() { std::cout << "Destroyer shoot"; }
 void Destroyer::seeingShip() { std::cout << "Destroyer see"; }
 
 void Destroyer::ramShip() { std::cout << "Destroyer ram"; }
+
+void Destroyer::runShip() { std::cout << "Destroyer running"; }
+
+void Destroyer::upgradeShip() { std::cout << "Destroyer upgrading"; }

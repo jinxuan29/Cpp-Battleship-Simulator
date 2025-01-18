@@ -4,6 +4,7 @@
 
 
 class Corvette :  public ShootingShip {
+  public:
     Corvette();
 
 //  Corvette(std::string shipName, int xPosition, int yPosition, int lives,
@@ -21,4 +22,8 @@ class Corvette :  public ShootingShip {
   Corvette &operator=(const Corvette &other);
 
   void shootingShip() override;
+
+  void runShip() override;
+
+  void upgradeShip() override;
 };

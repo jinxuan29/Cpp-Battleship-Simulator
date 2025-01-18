@@ -7,8 +7,8 @@
 
 GameManager::GameManager(std::string filename) { this->filename = filename; }
 // TODO
-//  team class maybe?
-// initialize object using the value initialized
+//  assign symbol to each ships inside the ship private variable
+
 void GameManager::readFile(std::string filename) {
   this->width = 0;
   this->height = 0;
@@ -107,16 +107,16 @@ void GameManager::readFile(std::string filename) {
       iss >> this->battlefieldMap[row][col];
     }
   }
-  /*
-    std::cout << "Number of Teams: " << this->numberOfTeams << std::endl;
-      for (int i = 0; i < this->numberOfTeams; ++i) {
-          std::cout << "Team " << this->teamName[i] << " has " <<
-    this->teamNumTypeShip[i] << " ships:" << std::endl; for (int j = 0; j <
-    this->teamNumTypeShip[i]; ++j) { std::cout << "  " <<
-    this->numberOfPerShip[i][j] << std::endl;
-          }
-      }
-  */
+
+  std::cout << "Number of Teams: " << this->numberOfTeams << std::endl;
+  for (int i = 0; i < this->numberOfTeams; ++i) {
+    std::cout << "Team " << this->teamName[i] << " has "
+              << this->teamNumTypeShip[i] << " ships:" << std::endl;
+    for (int j = 0; j < this->teamNumTypeShip[i]; ++j) {
+      std::cout << "  " << this->numberOfPerShip[i][j] << std::endl;
+    }
+  }
+
   Battlefield battlefield(battlefieldMap, width, height);
   battlefield.display();
   battlefield.setIslandPosition();
@@ -130,19 +130,92 @@ void GameManager::runGame() {
   readFile(this->filename);
   // initalize battlefield
   Battlefield battlefield(this->battlefieldMap, this->width, this->height);
-  // initailize teams
 
+  // initailize teams
   std::cout << numberOfTeams << std::endl;
 
-  this->teams = new Team*[numberOfTeams];
+  this->teams = new Team *[numberOfTeams];
   for (int i = 0; i < numberOfTeams; i++) {
-    std::cout << "Creating team: " << teamName[i] << " with " << teamNumTypeShip[i] << " ships\n";
-    teams[i] = new Team(teamName[i], teamNumTypeShip[i]);
-  }
+    std::cout << "Creating team: " << teamName[i] << " with "
+              << teamNumTypeShip[i] << " ships\n";
+    teams[i] = new Team(teamName[i]);
 
-  
-  for (int i = 0; i < numberOfTeams; i++) {
-    teams[i]->getName();
+    // first loop to initalize total number of ship each team has
+    int totalNumberofShips = 0;
+    for (int j = 0; j < teamNumTypeShip[i]; j++) {
+      std::cout << numberOfPerShip[i][j] << "\n";
+      std::string shipDetails = this->numberOfPerShip[i][j];
+      std::string shipType, shipLogo;
+      int numberOfShip;
+
+      std::istringstream iss(shipDetails);
+      iss >> shipType >> shipLogo >> numberOfShip;
+
+      std::cout << "Ship Type: " << shipType << std::endl;
+      std::cout << "Ship Logo: " << shipLogo << std::endl;
+      std::cout << "Number of Ships: " << numberOfShip << std::endl;
+
+      totalNumberofShips += numberOfShip;
+    }
+    teams[i]->setTeamShipsArraySize(totalNumberofShips);
+
+    // second loop to create ship object and add inside the team class
+    for (int j = 0; j < teamNumTypeShip[i]; j++) {
+      std::cout << numberOfPerShip[i][j] << "\n";
+      std::string shipDetails = this->numberOfPerShip[i][j];
+      std::string shipType, shipLogo;
+      int numberOfShip;
+
+      std::istringstream iss(shipDetails);
+      iss >> shipType >> shipLogo >> numberOfShip;
+
+      /*
+       for (int k = 0; k < numberOfShip; k++) {
+        if (shipType == "Amphibious") {
+          Amphibious* amphibious = new Amphibious();
+        } else if (shipType == "Corvette") {
+          Corvette* corvette = new Corvette();
+        } else if (shipType == "Cruiser") {
+          Cruiser* cruiser = new Cruiser();
+        } else if (shipType == "Destroyer") {
+          Destroyer* destroyer = new Destroyer();
+        } else if (shipType == "Frigate") {
+          Frigate* frigate = new Frigate();
+        } else if (shipType == "SuperShip") {
+          SuperShip* supership = new SuperShip();
+        } else if (shipType == "Battleship") {
+          Battleship* battleship = new Battleship();
+        } else {
+          std::cerr << "Unknown ship type: " << shipType << std::endl;
+        }
+*/
+      for (int k = 0; k < numberOfShip; k++) {
+        Ship *ship = nullptr;
+
+        if (shipType == "Amphibious") {
+          ship = new Amphibious();
+        } else if (shipType == "Corvette") {
+          ship = new Corvette();
+        } else if (shipType == "Cruiser") {
+          ship = new Cruiser();
+        } else if (shipType == "Destroyer") {
+          ship = new Destroyer();
+        } else if (shipType == "Frigate") {
+          ship = new Frigate();
+        } else if (shipType == "SuperShip") {
+          ship = new SuperShip();
+        } else if (shipType == "Battleship") {
+          ship = new Battleship();
+        } else {
+          std::cerr << "Unknown ship type: " << shipType << std::endl;
+        }
+
+        if (ship) {                // Check if 'ship' is not nullptr
+          teams[i]->addShip(ship); // Add the ship to the team
+        }
+      }
+    }
+    teams[i]->displayTeamShips();
   }
 }
 
@@ -156,20 +229,20 @@ GameManager::~GameManager() {
   }
 
   if (teams) {
-    for (int i = 0; i< numberOfTeams;i++) {
+    for (int i = 0; i < numberOfTeams; i++) {
       delete teams[i];
     }
     delete[] teams;
     teams = nullptr;
   }
 
-   if (numberOfPerShip) {
-     for (int i = 0; i < numberOfTeams; i++) {
-       delete[] numberOfPerShip[i];
-     }
-     delete[] numberOfPerShip;
-     numberOfPerShip = nullptr;
-   }
+  if (numberOfPerShip) {
+    for (int i = 0; i < numberOfTeams; i++) {
+      delete[] numberOfPerShip[i];
+    }
+    delete[] numberOfPerShip;
+    numberOfPerShip = nullptr;
+  }
 
   if (teamName) {
     delete[] teamName;

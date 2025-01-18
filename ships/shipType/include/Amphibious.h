@@ -28,4 +28,10 @@ public:
   void movingShip() override;
 
   void shootingShip() override;
+
+  void seeingShip() override;
+
+  void runShip() override;
+
+  void upgradeShip() override;
 };

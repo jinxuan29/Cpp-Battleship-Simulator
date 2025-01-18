@@ -1,9 +1,7 @@
 #include "../include/Battleship.h"
 #include <iostream>
 
-Battleship::Battleship() {
-  std::cout << "Battleship created";
-};
+Battleship::Battleship() {};
 
 Battleship::Battleship(const Position &position, int lives, int reviveCount,
                        int shipDestroyedCount, const std::string &shipName,
@@ -12,7 +10,7 @@ Battleship::Battleship(const Position &position, int lives, int reviveCount,
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
            teamName, isDestroyed) {}
 
-Battleship::~Battleship() { std::cout << "Battleship Removed"; }
+Battleship::~Battleship() {}
 
 Battleship::Battleship(const Battleship &other) {
   this->setPosition(other.getPosition());
@@ -40,3 +38,7 @@ void Battleship::seeingShip() { std::cout << "Battleship see"; }
 void Battleship::movingShip() { std::cout << "BattleShip move"; }
 
 void Battleship::shootingShip() { std::cout << "Battleship shoot"; }
+
+void Battleship::runShip() { std::cout << "Battleship running"; }
+
+void Battleship::upgradeShip() { std::cout << "Battleship upgrading"; }

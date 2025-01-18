@@ -2,6 +2,8 @@
 #include <iostream>
 #include <string>
 
+Frigate::Frigate(){}
+
 Frigate::Frigate(const Position &position, int lives, int reviveCount,
                  int shipDestroyedCount, const std::string &shipName,
                  const std::string &shipType, const std::string &teamName,
@@ -35,3 +37,7 @@ Frigate &Frigate::operator=(const Frigate &other) {
 void Frigate::shootingShip() { std::cout << "Frigate shoot"; }
 
 void Frigate::ramShip() { std::cout << "Frigate ram"; }
+
+void Frigate::runShip() { std::cout << "Frigate running"; }
+
+void Frigate::upgradeShip() { std::cout << "Frigate upgrading"; }

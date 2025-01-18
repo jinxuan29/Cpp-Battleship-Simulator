@@ -40,3 +40,9 @@ Amphibious &Amphibious::operator=(const Amphibious &other) {
 void Amphibious::movingShip() { std::cout << "Amphibious move"; }
 
 void Amphibious::shootingShip() { std::cout << "Amphibious shoot"; }
+
+void Amphibious::seeingShip() { std::cout << "Amphibious seeing"; }
+
+void Amphibious::runShip() { std::cout << "Amphibious running"; }
+
+void Amphibious::upgradeShip() { std::cout << "Amphibious upgrading"; }

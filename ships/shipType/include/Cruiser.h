@@ -31,4 +31,8 @@ public:
   void seeingShip() override;
 
   void ramShip() override;
+  
+  void runShip() override;
+
+  void upgradeShip() override;
 };

@@ -1,6 +1,14 @@
 #include "Battlefield.h"
 #include "Team.h"
 #include <string>
+#include "../../ships/shipType/include/Battleship.h"
+#include "../../ships/shipType/include/Amphibious.h"
+#include "../../ships/shipType/include/Corvette.h"
+#include "../../ships/shipType/include/Cruiser.h"
+#include "../../ships/shipType/include/Destroyer.h"
+#include "../../ships/shipType/include/Frigate.h"
+#include "../../ships/shipType/include//SuperShip.h"
+#include "../../ships/shipType/include//Ship.h"
 
 class GameManager {
 private:

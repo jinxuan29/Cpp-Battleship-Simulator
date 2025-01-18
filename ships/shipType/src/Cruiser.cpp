@@ -39,3 +39,7 @@ void Cruiser::movingShip(){
 void Cruiser::seeingShip() { std::cout << "Cruiser see"; }
 
 void Cruiser::ramShip() { std::cout << "Cruiser ram"; }
+
+void Cruiser::runShip() { std::cout << "Cruiser running"; }
+
+void Cruiser::upgradeShip() { std::cout << "Cruiser upgrading"; }

@@ -2,6 +2,10 @@
 #include <iostream>
 #include <string>
 
+Corvette::Corvette(){
+  std::cout << "Corvette Created";
+}
+
 Corvette::Corvette(const Position &position, int lives, int reviveCount,
                  int shipDestroyedCount, const std::string &shipName,
                  const std::string &shipType, const std::string &teamName,
@@ -34,3 +38,6 @@ Corvette &Corvette::operator=(const Corvette &other) {
 
 void Corvette::shootingShip() { std::cout << "Corvette shoot"; }
 
+void Corvette::runShip() { std::cout << "Corvette running"; }
+
+void Corvette::upgradeShip() { std::cout << "Corvette upgrading"; }

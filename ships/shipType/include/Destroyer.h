@@ -5,16 +5,20 @@
 #include "../../action/SeeingShip.h"
 #include "../../action/ShootingShip.h"
 
-class Destroyer : public MovingShip, public RamShip, public SeeingShip, public ShootingShip {
-    Destroyer();
+class Destroyer : public MovingShip,
+                  public RamShip,
+                  public SeeingShip,
+                  public ShootingShip {
+public:
+  Destroyer();
 
-//  Destroyer(std::string shipName, int xPosition, int yPosition, int lives,
-//          int reviveCount);
+  //  Destroyer(std::string shipName, int xPosition, int yPosition, int lives,
+  //          int reviveCount);
 
   Destroyer(const Position &position, int lives, int reviveCount,
-       int shipDestroyedCount, const std::string &shipName,
-       const std::string &shipType, const std::string &teamName,
-       bool isDestroyed);
+            int shipDestroyedCount, const std::string &shipName,
+            const std::string &shipType, const std::string &teamName,
+            bool isDestroyed);
 
   ~Destroyer();
 
@@ -29,4 +33,8 @@ class Destroyer : public MovingShip, public RamShip, public SeeingShip, public S
   void seeingShip() override;
 
   void ramShip() override;
+
+  void runShip() override;
+
+  void upgradeShip() override;
 };

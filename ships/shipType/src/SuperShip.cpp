@@ -34,8 +34,13 @@ SuperShip &SuperShip::operator=(const SuperShip &other) {
 }
 
 void SuperShip::movingShip() { std::cout << "SuperShip move"; }
+
 void SuperShip::seeingShip() { std::cout << "SuperShip see"; }
 
 void SuperShip::ramShip() { std::cout << "SuperShip ram"; }
 
 void SuperShip::shootingShip() { std::cout << "SuperShip shoot"; }
+
+void SuperShip::runShip() { std::cout << "SuperShip running"; }
+
+void SuperShip::upgradeShip() { std::cout << "SuperShip upgrading"; }
