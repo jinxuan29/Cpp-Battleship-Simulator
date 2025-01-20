@@ -6,7 +6,12 @@ private:
   int y;
 
 public:
+
+  Position(const Position& other) : x(other.x), y(other.y) {};
+
   Position(int x, int y) : x(x), y(y) {};
+
+  Position& operator=(const Position& other);
 
   bool operator=(const Position &other) const;
 
@@ -37,4 +42,6 @@ public:
   int getXValuePosition();
 
   int getYValuePosition();
+
+  void printXYValue() const;
 };

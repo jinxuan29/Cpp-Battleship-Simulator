@@ -5,15 +5,18 @@
 
 class Ship {
 private:
-  Position position;
-  int lives;
-  int reviveCount;
-  int shipDestroyedCount;
-  std::string shipName;
-  std::string shipType;
-  std::string teamName;
-  bool isDestroyed;
-  char symbol;
+  Position position; // Position (x,y) of the ship
+  int lives; // Revive count of the ship
+  int reviveCount; // Number of time ship has been revived
+  int shipDestroyedCount; // Number of Ship destroyed 
+  std::string shipName; // Name of Ship, its configured to named in a format
+                        // "TeamName_ShipType_ID" the ID is start from 0
+                        // Example A_Battleship_0
+
+  std::string shipType; // Type of ship
+  std::string teamName; // Team Name of the ship
+  bool isDestroyed;     // Check if ship is destroyed
+  char symbol;          // Symbol of ship displayed in battlefield
 
 public:
   Ship();
@@ -52,6 +55,6 @@ public:
   void setSymbol(char symbol);
   char getSymbol() const;
 
-  virtual void runShip() = 0; // run ship set of action.
-  virtual void upgradeShip()=0; // unsure to put it here ot battlefield class
+  virtual void runShip() = 0;     // run ship set of action.
+  virtual void upgradeShip() = 0; // unsure to put it here ot battlefield class
 };

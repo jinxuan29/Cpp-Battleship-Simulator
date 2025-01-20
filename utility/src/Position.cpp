@@ -11,7 +11,15 @@ Position Position::operator+(const Position &other) const {
   return Position(x + other.x, y + other.y);
 }
 
-Position::~Position(){};
+Position &Position::operator=(const Position &other) {
+  if (this != &other) { // Check for self-assignment
+    x = other.x;
+    y = other.y;
+  }
+  return *this;
+}
+
+Position::~Position() {};
 
 Position Position::Up() { return Position(0, 1); }
 

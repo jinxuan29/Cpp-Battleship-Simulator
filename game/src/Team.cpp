@@ -30,18 +30,18 @@ void Team::getName() const { std::cout << this->teamName; }
 
 void Team::displayTeamShips() const {
   for (int i = 0; i < this->numShip; i++) {
-    teamShips[i]->getSymbol();
-    std::cout << teamShips[i]->getSymbol() <<"\n";
+    std::cout << teamShips[i]->getSymbol() << "\n";
+    std::cout << teamShips[i]->getTeamName() << "\n";
+    std::cout << teamShips[i]->getShipName() << "\n";
+    std::cout << "Position: ("
+              << teamShips[i]->getPosition().getXValuePosition() << ", "
+              << teamShips[i]->getPosition().getYValuePosition() << ")\n";
   }
 }
 
-Ship** Team::getTeamShipsArray() const{
-  return this->teamShips;
-}
+Ship **Team::getTeamShipsArray() const { return this->teamShips; }
 
-int Team::getNumShip() const{
-  return this->numShip;
-}
+int Team::getNumShip() const { return this->numShip; }
 
 Team::~Team() {
   if (teamShips) {

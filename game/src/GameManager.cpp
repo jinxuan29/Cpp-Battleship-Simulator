@@ -8,7 +8,8 @@
 GameManager::GameManager(std::string filename) { this->filename = filename; }
 // TODO
 //  create link list (ship activity queue), create queue (respawn queue), 
-
+// store ship into queue and linked list
+// bad code on link list
 void GameManager::readFile(std::string filename) {
   this->width = 0;
   this->height = 0;
@@ -208,14 +209,18 @@ void GameManager::runGame() {
         }
 
         if (ship) { // Check if 'ship' is not nullptr
+          std::string shipName = teamName[i] + "_" + shipType+ "_" + std::to_string(k);
           ship->setSymbol(shipLogo);
+          ship->setTeamName(teamName[i]);
+          ship->setShipName(shipName);
+          ship->setShipType(shipType);
           teams[i]->addShip(ship); // Add the ship to the team
         }
       }
-    }
-    teams[i]->displayTeamShips();
+    } 
     battlefield.placeShipIntoBattlefield(teams[i]->getTeamShipsArray(), teams[i]->getNumShip());
     battlefield.display();
+    teams[i]->displayTeamShips();
   }
 }
 

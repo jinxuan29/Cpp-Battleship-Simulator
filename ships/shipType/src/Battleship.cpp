@@ -10,7 +10,7 @@ Battleship::Battleship(const Position &position, int lives, int reviveCount,
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
            teamName, isDestroyed) {}
 
-Battleship::~Battleship() {}
+Battleship::~Battleship() {std::cout << "Battleship Removed";}
 
 Battleship::Battleship(const Battleship &other) {
   this->setPosition(other.getPosition());

@@ -9,6 +9,8 @@
 #include "../../ships/shipType/include/Frigate.h"
 #include "../../ships/shipType/include//SuperShip.h"
 #include "../../ships/shipType/include//Ship.h"
+#include "../../utility/include/LinkList.h"
+#include "../../utility/include/Queue.h"
 
 class GameManager {
 private:
