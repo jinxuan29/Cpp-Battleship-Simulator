@@ -3,7 +3,7 @@
 #include <ctime>
 #include <iostream>
 
-bool Position::operator=(const Position &other) const {
+bool Position::operator==(const Position &other) const {
   return x == other.x && y == other.y;
 }
 

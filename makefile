@@ -12,7 +12,7 @@ UTILITY_SRC_DIR = utility/src
 # Source Files
 GAME_SOURCES = $(GAME_SRC_DIR)/Battlefield.cpp $(GAME_SRC_DIR)/GameManager.cpp $(GAME_SRC_DIR)/Team.cpp
 SHIP_SOURCES = $(SHIPS_SRC_DIR)/Amphibious.cpp $(SHIPS_SRC_DIR)/Battleship.cpp $(SHIPS_SRC_DIR)/Corvette.cpp $(SHIPS_SRC_DIR)/Cruiser.cpp $(SHIPS_SRC_DIR)/Destroyer.cpp $(SHIPS_SRC_DIR)/Frigate.cpp $(SHIPS_SRC_DIR)/Ship.cpp $(SHIPS_SRC_DIR)/SuperShip.cpp
-UTILITY_SOURCES = $(UTILITY_SRC_DIR)/Position.cpp $(UTILITY_SRC_DIR)/LinkList.cpp $(UTILITY_SRC_DIR)/Queue.cpp 
+UTILITY_SOURCES = $(UTILITY_SRC_DIR)/Position.cpp $(UTILITY_SRC_DIR)/Queue.cpp 
 MAIN_SOURCE = main.cpp
 
 # All Sources

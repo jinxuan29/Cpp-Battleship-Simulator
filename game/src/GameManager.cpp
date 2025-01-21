@@ -7,7 +7,7 @@
 
 GameManager::GameManager(std::string filename) { this->filename = filename; }
 // TODO
-//  create link list (ship activity queue), create queue (respawn queue), 
+//  create link list (ship activity queue), create queue (respawn queue),
 // store ship into queue and linked list
 // bad code on link list
 void GameManager::readFile(std::string filename) {
@@ -120,6 +120,33 @@ void GameManager::readFile(std::string filename) {
   delete[] lines;
 }
 
+void GameManager::addShipToActivityLinkList() {
+  int maxShips = 0;
+  for (int i = 0; i < numberOfTeams; i++) {
+    if (teams[i]->getNumShip() > maxShips) {
+      maxShips = teams[i]->getNumShip();
+    }
+  }
+
+  for (int i = 0; i < maxShips; i++) {
+    for (int j = 0; j < numberOfTeams; j++) {
+      Ship **teamShips = teams[j]->getTeamShipsArray();
+      int numShips = teams[j]->getNumShip();
+
+      // Check if the current team has a ship at index
+      if (i < numShips && teamShips[i]) {
+        shipActivityLinkList.push_back(teamShips[i]);
+      }
+    }
+  }
+}
+
+void GameManager::displayShipActivityLinkList() const {
+  std::cout << "Ship Activity Queue:\n";
+  shipActivityLinkList.print(); // print function only works for ship class
+                                // despite being template
+}
+
 void GameManager::runGame() {
   // create all objects
   readFile(this->filename);
@@ -142,7 +169,7 @@ void GameManager::runGame() {
     for (int j = 0; j < teamNumTypeShip[i]; j++) {
       std::cout << numberOfPerShip[i][j] << "\n";
       std::string shipDetails = this->numberOfPerShip[i][j];
-      std::string shipType; 
+      std::string shipType;
       char shipLogo;
       int numberOfShip;
 
@@ -209,7 +236,8 @@ void GameManager::runGame() {
         }
 
         if (ship) { // Check if 'ship' is not nullptr
-          std::string shipName = teamName[i] + "_" + shipType+ "_" + std::to_string(k);
+          std::string shipName =
+              teamName[i] + "_" + shipType + "_" + std::to_string(k);
           ship->setSymbol(shipLogo);
           ship->setTeamName(teamName[i]);
           ship->setShipName(shipName);
@@ -217,11 +245,14 @@ void GameManager::runGame() {
           teams[i]->addShip(ship); // Add the ship to the team
         }
       }
-    } 
-    battlefield.placeShipIntoBattlefield(teams[i]->getTeamShipsArray(), teams[i]->getNumShip());
+    }
+    battlefield.placeShipIntoBattlefield(teams[i]->getTeamShipsArray(),
+                                         teams[i]->getNumShip());
     battlefield.display();
     teams[i]->displayTeamShips();
   }
+  addShipToActivityLinkList();
+  displayShipActivityLinkList();
 }
 
 GameManager::~GameManager() {
