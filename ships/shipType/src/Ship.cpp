@@ -2,7 +2,7 @@
 #include <string>
 
 Ship::Ship()
-    : position(Position(0, 0)), lives(3), reviveCount(0), shipDestroyedCount(0),
+    : position(Position()), lives(3), reviveCount(0), shipDestroyedCount(0),
       shipName(""), shipType(""), teamName(""), isDestroyed(false) {}
 
 Ship::Ship(const Position &position, int lives, int reviveCount,
@@ -15,6 +15,7 @@ Ship::Ship(const Position &position, int lives, int reviveCount,
 
 Position Ship::getPosition() const { return position; }
 void Ship::setPosition(const Position &position) { this->position = position; }
+void Ship::setPosition(int x, int y) { this->position = Position(x,y); }
 
 void Ship::setLives(int lives) { this->lives = lives; }
 int Ship::getLives() const { return lives; }
@@ -32,7 +33,7 @@ void Ship::setShipName(std::string shipName) { this->shipName = shipName; }
 std::string Ship::getShipName() const { return shipName; }
 
 void Ship::setShipType(std::string shipType) { this->shipType = shipType; }
-std::string Ship::getShipTypes() const { return shipType; }
+std::string Ship::getShipType() const { return shipType; }
 
 void Ship::setIsDestroyed(bool isDestroyed) { this->isDestroyed = isDestroyed; }
 

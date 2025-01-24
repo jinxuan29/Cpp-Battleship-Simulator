@@ -15,7 +15,7 @@ Amphibious::~Amphibious() { std::cout << "Amphibious Removed"; }
 Amphibious::Amphibious(const Amphibious &other) {
   this->setPosition(other.getPosition());
   this->setShipName(other.getShipName());
-  this->setShipType(other.getShipTypes());
+  this->setShipType(other.getShipType());
   this->setLives(other.getLives());
   this->setReviveCount(other.getReviveCount());
   this->setShipDestroyedCount(other.getShipDestroyedCount());
@@ -27,7 +27,7 @@ Amphibious &Amphibious::operator=(const Amphibious &other) {
   if (this != &other) {
     this->setPosition(other.getPosition());
     this->setShipName(other.getShipName());
-    this->setShipType(other.getShipTypes());
+    this->setShipType(other.getShipType());
     this->setLives(other.getLives());
     this->setReviveCount(other.getReviveCount());
     this->setShipDestroyedCount(other.getShipDestroyedCount());

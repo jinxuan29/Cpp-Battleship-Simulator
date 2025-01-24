@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <stdexcept>
 
 bool Position::operator==(const Position &other) const {
   return x == other.x && y == other.y;
@@ -15,25 +16,26 @@ Position &Position::operator=(const Position &other) {
   if (this != &other) { // Check for self-assignment
     x = other.x;
     y = other.y;
+    isInitialized = true;
   }
   return *this;
 }
 
 Position::~Position() {};
 
-Position Position::Up() { return Position(0, 1); }
+Position Position::Up() { return Position(0, -1); }
 
-Position Position::Down() { return Position(0, -1); }
+Position Position::Down() { return Position(0, +1); }
 
 Position Position::Left() { return Position(-1, 0); }
 
 Position Position::Right() { return Position(1, 0); }
 
-Position Position::UpLeft() { return Position(-1, 1); }
+Position Position::UpLeft() { return Position(-1, -1); }
 
-Position Position::UpRight() { return Position(1, 1); }
-Position Position::DownLeft() { return Position(-1, -1); }
-Position Position::DownRight() { return Position(1, -1); }
+Position Position::UpRight() { return Position(1, -1); }
+Position Position::DownLeft() { return Position(-1, 1); }
+Position Position::DownRight() { return Position(1, 1); }
 
 // geneerate random UP DOWN LEFT OR RIGHT POSITION using srand
 Position Position::getRandomPositionFrom4Position() {
@@ -77,11 +79,29 @@ Position Position::getRandomPositionFrom8Position() {
   case 7:
     return Position::DownLeft();
   }
-  std::cout << "Error This should no happen idk whats wrong, position "
-               "getRandomPositionFrom8Position";
-  return Position(0, 0);
+  throw std::runtime_error("Error This should no happen idk whats wrong, position "
+               "getRandomPositionFrom8Position");
 };
 
-int Position::getXValuePosition() { return x; }
+int Position::getXValuePosition() const {
+  if (this->isInitialized) {
+    return x;
+  } else {
+    throw std::runtime_error("Position does not have X Value");
+  }
+}
+int Position::getYValuePosition() const {
+  if (this->isInitialized) {
+    return y;
+  } else {
+    throw std::runtime_error("Position does not have Y value");
+  }
+}
 
-int Position::getYValuePosition() { return y; }
+void Position::printXYValue() const {
+  if (this->isInitialized) {
+    std::cout << this->x << " " << this->y;
+  } else {
+    std::cout << "Position does not have X and Y value";
+  }
+}

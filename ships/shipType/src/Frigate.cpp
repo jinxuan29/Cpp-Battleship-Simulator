@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-Frigate::Frigate(){}
+Frigate::Frigate() {}
 
 Frigate::Frigate(const Position &position, int lives, int reviveCount,
                  int shipDestroyedCount, const std::string &shipName,
@@ -16,7 +16,7 @@ Frigate::~Frigate() { std::cout << "Frigate Removed"; }
 Frigate::Frigate(const Frigate &other) {
   this->setPosition(other.getPosition());
   this->setShipName(other.getShipName());
-  this->setShipType(other.getShipTypes());
+  this->setShipType(other.getShipType());
   this->setLives(other.getLives());
   this->setReviveCount(other.getReviveCount());
   this->setShipDestroyedCount(other.getShipDestroyedCount());
@@ -26,7 +26,7 @@ Frigate &Frigate::operator=(const Frigate &other) {
   if (this != &other) {
     this->setPosition(other.getPosition());
     this->setShipName(other.getShipName());
-    this->setShipType(other.getShipTypes());
+    this->setShipType(other.getShipType());
     this->setLives(other.getLives());
     this->setReviveCount(other.getReviveCount());
     this->setShipDestroyedCount(other.getShipDestroyedCount());

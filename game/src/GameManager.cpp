@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <stdexcept>
 #include <string>
 
 GameManager::GameManager(std::string filename) { this->filename = filename; }
@@ -148,26 +149,23 @@ void GameManager::displayShipActivityLinkList() const {
 }
 
 void GameManager::runGame() {
-  // create all objects
   readFile(this->filename);
-  // initalize battlefield
+
+  // Initialize battlefield
   Battlefield battlefield(this->battlefieldMap, this->width, this->height);
   battlefield.display();
   battlefield.setIslandPosition();
 
-  // initailize teams
+  // Initialize teams
   std::cout << numberOfTeams << std::endl;
 
   this->teams = new Team *[numberOfTeams];
-  for (int i = 0; i < numberOfTeams; i++) {
-    std::cout << "Creating team: " << teamName[i] << " with "
-              << teamNumTypeShip[i] << " ships\n";
-    teams[i] = new Team(teamName[i]);
+  int totalShipsAcrossAllTeams = 0;
 
-    // first loop to initalize total number of ship each team has
+  // Calculate the total number of ships across all teams
+  for (int i = 0; i < numberOfTeams; i++) {
     int totalNumberofShips = 0;
     for (int j = 0; j < teamNumTypeShip[i]; j++) {
-      std::cout << numberOfPerShip[i][j] << "\n";
       std::string shipDetails = this->numberOfPerShip[i][j];
       std::string shipType;
       char shipLogo;
@@ -175,18 +173,21 @@ void GameManager::runGame() {
 
       std::istringstream iss(shipDetails);
       iss >> shipType >> shipLogo >> numberOfShip;
-
-      std::cout << "Ship Type: " << shipType << std::endl;
-      std::cout << "Ship Logo: " << shipLogo << std::endl;
-      std::cout << "Number of Ships: " << numberOfShip << std::endl;
 
       totalNumberofShips += numberOfShip;
     }
+    teams[i] = new Team(teamName[i]);
     teams[i]->setTeamShipsArraySize(totalNumberofShips);
+    totalShipsAcrossAllTeams += totalNumberofShips;
+  }
 
-    // second loop to create ship object and add inside the team class
+  // Create a single array to hold all ships
+  Ship **allShips = new Ship *[totalShipsAcrossAllTeams]();
+  int shipIndex = 0;
+
+  // Create ship objects and add them to the combined array
+  for (int i = 0; i < numberOfTeams; i++) {
     for (int j = 0; j < teamNumTypeShip[i]; j++) {
-      std::cout << numberOfPerShip[i][j] << "\n";
       std::string shipDetails = this->numberOfPerShip[i][j];
       std::string shipType;
       char shipLogo;
@@ -194,26 +195,7 @@ void GameManager::runGame() {
 
       std::istringstream iss(shipDetails);
       iss >> shipType >> shipLogo >> numberOfShip;
-      /*
-       for (int k = 0; k < numberOfShip; k++) {
-        if (shipType == "Amphibious") {
-          Amphibious* amphibious = new Amphibious();
-        } else if (shipType == "Corvette") {
-          Corvette* corvette = new Corvette();
-        } else if (shipType == "Cruiser") {
-          Cruiser* cruiser = new Cruiser();
-        } else if (shipType == "Destroyer") {
-          Destroyer* destroyer = new Destroyer();
-        } else if (shipType == "Frigate") {
-          Frigate* frigate = new Frigate();
-        } else if (shipType == "SuperShip") {
-          SuperShip* supership = new SuperShip();
-        } else if (shipType == "Battleship") {
-          Battleship* battleship = new Battleship();
-        } else {
-          std::cerr << "Unknown ship type: " << shipType << std::endl;
-        }
-*/
+
       for (int k = 0; k < numberOfShip; k++) {
         Ship *ship = nullptr;
 
@@ -242,17 +224,34 @@ void GameManager::runGame() {
           ship->setTeamName(teamName[i]);
           ship->setShipName(shipName);
           ship->setShipType(shipType);
-          teams[i]->addShip(ship); // Add the ship to the team
+          teams[i]->addShip(ship);      // Add the ship to the team
+          allShips[shipIndex++] = ship; // Add the ship to the combined array
+        } else {
+          throw std::runtime_error("Ship not initialized during run game "
+                                   "function. Maybe ship type does not exist.");
         }
       }
     }
-    battlefield.placeShipIntoBattlefield(teams[i]->getTeamShipsArray(),
-                                         teams[i]->getNumShip());
-    battlefield.display();
+  }
+
+  // Place all ships into the battlefield
+  battlefield.placeShipArrayIntoBattlefield(allShips, totalShipsAcrossAllTeams);
+  battlefield.display();
+
+  // Display ships for each team
+  for (int i = 0; i < numberOfTeams; i++) {
     teams[i]->displayTeamShips();
   }
+
+  battlefield.updateBattlefield();
+
   addShipToActivityLinkList();
   displayShipActivityLinkList();
+  shipActivityLinkList.runShip();
+  shipActivityLinkList.print();
+  battlefield.updateBattlefield();
+
+  delete[] allShips;
 }
 
 GameManager::~GameManager() {

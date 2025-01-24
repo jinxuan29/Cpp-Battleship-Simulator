@@ -15,7 +15,7 @@ SuperShip::~SuperShip() { std::cout << "SuperShip Removed"; }
 SuperShip::SuperShip(const SuperShip &other) {
   this->setPosition(other.getPosition());
   this->setShipName(other.getShipName());
-  this->setShipType(other.getShipTypes());
+  this->setShipType(other.getShipType());
   this->setLives(other.getLives());
   this->setReviveCount(other.getReviveCount());
   this->setShipDestroyedCount(other.getShipDestroyedCount());
@@ -25,7 +25,7 @@ SuperShip &SuperShip::operator=(const SuperShip &other) {
   if (this != &other) {
     this->setPosition(other.getPosition());
     this->setShipName(other.getShipName());
-    this->setShipType(other.getShipTypes());
+    this->setShipType(other.getShipType());
     this->setLives(other.getLives());
     this->setReviveCount(other.getReviveCount());
     this->setShipDestroyedCount(other.getShipDestroyedCount());

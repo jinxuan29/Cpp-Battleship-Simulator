@@ -1,6 +1,8 @@
 #pragma once
 #include "../../ships/shipType/include/Ship.h"
 #include <iostream>
+#include <iterator>
+#include <ostream>
 #include <stdexcept>
 
 template <typename T> class LinkList {
@@ -77,11 +79,26 @@ public:
     size--;
   }
 
+// only works for ship class 
+
   // Generic print method
   void print() const {
     Node *current = head;
     while (current) {
-      std::cout << current->data->getShipName() << " "; // Works for any type T
+      std::cout << "Symbol: "<< current->data->getSymbol()<< " " << std::endl;
+      std::cout << "Ship Type: " << current->data->getShipType() << std::endl;
+      std::cout << "Ship Position: ";
+      current->data->getPosition().printXYValue();
+      std::cout << std::endl;
+      current = current->next;
+    }
+    std::cout << "\n";
+  }
+
+  void runShip(){
+    Node *current = head;
+    while (current) {
+      current->data->runShip(); 
       current = current->next;
     }
     std::cout << "\n";

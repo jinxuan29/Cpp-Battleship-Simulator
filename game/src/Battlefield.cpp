@@ -31,7 +31,7 @@ Battlefield::Battlefield(char **grid, int width, int height)
 void Battlefield::display() const {
   for (int i = 0; i < height; ++i) {
     for (int j = 0; j < width; ++j) {
-      std::cout << grid[i][j] << ' ';
+      std::cout << this->grid[i][j] << ' ';
     }
     std::cout << '\n';
   }
@@ -41,7 +41,7 @@ void Battlefield::setIslandPosition() {
   int numberOfIsland = 0;
   for (int i = 0; i < height; i++) {
     for (int j = 0; j < width; j++) {
-      if (grid[i][j] == '1') {
+      if (this->grid[i][j] == '1') {
         numberOfIsland++;
       }
     }
@@ -55,9 +55,9 @@ void Battlefield::setIslandPosition() {
   int currentIndex = 0;
   for (int i = 0; i < height; i++) {
     for (int j = 0; j < width; j++) {
-      if (grid[i][j] == '1') {
-        this->islandPosition[currentIndex][0] = i;
-        this->islandPosition[currentIndex][1] = j;
+      if (this->grid[i][j] == '1') {
+        this->islandPosition[currentIndex][0] = j;
+        this->islandPosition[currentIndex][1] = i;
         currentIndex++;
       }
     }
@@ -65,11 +65,12 @@ void Battlefield::setIslandPosition() {
 }
 
 // only works after running the setIslandPosition function
-// starts from 0 instead of 1 
-void Battlefield::printIslandPosition(){
+// starts from 0 instead of 1
+void Battlefield::printIslandPosition() const {
   std::cout << "Island Positions:\n";
-  for (int i = 0; i<this->numberOfIsland;i++) {
-    std::cout<< this->islandPosition[i][0] << ":" << this->islandPosition[i][1] << "\n"; 
+  for (int i = 0; i < this->numberOfIsland; i++) {
+    std::cout << this->islandPosition[i][0] << ":" << this->islandPosition[i][1]
+              << "\n";
   }
 }
 
@@ -78,8 +79,38 @@ void Battlefield::placeIsland(int x, int y, char symbol) {
   display();
 }
 
-void Battlefield::placeShipIntoBattlefield(Ship** ships, int numShips) {
-  srand(time(0)); 
+void Battlefield::updateBattlefield() {
+  // rewrite the grid change all symbol back to 0 except islands (1)
+  for (int i = 0; i < height; i++) {
+    for (int j = 0; j < width; j++) {
+      if (this->grid[i][j] != '1') {
+        this->grid[i][j] = '0';
+      }
+    }
+  }
+
+  for (int i = 0; i < totalNumberofShips; i++) {
+    if (battlefieldShip[i]) {
+      Position pos = battlefieldShip[i]->getPosition();
+      if (pos.getXValuePosition() >= 0 && pos.getXValuePosition() < width &&
+          pos.getYValuePosition() >= 0 && pos.getYValuePosition() < height) {
+        this->grid[pos.getYValuePosition()][pos.getXValuePosition()] =
+            battlefieldShip[i]->getSymbol();
+      }
+    }
+  }
+  display();
+}
+// TODO  here only the latest team array was put inside so had to change 
+// write a fuinction on game manager to loop both ship juz to store the array here
+void Battlefield::placeShipArrayIntoBattlefield(Ship **ships, int numShips) {
+  srand(time(0));
+  this->totalNumberofShips = numShips;
+  // add ship into the battlefield ship array
+  battlefieldShip = new Ship *[numShips]();
+  for (int i = 0; i < numShips; i++) {
+    battlefieldShip[i] = ships[i];
+  }
 
   int emptyPositions = 0;
   for (int i = 0; i < height; i++) {
@@ -103,12 +134,12 @@ void Battlefield::placeShipIntoBattlefield(Ship** ships, int numShips) {
 
     bool placed = false;
     int attempts = 0;
-    const int maxAttempts = width * height; 
+    const int maxAttempts = width * height;
 
     while (!placed && attempts < maxAttempts) {
-      
-      int x = rand() % height; 
-      int y = rand() % width;  
+
+      int y = rand() % height;
+      int x = rand() % width;
 
       bool isIsland = false;
 
@@ -119,8 +150,8 @@ void Battlefield::placeShipIntoBattlefield(Ship** ships, int numShips) {
         }
       }
 
-      if (!isIsland && grid[x][y] == '0') {
-        grid[x][y] = ships[i]->getSymbol();
+      if (!isIsland && grid[y][x] == '0') {
+        grid[y][x] = ships[i]->getSymbol();
         placed = true;
 
         ships[i]->setPosition(Position(x, y));
@@ -130,7 +161,8 @@ void Battlefield::placeShipIntoBattlefield(Ship** ships, int numShips) {
     }
 
     if (!placed) {
-      std::cerr << "Error: Could not place ship " << i << " after " << maxAttempts << " attempts.\n";
+      std::cerr << "Error: Could not place ship " << i << " after "
+                << maxAttempts << " attempts.\n";
     }
   }
 }
@@ -145,10 +177,15 @@ Battlefield::~Battlefield() {
   }
 
   if (this->islandPosition) {
-    for (int i = 0; i <this->numberOfIsland ; i++) {
+    for (int i = 0; i < this->numberOfIsland; i++) {
       delete[] this->islandPosition[i];
     }
     delete[] this->islandPosition;
     this->islandPosition = nullptr;
+  }
+
+  if (this->battlefieldShip) {
+    delete[] battlefieldShip;
+    this->battlefieldShip = nullptr;
   }
 }

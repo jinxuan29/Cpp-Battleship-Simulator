@@ -3,6 +3,7 @@
 #include "../../action/MovingShip.h"
 #include "../../action/ShootingShip.h"
 #include "../../action/SeeingShip.h"
+#include "../../../utility/include/Position.h"
 
 class Battleship : public MovingShip, public ShootingShip, public SeeingShip {
 
