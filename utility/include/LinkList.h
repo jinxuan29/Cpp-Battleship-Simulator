@@ -90,6 +90,7 @@ public:
       std::cout << "Ship Position: ";
       current->data->getPosition().printXYValue();
       std::cout << std::endl;
+      std::cout <<"Ship IsDestroyed:" << current->data->getIsDestroyed() << std::endl;
       current = current->next;
     }
     std::cout << "\n";

@@ -22,5 +22,12 @@ public:
   void printIslandPosition() const; // print all island position in (x,y) in battlefield
   void placeShipArrayIntoBattlefield(Ship** ship, int numShips); // place array of ship into the battlefield
   void placeShipIntoBattlefield(Ship* ship); // place ship (one only for respawn queue) back into battlefield 
-  void updateBattlefield();
+  void updateBattlefield(); // update the current state of the battlefield
+  /*
+     on the ship shoot function check if it hits any ship using 
+     using ship position and check if the ship isDestroyed 
+
+     so 
+     if(ship.getPosition == shootPosition ) then only shoot 
+  */
 };

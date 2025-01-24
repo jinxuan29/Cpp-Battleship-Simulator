@@ -90,7 +90,7 @@ void Battlefield::updateBattlefield() {
   }
 
   for (int i = 0; i < totalNumberofShips; i++) {
-    if (battlefieldShip[i]) {
+    if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
       Position pos = battlefieldShip[i]->getPosition();
       if (pos.getXValuePosition() >= 0 && pos.getXValuePosition() < width &&
           pos.getYValuePosition() >= 0 && pos.getYValuePosition() < height) {
@@ -101,8 +101,7 @@ void Battlefield::updateBattlefield() {
   }
   display();
 }
-// TODO  here only the latest team array was put inside so had to change 
-// write a fuinction on game manager to loop both ship juz to store the array here
+
 void Battlefield::placeShipArrayIntoBattlefield(Ship **ships, int numShips) {
   srand(time(0));
   this->totalNumberofShips = numShips;
