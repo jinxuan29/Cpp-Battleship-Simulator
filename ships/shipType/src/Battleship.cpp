@@ -39,14 +39,7 @@ void Battleship::movingShip() { std::cout << "BattleShip move"; }
 
 void Battleship::shootingShip() { std::cout << "Battleship shoot"; }
 
-void Battleship::runShip() {
-  if (this->getPosition().getYValuePosition() != 0) {
-
-    Position newPosition = this->getPosition() + Position().Up();
-    this->setPosition(newPosition); 
-  }
-  this->setSymbol(']');  
-  std::cout << "Battleship running";
+void Battleship::runShip() {std::cout << "Battleship running";
 }
 
 void Battleship::upgradeShip() { std::cout << "Battleship upgrading"; }
