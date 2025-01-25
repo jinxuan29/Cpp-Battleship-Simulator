@@ -1,5 +1,6 @@
 #include "../include/GameManager.h"
 #include <cstddef>
+#include <cstdio>
 #include <fstream>
 #include <iostream>
 #include <ostream>
@@ -8,10 +9,6 @@
 #include <string>
 
 GameManager::GameManager(std::string filename) { this->filename = filename; }
-// TODO
-//  create link list (ship activity queue), create queue (respawn queue),
-// store ship into queue and linked list
-// bad code on link list
 void GameManager::readFile(std::string filename) {
   this->width = 0;
   this->height = 0;
@@ -170,9 +167,35 @@ void GameManager::addDestroyedShipIntoQueue() {
   }
 }
 
-void GameManager::runGame() {
+void GameManager::removeDestroyShipFromLinkList() {
+  std::cout << "Removing destroyed ships from the link list...\n";
+  for (int i = shipActivityLinkList.getSize() - 1; i >= 0; i--) {
+    if (shipActivityLinkList.get(i)->getIsDestroyed() ||
+        shipActivityLinkList.get(i)->getLives() < 1) {
+      std::cout << "Removing ship: "
+                << shipActivityLinkList.get(i)->getShipName() << "\n";
+      shipActivityLinkList.remove(i);
+    }else {
+      std::cout << "No destroyed ship in the link list";
+    }
+  }
+  std::cout << "Removal complete.\n";
+}
 
-  // initalize all objects and related settings
+void GameManager::respawnShip() {
+  // Attempt to respawn up to 2 ships from the respawn queue
+  for (int i = 0; i < 2; i++) {
+    if (!shipRespawnQueue.isEmpty()) {
+      Ship *nextShip = shipRespawnQueue.peek();
+      shipActivityLinkList.push_back(nextShip);
+      shipRespawnQueue.dequeue();
+    } else {
+      break;
+    }
+  }
+}
+
+void GameManager::runGame() {
   readFile(this->filename);
 
   // Initialize battlefield
@@ -276,12 +299,21 @@ void GameManager::runGame() {
     battlefield.updateBattlefield();
     // TODO if ship hit another ship but that ship lives is ady 0 juz ignore it
     shipActivityLinkList.runShip();
+
+    // Remove destroyed ships from the link list
+    removeDestroyShipFromLinkList();
+
+    // Debug: Print remaining ships
+    std::cout << "Remaining ships after removal:\n";
     shipActivityLinkList.print();
 
-    // TODO if ship got destroy remove from link as well and reque from the back
-    // when respawned
     addDestroyedShipIntoQueue();
+    std::cout << std::endl << "Ship Queue:";
+    respawnShip();
+    std::cout << std::endl << "Ship Queue:";
     shipRespawnQueue.print();
+    std::cout << std::endl;
+
     i++;
   }
 }

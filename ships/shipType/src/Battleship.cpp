@@ -39,7 +39,6 @@ void Battleship::movingShip() { std::cout << "BattleShip move"; }
 
 void Battleship::shootingShip() { std::cout << "Battleship shoot"; }
 
-void Battleship::runShip() {std::cout << "Battleship running";
-}
+void Battleship::runShip() { std::cout << "Battleship running"; }
 
 void Battleship::upgradeShip() { std::cout << "Battleship upgrading"; }

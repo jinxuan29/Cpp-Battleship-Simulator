@@ -50,7 +50,10 @@ public:
   ~GameManager();
   void readFile(std::string filename);
   void addShipToActivityLinkList();
-  //void displayShipActivityLinkList() const;
-  void runGame();
-  void addDestroyedShipIntoQueue();
+  // void displayShipActivityLinkList() const;
+  void runGame();                       // function to run the stimulation
+  void addDestroyedShipIntoQueue();     // add destroyed ship into queue
+  void removeDestroyShipFromLinkList(); // remove destroyed ship into link list
+  void respawnShip(); // respawn ship function (auto check for if ship are
+                      // destroyed and add back into the linked list)
 };
