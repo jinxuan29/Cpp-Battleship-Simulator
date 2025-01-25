@@ -3,16 +3,20 @@
 #include <ctime>
 #include <iostream>
 
-bool Position::operator==(const Position &other) const {
+bool Position::operator==(const Position &other) const
+{
   return x == other.x && y == other.y;
 }
 
-Position Position::operator+(const Position &other) const {
+Position Position::operator+(const Position &other) const
+{
   return Position(x + other.x, y + other.y);
 }
 
-Position &Position::operator=(const Position &other) {
-  if (this != &other) { // Check for self-assignment
+Position &Position::operator=(const Position &other)
+{
+  if (this != &other)
+  { // Check for self-assignment
     x = other.x;
     y = other.y;
   }
@@ -36,10 +40,12 @@ Position Position::DownLeft() { return Position(-1, -1); }
 Position Position::DownRight() { return Position(1, -1); }
 
 // geneerate random UP DOWN LEFT OR RIGHT POSITION using srand
-Position Position::getRandomPositionFrom4Position() {
+Position Position::getRandomPositionFrom4Position()
+{
   srand(0);
   int randomDirection = rand() % 4;
-  switch (randomDirection) {
+  switch (randomDirection)
+  {
   case 0:
     return Position::Up();
   case 1:
@@ -56,10 +62,12 @@ Position Position::getRandomPositionFrom4Position() {
 
 // geneerate random UP DOWN LEFT RIGHT UPLEFT UPRIGHT DOWNLEFT DOWNRIGHT
 // POSITION using srand
-Position Position::getRandomPositionFrom8Position() {
+Position Position::getRandomPositionFrom8Position()
+{
   srand(time(0));
   int randomDirection = rand() % 8;
-  switch (randomDirection) {
+  switch (randomDirection)
+  {
   case 0:
     return Position::Up();
   case 1:
