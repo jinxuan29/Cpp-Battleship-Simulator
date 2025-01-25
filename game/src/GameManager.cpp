@@ -296,6 +296,10 @@ void GameManager::runGame() {
   while (i < iteration) {
     std::cout << "Iteration:" << i + 1 << std::endl;
 
+    if (i != 0) {
+      respawnShip();
+    }
+
     battlefield.updateBattlefield();
     // TODO if ship hit another ship but that ship lives is ady 0 juz ignore it
     shipActivityLinkList.runShip();
@@ -309,11 +313,8 @@ void GameManager::runGame() {
 
     addDestroyedShipIntoQueue();
 
-    // take the first two ship in queue to respawn. does not work on the first round
-    if (i != 0) {
-      respawnShip();
-    }
-
+    // take the first two ship in queue to respawn. does not work on the first
+    // round
     std::cout << std::endl << "Ship Queue:";
     shipRespawnQueue.print();
     std::cout << std::endl;
