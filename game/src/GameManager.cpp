@@ -175,8 +175,6 @@ void GameManager::removeDestroyShipFromLinkList() {
       std::cout << "Removing ship: "
                 << shipActivityLinkList.get(i)->getShipName() << "\n";
       shipActivityLinkList.remove(i);
-    }else {
-      std::cout << "No destroyed ship in the link list";
     }
   }
   std::cout << "Removal complete.\n";
@@ -187,6 +185,8 @@ void GameManager::respawnShip() {
   for (int i = 0; i < 2; i++) {
     if (!shipRespawnQueue.isEmpty()) {
       Ship *nextShip = shipRespawnQueue.peek();
+      nextShip->setIsDestroyed(false);
+      std::cout << std::endl << "Ship Respawn: " << nextShip->getShipName();
       shipActivityLinkList.push_back(nextShip);
       shipRespawnQueue.dequeue();
     } else {
@@ -308,8 +308,12 @@ void GameManager::runGame() {
     shipActivityLinkList.print();
 
     addDestroyedShipIntoQueue();
-    std::cout << std::endl << "Ship Queue:";
-    respawnShip();
+
+    // take the first two ship in queue to respawn. does not work on the first round
+    if (i != 0) {
+      respawnShip();
+    }
+
     std::cout << std::endl << "Ship Queue:";
     shipRespawnQueue.print();
     std::cout << std::endl;
