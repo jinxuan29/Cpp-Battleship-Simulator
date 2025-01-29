@@ -4,11 +4,17 @@
 #include "../../action/RamShip.h"
 #include "../../action/SeeingShip.h"
 #include "../../action/ShootingShip.h"
+#include "../..include/Battlefield.h"
+#include <cstdlib> // For rand()
 
 class SuperShip : public MovingShip,
                   public RamShip,
                   public SeeingShip,
                   public ShootingShip {
+              
+private : 
+      // Added: Helper function for shooting at a position
+      bool shootAt(const Position &pos);
 public:
   SuperShip();
 
