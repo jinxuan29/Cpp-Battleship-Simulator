@@ -180,16 +180,18 @@ void GameManager::removeDestroyShipFromLinkList() {
   std::cout << "Removal complete.\n";
 }
 
-void GameManager::respawnShip() {
+void GameManager::respawnShip(Battlefield &battlefield) {
   // Attempt to respawn up to 2 ships from the respawn queue
   for (int i = 0; i < 2; i++) {
     if (!shipRespawnQueue.isEmpty()) {
       Ship *nextShip = shipRespawnQueue.peek();
       nextShip->setIsDestroyed(false);
-      std::cout << std::endl << "Ship Respawn: " << nextShip->getShipName();
+      std::cout << std::endl << "Ship Respawn: " << nextShip->getShipName() << std::endl;
+      battlefield.placeShipIntoBattlefield(nextShip);
       shipActivityLinkList.push_back(nextShip);
       shipRespawnQueue.dequeue();
     } else {
+      std::cout << "No Ship on Respawn Queue";
       break;
     }
   }
@@ -297,7 +299,7 @@ void GameManager::runGame() {
     std::cout << "Iteration:" << i + 1 << std::endl;
 
     if (i != 0) {
-      respawnShip();
+      respawnShip(battlefield);
     }
 
     battlefield.updateBattlefield();
@@ -308,7 +310,7 @@ void GameManager::runGame() {
     removeDestroyShipFromLinkList();
 
     // Debug: Print remaining ships
-    std::cout << "Remaining ships after removal:\n";
+    std::cout << "\n Remaining ships after removal:\n";
     shipActivityLinkList.print();
 
     addDestroyedShipIntoQueue();
