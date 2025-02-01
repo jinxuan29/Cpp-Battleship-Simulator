@@ -3,7 +3,7 @@
 #include "../../action/MovingShip.h"
 #include "../../action/ShootingShip.h"
 #include "../../action/SeeingShip.h"
-#include "../../include/Battlefield.h"
+#include "../../../game/include/Battlefield.h"
 #include <cstdlib> // For rand ()
 
 // can move in sea and land ifk if tht rammming or moving
