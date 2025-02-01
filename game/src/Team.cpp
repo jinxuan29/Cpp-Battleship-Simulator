@@ -26,7 +26,7 @@ void Team::addShip(Ship *ship) {
   }
 }
 
-void Team::getName() const { std::cout << this->teamName; }
+std::string Team::getName() const { return this->teamName; }
 
 void Team::displayTeamShips() const {
   for (int i = 0; i < this->numShip; i++) {
