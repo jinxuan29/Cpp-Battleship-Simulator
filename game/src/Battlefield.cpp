@@ -96,6 +96,7 @@ void Battlefield::updateBattlefield() {
           pos.getYValuePosition() >= 0 && pos.getYValuePosition() < height) {
         bool isOnIsland = false;
         if (battlefieldShip[i]->getShipType() == "Amphibious") {
+          // check if amphibious is on island
           for (int j = 0; j < numberOfIsland; j++) {
             if (islandPosition[j][0] == pos.getXValuePosition() &&
                 islandPosition[j][1] == pos.getYValuePosition()) {
