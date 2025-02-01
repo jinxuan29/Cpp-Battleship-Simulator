@@ -54,6 +54,6 @@ public:
   void runGame();                       // function to run the stimulation
   void addDestroyedShipIntoQueue();     // add destroyed ship into queue
   void removeDestroyShipFromLinkList(); // remove destroyed ship into link list
-  void respawnShip(); // respawn ship function (auto check for if ship are
+  void respawnShip(Battlefield &baattlefield); // respawn ship function (auto check for if ship are
                       // destroyed and add back into the linked list)
 };

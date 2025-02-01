@@ -6,7 +6,7 @@ private:
   int width; // width of the baattlefield (columns)
   int height; // height of the battlefield (row)
   int numberOfIsland; // total number of island in the battlefield
-  int totalNumberofShips; // total number of ships in the battlefield
+  int totalNumberOfShips; // total number of ships in the battlefield
   char **grid; // 2d array of char to represetation the battlefield 
   int **islandPosition;  // 2d array of all coords of the island in battlefield
   Ship **battlefieldShip; // array of ships that currently in the battlefield
