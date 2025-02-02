@@ -2,42 +2,58 @@
 #include <iostream>
 #include <string>
 
-Frigate::Frigate(){}
+Frigate::Frigate() : shotsFired(0), shipsDestroyed(0) {}
 
 Frigate::Frigate(const Position &position, int lives, int reviveCount,
                  int shipDestroyedCount, const std::string &shipName,
                  const std::string &shipType, const std::string &teamName,
                  bool isDestroyed)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
-           teamName, isDestroyed) {}
+           teamName, isDestroyed), shotsFired(0), shipsDestroyed(0) {}
 
-Frigate::~Frigate() { std::cout << "Frigate Removed"; }
+Frigate::~Frigate() { std::cout << "Frigate Removed\n"; }
 
-Frigate::Frigate(const Frigate &other) {
-  this->setPosition(other.getPosition());
-  this->setShipName(other.getShipName());
-  this->setShipType(other.getShipTypes());
-  this->setLives(other.getLives());
-  this->setReviveCount(other.getReviveCount());
-  this->setShipDestroyedCount(other.getShipDestroyedCount());
+Frigate::Frigate(const Frigate &other) : Ship(other) {
+    this->shotsFired = other.shotsFired;
+    this->shipsDestroyed = other.shipsDestroyed;
 }
 
 Frigate &Frigate::operator=(const Frigate &other) {
-  if (this != &other) {
-    this->setPosition(other.getPosition());
-    this->setShipName(other.getShipName());
-    this->setShipType(other.getShipTypes());
-    this->setLives(other.getLives());
-    this->setReviveCount(other.getReviveCount());
-    this->setShipDestroyedCount(other.getShipDestroyedCount());
-  }
-  return *this;
+    if (this != &other) {
+        Ship::operator=(other);
+        this->shotsFired = other.shotsFired;
+        this->shipsDestroyed = other.shipsDestroyed;
+    }
+    return *this;
 }
 
-void Frigate::shootingShip() { std::cout << "Frigate shoot"; }
+void Frigate::shootingShip() {
+    Position target = getNextTargetPosition();
+    std::cout << "Frigate shooting at position: (" << target.x << ", " << target.y << ")\n";
 
-void Frigate::ramShip() { std::cout << "Frigate ram"; }
+    // Simulate shooting logic (e.g., check if target is a ship, destroy it, etc.)
+    // If a ship is destroyed, increment shipsDestroyed
+    shipsDestroyed++;
 
-void Frigate::runShip() { std::cout << "Frigate running"; }
+    // Check if the frigate should upgrade to Corvette
+    if (shouldUpgrade()) {
+        upgradeToCorvette();
+    }
+}
 
-void Frigate::upgradeShip() { std::cout << "Frigate upgrading"; }
+void Frigate::upgradeToCorvette() {
+    std::cout << "Frigate upgraded to Corvette!\n";
+    // Update ship type and behavior (e.g., random shooting)
+    this->setShipType("Corvette");
+}
+
+Position Frigate::getNextTargetPosition() {
+    // Calculate the next target position based on the shooting sequence
+    Position target = shootingSequence[shotsFired % 8];
+    shotsFired++;
+    return Position(this->getPosition().x + target.x, this->getPosition().y + target.y);
+}
+
+bool Frigate::shouldUpgrade() const {
+    return shipsDestroyed >= UPGRADE_THRESHOLD;
+}
