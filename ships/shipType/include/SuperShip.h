@@ -4,7 +4,7 @@
 #include "../../action/RamShip.h"
 #include "../../action/SeeingShip.h"
 #include "../../action/ShootingShip.h"
-#include "../..include/Battlefield.h"
+#include "../../../game/include/Battlefield.h"
 #include <cstdlib> // For rand()
 
 class SuperShip : public MovingShip,
