@@ -37,8 +37,49 @@ SuperShip &SuperShip::operator=(const SuperShip &other)
 }
 
 void SuperShip::movingShip(Battlefield &battlefield)
+
 {
-  std::cout << "move Ship";
+  // Get current position
+  Position currentPos = this->getPosition();
+  int currX = currentPos.getXValuePosition();
+  int currY = currentPos.getYValuePosition();
+
+  // Define the search area (3x3 grid)
+  int startX = std::max(currX - 1, 0); // Ensure the search area stays within bounds
+  int endX = std::min(currX + 1, battlefield.getWidth() - 1);
+  int startY = std::max(currY - 1, 0);
+  int endY = std::min(currY + 1, battlefield.getHeight() - 1);
+
+  bool enemyFound = false;
+
+  // Step 1: Search for enemy ship in the 3x3 grid
+  for (int y = startY; y <= endY; ++y)
+  {
+    for (int x = startX; x <= endX; ++x)
+    {
+      if (battlefield.checkForEnemyShip(x, y))
+      {
+        // Move to the enemy ship's position (destroy it)
+        battlefield.removeShipAtPosition(x, y); // Assuming you have a remove ship method
+        this->setPosition(Position(x, y));
+        std::cout << "Moving to destroy enemy at (" << x << ", " << y << ").\n";
+        enemyFound = true;
+        return; // Exit once the ship moves
+      }
+    }
+  }
+
+  // Step 2: If no enemy ship is found, move randomly within the grid
+  if (!enemyFound)
+  {
+    // Randomly select a new position within the 3x3 grid
+    int randomX = rand() % (endX - startX + 1) + startX;
+    int randomY = rand() % (endY - startY + 1) + startY;
+
+    // Move to the random position
+    this->setPosition(Position(randomX, randomY));
+    std::cout << "Moving to random position (" << randomX << ", " << randomY << ").\n";
+  }
 }
 
 void SuperShip::shootingShip(Battlefield &battlefield)
@@ -84,10 +125,53 @@ bool SuperShip::shootAt(const Position &pos)
   return true;
 }
 
-void SuperShip::ramShip(Battlefield &baattlefield){
-  std::cout << "super ship ramming";
+void SuperShip::ramShip(Battlefield &battlefield)
+
+{
+  // Get current position
+  Position currentPos = this->getPosition();
+  int currX = currentPos.getXValuePosition();
+  int currY = currentPos.getYValuePosition();
+
+  // Define the search area (3x3 grid) to check for enemy ships nearby
+  int startX = std::max(currX - 1, 0);
+  int endX = std::min(currX + 1, battlefield.getWidth() - 1);
+  int startY = std::max(currY - 1, 0);
+  int endY = std::min(currY + 1, battlefield.getHeight() - 1);
+
+  bool enemyFound = false;
+
+  // Step 1: Search for an enemy ship in the nearby grid (3x3 area)
+  for (int y = startY; y <= endY; ++y)
+  {
+    for (int x = startX; x <= endX; ++x)
+    {
+      if (battlefield.checkForEnemyShip(x, y))
+      {
+        // If an enemy ship is found, ram it
+        std::cout << "Ramming enemy at (" << x << ", " << y << ").\n";
+
+        // Assuming the enemy ship is destroyed upon ramming
+        battlefield.removeShipAtPosition(x, y);
+
+        // Optionally, you can decrease lives of the ramming ship or implement damage
+        // For now, just print a message
+        this->setLives(this->getLives() - 1); // Decrease lives after ramming
+
+        enemyFound = true;
+        return; // Exit after ramming
+      }
+    }
+  }
+
+  // Step 2: If no enemy ship is found, print a message
+  if (!enemyFound)
+  {
+    std::cout << "No enemy ship nearby to ram.\n";
+  }
 }
 
-void SuperShip::upgradeShip(){
+void SuperShip::upgradeShip()
+{
   std::cout << "super ship unable to upgrade";
 }

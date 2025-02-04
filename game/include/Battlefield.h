@@ -17,6 +17,10 @@ public:
   Battlefield(char **grid, int width, int height);
   ~Battlefield();
 
+  // Getter methods for width and height
+  int getWidth() const;
+  int getHeight() const;
+
   void display() const; // print the battlefield
   bool checkTerrain(int x, int y) const;
   void placeIsland(int x, int y, char symbol);                   // place all the island into battlefield
@@ -27,6 +31,7 @@ public:
   void updateBattlefield();                                      // update the current state of the battlefield
   bool isValidPosition(int x, int y) const;
   bool checkForEnemyShip(int x, int y) const; // Check if a ship is at (x, y)
+  void removeShipAtPosition(int x, int y);    // Remove ship at given position
 
   /*
      on the ship shoot function check if it hits any ship using

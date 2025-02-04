@@ -2,6 +2,40 @@
 #include <ctime>
 #include <iostream>
 
+void Battlefield::removeShipAtPosition(int x, int y)
+{
+  for (int i = 0; i < totalNumberOfShips; i++)
+  {
+    if (battlefieldShip[i] != nullptr)
+    { // Ensure the pointer is valid
+      Position shipPos = battlefieldShip[i]->getPosition();
+      if (shipPos.getXValuePosition() == x && shipPos.getYValuePosition() == y)
+      {
+        std::cout << "Removing ship at (" << x << ", " << y << ").\n";
+
+        // Remove ship from battlefield (mark as nullptr)
+        delete battlefieldShip[i]; // Free memory
+        battlefieldShip[i] = nullptr;
+
+        // Remove the ship from the battlefield grid
+        grid[y][x] = '.'; // Assuming '.' represents empty water
+
+        return; // Exit after removing the ship
+      }
+    }
+  }
+}
+
+int Battlefield::getWidth() const
+{
+  return width;
+}
+
+int Battlefield::getHeight() const
+{
+  return height;
+}
+
 bool Battlefield::checkForEnemyShip(int x, int y) const
 {
   if (!isValidPosition(x, y))
