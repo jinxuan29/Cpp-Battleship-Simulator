@@ -1,6 +1,8 @@
 #pragma once
 #include "../../ships/shipType/include/Ship.h"
 #include <iostream>
+#include <iterator>
+#include <ostream>
 #include <stdexcept>
 
 template <typename T> class LinkList {
@@ -14,7 +16,7 @@ private:
 
   Node *head;
   Node *tail;
-  size_t size;
+  int size;
 
 public:
   LinkList() : head(nullptr), tail(nullptr), size(0) {}
@@ -51,13 +53,26 @@ public:
     size++;
   }
 
-  void remove(size_t position) {
+  T get(int position) const {
     if (position >= size) {
       throw std::out_of_range("Position out of range");
     }
 
     Node *current = head;
-    for (size_t i = 0; i < position; i++) {
+    for (int i = 0; i < position; i++) {
+      current = current->next;
+    }
+
+    return current->data;
+  }
+
+  void remove(int position) {
+    if (position >= size) {
+      throw std::out_of_range("Position out of range");
+    }
+
+    Node *current = head;
+    for (int i = 0; i < position; i++) {
       current = current->next;
     }
 
@@ -77,15 +92,34 @@ public:
     size--;
   }
 
+  // only works for ship class
+
   // Generic print method
   void print() const {
     Node *current = head;
     while (current) {
-      std::cout << current->data->getShipName() << " "; // Works for any type T
+      std::cout << "Symbol: " << current->data->getSymbol() << " " << std::endl;
+      std::cout << "Ship Type: " << current->data->getShipType() << std::endl;
+      std::cout << "Ship Position: ";
+      current->data->getPosition().printXYValue();
+      std::cout << std::endl;
+      std::cout << "Ship IsDestroyed:" << current->data->getIsDestroyed()
+                << std::endl;
+      std::cout << "Ship Name: " << current->data->getShipName() << std::endl;
       current = current->next;
     }
     std::cout << "\n";
   }
 
-  size_t getSize() const { return size; }
+  void runShip() {
+    Node *current = head;
+    while (current) {
+      current->data->runShip();
+      current->data->upgradeShip(); // inside do if shipDestroyCount > number...
+      current = current->next;
+    }
+    std::cout << "\n";
+  }
+
+  int getSize() const { return size; }
 };

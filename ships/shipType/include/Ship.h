@@ -26,9 +26,12 @@ public:
        const std::string &shipType, const std::string &teamName,
        bool isDestroyed);
 
+  //Ship(const Ship& ship); // copy constuctor to copy the ship  
+
   virtual ~Ship() = default;
 
   void setPosition(const Position &positiion);
+  void setPosition(int x, int y);
   Position getPosition() const;
 
   void setLives(int lives = 3);
@@ -44,7 +47,7 @@ public:
   std::string getShipName() const;
 
   void setShipType(std::string shipType);
-  std::string getShipTypes() const;
+  std::string getShipType() const;
 
   void setTeamName(std::string teamName);
   std::string getTeamName() const;

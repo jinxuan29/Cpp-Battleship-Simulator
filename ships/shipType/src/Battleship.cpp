@@ -10,12 +10,12 @@ Battleship::Battleship(const Position &position, int lives, int reviveCount,
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
            teamName, isDestroyed) {}
 
-Battleship::~Battleship() {std::cout << "Battleship Removed";}
+Battleship::~Battleship() { std::cout << "Battleship Removed"; }
 
 Battleship::Battleship(const Battleship &other) {
   this->setPosition(other.getPosition());
   this->setShipName(other.getShipName());
-  this->setShipType(other.getShipTypes());
+  this->setShipType(other.getShipType());
   this->setLives(other.getLives());
   this->setReviveCount(other.getReviveCount());
   this->setShipDestroyedCount(other.getShipDestroyedCount());
@@ -25,7 +25,7 @@ Battleship &Battleship::operator=(const Battleship &other) {
   if (this != &other) {
     this->setPosition(other.getPosition());
     this->setShipName(other.getShipName());
-    this->setShipType(other.getShipTypes());
+    this->setShipType(other.getShipType());
     this->setLives(other.getLives());
     this->setReviveCount(other.getReviveCount());
     this->setShipDestroyedCount(other.getShipDestroyedCount());

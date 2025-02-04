@@ -2,7 +2,7 @@
 #include <iostream>
 #include <string>
 
-Frigate::Frigate() : shotsFired(0), shipsDestroyed(0) {}
+Frigate::Frigate(){}
 
 Frigate::Frigate(const Position &position, int lives, int reviveCount,
                  int shipDestroyedCount, const std::string &shipName,
@@ -13,18 +13,25 @@ Frigate::Frigate(const Position &position, int lives, int reviveCount,
 
 Frigate::~Frigate() { std::cout << "Frigate Removed\n"; }
 
-Frigate::Frigate(const Frigate &other) : Ship(other) {
-    this->shotsFired = other.shotsFired;
-    this->shipsDestroyed = other.shipsDestroyed;
+Frigate::Frigate(const Frigate &other) {
+  this->setPosition(other.getPosition());
+  this->setShipName(other.getShipName());
+  this->setShipType(other.getShipTypes());
+  this->setLives(other.getLives());
+  this->setReviveCount(other.getReviveCount());
+  this->setShipDestroyedCount(other.getShipDestroyedCount());
 }
 
 Frigate &Frigate::operator=(const Frigate &other) {
-    if (this != &other) {
-        Ship::operator=(other);
-        this->shotsFired = other.shotsFired;
-        this->shipsDestroyed = other.shipsDestroyed;
-    }
-    return *this;
+  if (this != &other) {
+    this->setPosition(other.getPosition());
+    this->setShipName(other.getShipName());
+    this->setShipType(other.getShipTypes());
+    this->setLives(other.getLives());
+    this->setReviveCount(other.getReviveCount());
+    this->setShipDestroyedCount(other.getShipDestroyedCount());
+  }
+  return *this;
 }
 
 void Frigate::shootingShip() {

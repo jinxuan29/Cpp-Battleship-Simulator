@@ -13,6 +13,9 @@ Corvette::Corvette(const Position &position, int lives, int reviveCount,
                    int shipDestroyedCount, const std::string &shipName,
                    const std::string &shipType, const std::string &teamName,
                    bool isDestroyed)
+                   int shipDestroyedCount, const std::string &shipName,
+                   const std::string &shipType, const std::string &teamName,
+                   bool isDestroyed)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
            teamName, isDestroyed) {
     // Seed the random number generator
@@ -23,15 +26,25 @@ Corvette::~Corvette() {
     std::cout << "Corvette Removed\n";
 }
 
-Corvette::Corvette(const Corvette &other) : Ship(other) {
-    // Copy constructor (no additional members to copy)
+Corvette::Corvette(const Corvette &other) {
+  this->setPosition(other.getPosition());
+  this->setShipName(other.getShipName());
+  this->setShipType(other.getShipType());
+  this->setLives(other.getLives());
+  this->setReviveCount(other.getReviveCount());
+  this->setShipDestroyedCount(other.getShipDestroyedCount());
 }
 
 Corvette &Corvette::operator=(const Corvette &other) {
-    if (this != &other) {
-        Ship::operator=(other);
-    }
-    return *this;
+  if (this != &other) {
+    this->setPosition(other.getPosition());
+    this->setShipName(other.getShipName());
+    this->setShipType(other.getShipType());
+    this->setLives(other.getLives());
+    this->setReviveCount(other.getReviveCount());
+    this->setShipDestroyedCount(other.getShipDestroyedCount());
+  }
+  return *this;
 }
 
 void Corvette::shootingShip() {

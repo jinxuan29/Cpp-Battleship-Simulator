@@ -3,11 +3,17 @@
 #include "../../action/MovingShip.h"
 #include "../../action/ShootingShip.h"
 #include "../../action/SeeingShip.h"
+#include "../../../game/include/Battlefield.h"
+#include <cstdlib> // For rand ()
 
 // can move in sea and land ifk if tht rammming or moving
 class Amphibious : public MovingShip, public ShootingShip, public SeeingShip {
 
 private:
+
+    // Helper functions
+    bool shootAt(const Position &pos);
+     
 public:
   Amphibious();
 
@@ -34,4 +40,6 @@ public:
   void runShip() override;
 
   void upgradeShip() override;
+
+  
 };
