@@ -7,6 +7,8 @@
 #include "../../../game/include/Battlefield.h"
 #include <cstdlib> // For rand()
 
+class Battlefield;
+
 class SuperShip : public MovingShip,
                   public RamShip,
                   public SeeingShip,
@@ -34,15 +36,15 @@ public:
 
   SuperShip &operator=(const SuperShip &other);
 
-  void movingShip() override;
+  void movingShip(Battlefield &battlefield) override;
 
-  void shootingShip() override;
+  void shootingShip(Battlefield &battlefield) override;
 
-  void seeingShip() override;
+  void seeingShip(Battlefield &battlefield) override;
 
-  void ramShip() override;
+  void ramShip(Battlefield &battlefield) override;
 
-  void runShip() override;
+  void runShip(Battlefield &battlefield) override;
 
   void upgradeShip() override;
 };

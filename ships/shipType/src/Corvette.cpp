@@ -44,7 +44,7 @@ Corvette &Corvette::operator=(const Corvette &other) {
   return *this;
 }
 
-void Corvette::shootingShip() {
+void Corvette::shootingShip(Battlefield &battlefield) {
     Position target = getRandomTargetPosition();
     std::cout << "Corvette shooting at position: (" << target.getXValuePosition() << ", " << target.getYValuePosition() << ")\n";
 
@@ -74,8 +74,8 @@ Position Corvette::getRandomTargetPosition() const {
                     this->getPosition().getYValuePosition() + target.getYValuePosition());
 }
 
-void Corvette::runShip(){
-    shootingShip();
+void Corvette::runShip(Battlefield &battlefield){
+    shootingShip(battlefield);
 }
 
 void Corvette::upgradeShip() {

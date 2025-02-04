@@ -36,11 +36,12 @@ SuperShip &SuperShip::operator=(const SuperShip &other)
   return *this;
 }
 
-void SuperShip::movingShip()
+void SuperShip::movingShip(Battlefield &battlefield)
 {
+  std::cout << "move Ship";
 }
 
-void SuperShip::shootingShip()
+void SuperShip::shootingShip(Battlefield &battlefield)
 {
   std::cout << getShipName() << " is shooting at 3 random positions!\n";
 
@@ -68,12 +69,12 @@ void SuperShip::shootingShip()
   }
 }
 
-void SuperShip::seeingShip()
+void SuperShip::seeingShip(Battlefield &battlefield)
 {
   std::cout << getShipName() << " is seeing!\n";
 }
 
-void SuperShip::runShip()
+void SuperShip::runShip(Battlefield &battlefield)
 {
   std::cout << getShipName() << " is running!\n";
 }

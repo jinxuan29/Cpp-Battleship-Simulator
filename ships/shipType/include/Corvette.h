@@ -20,9 +20,9 @@ public:
 
     Corvette &operator=(const Corvette &other);
 
-    void shootingShip() override;
+    void shootingShip(Battlefield &battlefield) override;
 
-    void runShip() override;
+    void runShip(Battlefield &battlefield) override;
 
     void upgradeShip() override;
 

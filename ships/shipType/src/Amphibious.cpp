@@ -41,7 +41,7 @@ Amphibious &Amphibious::operator=(const Amphibious &other)
 }
 
 // Shooting Function - Random fire in 8 directions
-void Amphibious::shootingShip()
+void Amphibious::shootingShip(Battlefield &battlefield)
 {
   std::cout << getShipName() << "is shooting\n";
 
@@ -75,7 +75,6 @@ void Amphibious::shootingShip()
     target = target.DownRight(); // Down Right
     break;
   }
-  Battlefield battlefield(10, 10);
 
   // Check if new position is valid (not out of bounds)
   if (battlefield.isValidPosition(target.getXValuePosition(), target.getYValuePosition()))
@@ -92,12 +91,11 @@ void Amphibious::shootingShip()
   }
 }
 
-void Amphibious::seeingShip()
+void Amphibious::seeingShip(Battlefield &battlefield)
 {
   std::cout << getShipName() << " is scanning surroundings\n";
 
   Position current = getPosition();
-  Battlefield battlefield(10, 10); // Create an instance of Battlefield
 
   for (int dx = -1; dx <= 1; ++dx)
   {
@@ -114,7 +112,7 @@ void Amphibious::seeingShip()
   }
 }
 
-void Amphibious::movingShip()
+void Amphibious::movingShip(Battlefield &battlefield)
 {
   std::cout << getShipName() << " is moving\n";
 
@@ -137,8 +135,6 @@ void Amphibious::movingShip()
     newPos = Position(newPos.getXValuePosition() + 1, newPos.getYValuePosition()); // Move right
     break;
   }
-
-  Battlefield battlefield(10, 10);
 
   // Check if new position is valid (not out of bounds)
   if (battlefield.isValidPosition(newPos.getXValuePosition(), newPos.getYValuePosition()))
@@ -166,11 +162,11 @@ void Amphibious::movingShip()
 }
 
 // Run Function - Executes ship actions
-void Amphibious::runShip()
+void Amphibious::runShip(Battlefield &battlefield)
 {
-  seeingShip();
-  movingShip();
-  shootingShip();
+  seeingShip(battlefield);
+  movingShip(battlefield);
+  shootingShip(battlefield);
 }
 
 // Upgrade Function - Upgrade to SuperShip after 4 kills

@@ -26,13 +26,13 @@ public:
 
   Ship *upgradeShip(Ship *shipObj);
 
-  void movingShip() override;
+  void movingShip(Battlefield &battlefield) override;
 
-  void seeingShip() override;
+  void seeingShip(Battlefield &battlefield) override;
 
-  void ramShip() override;
+  void ramShip(Battlefield &battlefield) override;
   
-  void runShip() override;
+  void runShip(Battlefield &battlefield) override;
 
   void upgradeShip() override;
 };

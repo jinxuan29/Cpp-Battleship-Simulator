@@ -34,7 +34,7 @@ Frigate &Frigate::operator=(const Frigate &other) {
   return *this;
 }
 
-void Frigate::shootingShip() {
+void Frigate::shootingShip(Battlefield &battlefield) {
     Position target = getNextTargetPosition();
     std::cout << "Frigate shooting at position: (" << target.getXValuePosition() << ", " << target.getYValuePosition() << ")\n";
 
@@ -71,6 +71,6 @@ bool Frigate::shouldUpgrade() const {
     return shipsDestroyed >= UPGRADE_THRESHOLD;
 }
 
-void Frigate::runShip() {
-    shootingShip();
+void Frigate::runShip(Battlefield &battlefield) {
+    shootingShip(battlefield);
 }

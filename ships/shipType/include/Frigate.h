@@ -37,7 +37,7 @@ public:
 
     Frigate &operator=(const Frigate &other);
 
-    void shootingShip() override;
+    void shootingShip(Battlefield &battlefield) override;
 
     // Upgrade to Corvette
     void upgradeShip() override;
@@ -48,5 +48,5 @@ public:
     // Check if the frigate should upgrade to Corvette
     bool shouldUpgrade() const;
 
-    void runShip() override;
+    void runShip(Battlefield &battlefield) override;
 };

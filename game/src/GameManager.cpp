@@ -306,7 +306,7 @@ void GameManager::runGame() {
 
     battlefield.updateBattlefield();
     // TODO if ship hit another ship but that ship lives is ady 0 juz ignore it
-    shipActivityLinkList.runShip();
+    shipActivityLinkList.runShip(battlefield);
 
     // Remove destroyed ships from the link list
     removeDestroyShipFromLinkList();

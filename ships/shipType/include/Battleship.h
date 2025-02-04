@@ -25,13 +25,13 @@ public:
 
   Battleship &operator=(const Battleship &other);
 
-  void seeingShip() override;
+  void seeingShip(Battlefield &battlefield) override;
 
-  void movingShip() override;
+  void movingShip(Battlefield &battlefield) override;
 
-  void shootingShip() override;
+  void shootingShip(Battlefield &battlefield) override;
 
-  void runShip() override;
+  void runShip(Battlefield &battlefield) override;
 
   void upgradeShip() override;
 };
