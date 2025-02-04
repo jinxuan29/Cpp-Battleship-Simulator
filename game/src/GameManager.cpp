@@ -16,6 +16,7 @@ void GameManager::readFile(std::string filename) {
   std::ifstream file(filename);
   if (!file.is_open()) {
     std::cerr << "Failed to open the file: " << filename << "\n";
+    Logger().logEvent("Failed to open the file: " + filename); // Log the error
     return;
   }
 
@@ -43,17 +44,24 @@ void GameManager::readFile(std::string filename) {
     if (lines[i].find("iteration") != std::string::npos) {
       size_t pos = lines[i].find(" ");
       this->iteration = std::stoi(lines[i].substr(pos + 1));
+      Logger().logEvent("Iteration: " +
+                        std::to_string(this->iteration)); // Log the iteration
     }
     if (lines[i].find("width") != std::string::npos) {
       size_t pos = lines[i].find(" ");
       this->width = std::stoi(lines[i].substr(pos + 1));
+      Logger().logEvent("Width: " +
+                        std::to_string(this->width)); // Log the width
     }
     if (lines[i].find("height") != std::string::npos) {
       size_t pos = lines[i].find(" ");
       this->height = std::stoi(lines[i].substr(pos + 1));
+      Logger().logEvent("Height: " +
+                        std::to_string(this->height)); // Log the height
     }
     if (lines[i].find("Team") != std::string::npos) {
       this->numberOfTeams++;
+      Logger().logEvent("Team found: " + lines[i]); // Log the team information
     }
   }
 
@@ -67,6 +75,7 @@ void GameManager::readFile(std::string filename) {
   // to initialize the array, probably has better way of doing this
   std::ifstream file2(filename);
   if (!file2.is_open()) {
+    Logger().logEvent("Failed to open the file: " + filename);
     std::cerr << "Failed to open the file: " << filename << "\n";
     return;
   }
@@ -91,6 +100,8 @@ void GameManager::readFile(std::string filename) {
     }
   }
 
+  Logger().logEvent("Width: " + std::to_string(width));
+  Logger().logEvent("Height: " + std::to_string(height));
   std::cout << numberOfTeams << "\n";
   std::cout << "Width: " << width << "\n"
             << "Height: " << height << "\n";
@@ -106,6 +117,15 @@ void GameManager::readFile(std::string filename) {
     std::istringstream iss(lines[i]);
     for (int col = 0; col < width; col++) {
       iss >> this->battlefieldMap[row][col];
+    }
+  }
+
+  Logger().logEvent("Number of Teams: " + std::to_string(this->numberOfTeams));
+  for (int i = 0; i < this->numberOfTeams; ++i) {
+    Logger().logEvent("Team " + this->teamName[i] + " has " +
+                      std::to_string(this->teamNumTypeShip[i]) + " ships:");
+    for (int j = 0; j < this->teamNumTypeShip[i]; ++j) {
+      Logger().logEvent("  " + this->numberOfPerShip[i][j]);
     }
   }
 
@@ -168,15 +188,19 @@ void GameManager::addDestroyedShipIntoQueue() {
 }
 
 void GameManager::removeDestroyShipFromLinkList() {
+  Logger().logEvent("Removing destroyed ships from the link list...");
   std::cout << "Removing destroyed ships from the link list...\n";
   for (int i = shipActivityLinkList.getSize() - 1; i >= 0; i--) {
     if (shipActivityLinkList.get(i)->getIsDestroyed() ||
         shipActivityLinkList.get(i)->getLives() < 1) {
+      Logger().logEvent("Removing ship: " +
+                        shipActivityLinkList.get(i)->getShipName());
       std::cout << "Removing ship: "
                 << shipActivityLinkList.get(i)->getShipName() << "\n";
       shipActivityLinkList.remove(i);
     }
   }
+  Logger().logEvent("Removal complete");
   std::cout << "Removal complete.\n";
 }
 
@@ -186,13 +210,18 @@ void GameManager::respawnShip(Battlefield &battlefield) {
     if (!shipRespawnQueue.isEmpty()) {
       Ship *nextShip = shipRespawnQueue.peek();
       nextShip->setIsDestroyed(false);
-      std::cout << std::endl << "Ship Respawn: " << nextShip->getShipName() << std::endl;
+      Logger().logEvent("Ship Respawn: " + nextShip->getShipName());
+      std::cout << std::endl
+                << "Ship Respawn: " << nextShip->getShipName() << std::endl;
       battlefield.placeShipIntoBattlefield(nextShip);
       nextShip->setLives(nextShip->getLives() - 1);
-      std::cout << std::endl << "Ship Lives: " << nextShip->getLives() << std::endl;
+      Logger().logEvent( "Ship Lives: " + std::to_string(nextShip->getLives()));
+      std::cout << std::endl
+                << "Ship Lives: " << nextShip->getLives() << std::endl;
       shipActivityLinkList.push_back(nextShip);
       shipRespawnQueue.dequeue();
     } else {
+      Logger().logEvent("No Ship on Respawn Queue");
       std::cout << "No Ship on Respawn Queue";
       break;
     }
@@ -204,7 +233,6 @@ void GameManager::runGame() {
 
   // Initialize battlefield
   Battlefield battlefield(this->battlefieldMap, this->width, this->height);
-  battlefield.display();
   battlefield.setIslandPosition();
 
   // Initialize teams
@@ -298,6 +326,7 @@ void GameManager::runGame() {
   // game starts here
   int i = 0;
   while (i < iteration) {
+    Logger().logEvent("Iteration " + std::to_string(i + 1));
     std::cout << "Iteration:" << i + 1 << std::endl;
 
     if (i != 0) {
@@ -312,6 +341,7 @@ void GameManager::runGame() {
     removeDestroyShipFromLinkList();
 
     // Debug: Print remaining ships
+    Logger().logEvent("Iteration " + std::to_string(i + 1));
     std::cout << "\n Remaining ships after removal:\n";
     shipActivityLinkList.print();
 
@@ -319,6 +349,7 @@ void GameManager::runGame() {
 
     // take the first two ship in queue to respawn. does not work on the first
     // round
+    Logger().logEvent("Ship Queue: ");
     std::cout << std::endl << "Ship Queue:";
     shipRespawnQueue.print();
     std::cout << std::endl;
@@ -346,13 +377,17 @@ void GameManager::runGame() {
 
     std::cout << "Team " << teams[i]->getName() << " has " << remainingShips
               << " remaining ships.\n";
+    
+  Logger().logEvent("Team " + teams[i]->getName() + " has " + std::to_string(remainingShips) + " remaining ships.");
   }
 
   // Output the winning team
-  if (maxRemainingShips > 0) {
+  if (maxRemainingShips > 0) {  
+  Logger().logEvent("\n Winning Team: " + winningTeam + " with " + std::to_string(maxRemainingShips) + " remaining ships.");
     std::cout << "\n Winning Team: " << winningTeam << " with "
               << maxRemainingShips << " remaining ships.\n";
   } else {
+    Logger().logEvent("No winning team. All ships are destroyed");
     std::cout << "\n No winning team. All ships are destroyed.\n";
   }
 }

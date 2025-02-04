@@ -7,13 +7,13 @@ class Battlefield;
 
 class Ship {
 private:
-  Position position; // Position (x,y) of the ship
-  int lives; // Revive count of the ship
-  int reviveCount; // Number of time ship has been revived
-  int shipDestroyedCount; // Number of Ship destroyed 
-  std::string shipName; // Name of Ship, its configured to named in a format
-                        // "TeamName_ShipType_ID" the ID is start from 0
-                        // Example A_Battleship_0
+  Position position;      // Position (x,y) of the ship
+  int lives;              // Revive count of the ship
+  int reviveCount;        // Number of time ship has been revived
+  int shipDestroyedCount; // Number of Ship destroyed
+  std::string shipName;   // Name of Ship, its configured to named in a format
+                          // "TeamName_ShipType_ID" the ID is start from 0
+                          // Example A_Battleship_0
 
   std::string shipType; // Type of ship
   std::string teamName; // Team Name of the ship
@@ -28,9 +28,9 @@ public:
        const std::string &shipType, const std::string &teamName,
        bool isDestroyed);
 
-  //Ship(const Ship& ship); // copy constuctor to copy the ship  
-
   virtual ~Ship() = default;
+
+  Ship(Ship &&other);
 
   void setPosition(const Position &positiion);
   void setPosition(int x, int y);
@@ -60,6 +60,6 @@ public:
   void setSymbol(char symbol);
   char getSymbol() const;
 
-  virtual void runShip(Battlefield &battlefield) = 0;     // run ship set of action.
-  virtual void upgradeShip() = 0; // unsure to put it here ot battlefield class
+  virtual void runShip(Battlefield &battlefield) = 0; // run ship set of action.
+  virtual Ship *upgradeShip() = 0; // unsure to put it here ot battlefield class
 };

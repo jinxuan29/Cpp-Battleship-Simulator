@@ -37,9 +37,9 @@ Position Position::UpRight() { return Position(1, -1); }
 Position Position::DownLeft() { return Position(-1, 1); }
 Position Position::DownRight() { return Position(1, 1); }
 
-// geneerate random UP DOWN LEFT OR RIGHT POSITION using srand
+// geneerate random UP DOWN LEFT OR RIGHT POSITION using //srand
 Position Position::getRandomPositionFrom4Position() {
-  srand(0);
+  ////srand(time(0));
   int randomDirection = rand() % 4;
   switch (randomDirection) {
   case 0:
@@ -57,9 +57,9 @@ Position Position::getRandomPositionFrom4Position() {
 };
 
 // geneerate random UP DOWN LEFT RIGHT UPLEFT UPRIGHT DOWNLEFT DOWNRIGHT
-// POSITION using srand
+// POSITION using //srand
 Position Position::getRandomPositionFrom8Position() {
-  srand(time(0));
+  // srand(time(0));
   int randomDirection = rand() % 8;
   switch (randomDirection) {
   case 0:
@@ -79,8 +79,9 @@ Position Position::getRandomPositionFrom8Position() {
   case 7:
     return Position::DownLeft();
   }
-  throw std::runtime_error("Error This should no happen idk whats wrong, position "
-               "getRandomPositionFrom8Position");
+  throw std::runtime_error(
+      "Error This should no happen idk whats wrong, position "
+      "getRandomPositionFrom8Position");
 };
 
 int Position::getXValuePosition() const {

@@ -1,32 +1,31 @@
 #pragma once
 
-#include "../../action/ShootingShip.h"
 #include "../../../utility/include/Position.h"
+#include "../../action/ShootingShip.h"
 #include <string>
 
-class Corvette : public ShootingShip
-{
+class Corvette : public ShootingShip {
 public:
-    Corvette();
+  Corvette();
 
-    Corvette(const Position &position, int lives, int reviveCount,
-             int shipDestroyedCount, const std::string &shipName,
-             const std::string &shipType, const std::string &teamName,
-             bool isDestroyed);
+  Corvette(const Position &position, int lives, int reviveCount,
+           int shipDestroyedCount, const std::string &shipName,
+           const std::string &shipType, const std::string &teamName,
+           bool isDestroyed);
 
-    ~Corvette();
+  ~Corvette();
 
-    Corvette(const Corvette &other);
+  Corvette(const Corvette &other);
 
-    Corvette &operator=(const Corvette &other);
+  Corvette &operator=(const Corvette &other);
 
-    void shootingShip(Battlefield &battlefield) override;
+  void shootingShip(Battlefield &battlefield) override;
 
-    void runShip(Battlefield &battlefield) override;
+  void runShip(Battlefield &battlefield) override;
 
-    void upgradeShip() override;
+  Ship *upgradeShip() override;
 
 private:
-    // Helper function to generate a random target position
-    Position getRandomTargetPosition() const;
+  // Helper function to generate a random target position
+  Position getRandomTargetPosition() const;
 };

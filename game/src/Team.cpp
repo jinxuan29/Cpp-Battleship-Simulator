@@ -30,6 +30,16 @@ std::string Team::getName() const { return this->teamName; }
 
 void Team::displayTeamShips() const {
   for (int i = 0; i < this->numShip; i++) {
+
+    Logger logger;
+
+    logger.logEvent(teamShips[i]->getSymbol());
+    logger.logEvent(teamShips[i]->getTeamName());
+    logger.logEvent(teamShips[i]->getShipName());
+    logger.logEvent(
+        "Position: (" +
+        std::to_string(teamShips[i]->getPosition().getXValuePosition()) + ", " +
+        std::to_string(teamShips[i]->getPosition().getYValuePosition()) + ")");
     std::cout << teamShips[i]->getSymbol() << "\n";
     std::cout << teamShips[i]->getTeamName() << "\n";
     std::cout << teamShips[i]->getShipName() << "\n";

@@ -53,7 +53,7 @@ void Frigate::shootingShip(Battlefield &battlefield) {
     }
 }
 
-void Frigate::upgradeShip() {
+Ship* Frigate::upgradeShip() {
     std::cout << "Frigate has destroyed " << shipsDestroyed << " ships and is now upgrading to Corvette!\n";
     // Update ship type and behavior (e.g., random shooting)
     this->setShipType("Corvette");

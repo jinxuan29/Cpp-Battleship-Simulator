@@ -1,5 +1,6 @@
 #pragma once
 #include "../../ships/shipType/include/Ship.h"
+#include "../../utility/include/Logger.h"
 
 class Battlefield
 {
@@ -26,7 +27,7 @@ public:
   void placeShipIntoBattlefield(Ship *ship);                     // place ship (one only for respawn queue) back into battlefield
   void updateBattlefield();                                      // update the current state of the battlefield
   bool isValidPosition(int x, int y) const;
-  bool checkForEnemyShip(int x, int y) const; // Check if a ship is at (x, y)
+  bool checkForEnemyShip(int x, int y); // Check if a ship is at (x, y)
 
   /*
      on the ship shoot function check if it hits any ship using

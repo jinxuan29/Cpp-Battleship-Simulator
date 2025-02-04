@@ -41,4 +41,4 @@ void Battleship::shootingShip(Battlefield &battlefield) { std::cout << "Battlesh
 
 void Battleship::runShip(Battlefield &battlefield) { std::cout << "Battleship running"; }
 
-void Battleship::upgradeShip() { std::cout << "Battleship upgrading"; }
+Ship* Battleship::upgradeShip() { std::cout << "Battleship upgrading"; }

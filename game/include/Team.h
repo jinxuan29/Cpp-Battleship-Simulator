@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include "../../ships/shipType/include/Ship.h"
+#include "../../utility/include/Logger.h"
+
 class Team
 {
 private:

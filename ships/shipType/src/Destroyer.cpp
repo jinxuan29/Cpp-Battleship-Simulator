@@ -44,4 +44,4 @@ void Destroyer::ramShip(Battlefield &battlefield) { std::cout << "Destroyer ram"
 
 void Destroyer::runShip(Battlefield &battlefield) { std::cout << "Destroyer running"; }
 
-void Destroyer::upgradeShip() { std::cout << "Destroyer upgrading"; }
+Ship* Destroyer::upgradeShip() { std::cout << "Destroyer upgrading"; }

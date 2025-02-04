@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <stdexcept>
+#include "Logger.h"
 
 template <typename T>
 class Queue
@@ -103,6 +104,7 @@ public:
     Node *current = front;
     while (current)
     {
+      Logger().logEvent(current->data->getShipName());
       std::cout << current->data->getShipName() << " ";
       current = current->next;
     }

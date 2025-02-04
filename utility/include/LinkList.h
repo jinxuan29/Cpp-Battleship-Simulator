@@ -1,5 +1,6 @@
 #pragma once
 #include "../../ships/shipType/include/Ship.h"
+#include "Logger.h"
 #include <iostream>
 #include <iterator>
 #include <ostream>
@@ -100,6 +101,27 @@ public:
   void print() const {
     Node *current = head;
     while (current) {
+
+      Logger logger;
+      logger.logEvent("Symbol: " + current->data->getSymbol()); // Log symbol
+                                                                //
+      logger.logEvent("Ship Type: " +
+                      current->data->getShipType()); // Log ship type
+      logger.logEvent("Ship Position: ");
+      std::string position =
+          "Position: (" +
+          std::to_string(current->data->getPosition().getXValuePosition()) +
+          ", " +
+          std::to_string(current->data->getPosition().getYValuePosition()) +
+          ")";
+      logger.logEvent(position); // Log position
+
+      logger.logEvent(
+          "Ship IsDestroyed: " +
+          std::to_string(
+              current->data->getIsDestroyed())); // Log if ship is destroyed
+      logger.logEvent("Ship Name: " +
+                      current->data->getShipName()); // Log ship name
       std::cout << "Symbol: " << current->data->getSymbol() << " " << std::endl;
       std::cout << "Ship Type: " << current->data->getShipType() << std::endl;
       std::cout << "Ship Position: ";
@@ -117,7 +139,11 @@ public:
     Node *current = head;
     while (current) {
       current->data->runShip(battlefield);
-      current->data->upgradeShip(); // inside do if shipDestroyCount > number...
+      Ship *ship2 = current->data->upgradeShip();
+      if (ship2) {
+        delete current->data;
+        current->data = ship2;
+      }
       current = current->next;
     }
     std::cout << "\n";

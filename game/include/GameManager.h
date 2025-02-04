@@ -9,6 +9,7 @@
 #include "../../ships/shipType/include/Frigate.h"
 #include "../../utility/include/LinkList.h"
 #include "../../utility/include/Queue.h"
+#include "../../utility/include/Logger.h"
 #include "Battlefield.h"
 #include "Team.h"
 #include <string>

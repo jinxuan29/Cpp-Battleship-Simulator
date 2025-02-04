@@ -1,4 +1,6 @@
 #include "../include/Amphibious.h"
+#include <cstdlib>
+#include <ctime>
 #include <iostream>
 
 Amphibious::Amphibious() {};
@@ -10,10 +12,12 @@ Amphibious::Amphibious(const Position &position, int lives, int reviveCount,
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
            teamName, isDestroyed) {}
 
-Amphibious::~Amphibious() { std::cout << "Amphibious Removed"; }
+Amphibious::~Amphibious() {
+  Logger().logEvent("Amphibious Removed");
+  std::cout << "Amphibious Removed";
+}
 
-Amphibious::Amphibious(const Amphibious &other)
-{
+Amphibious::Amphibious(const Amphibious &other) {
   this->setPosition(other.getPosition());
   this->setShipName(other.getShipName());
   this->setShipType(other.getShipType());
@@ -24,10 +28,8 @@ Amphibious::Amphibious(const Amphibious &other)
   this->setIsDestroyed(other.getIsDestroyed());
 }
 
-Amphibious &Amphibious::operator=(const Amphibious &other)
-{
-  if (this != &other)
-  {
+Amphibious &Amphibious::operator=(const Amphibious &other) {
+  if (this != &other) {
     this->setPosition(other.getPosition());
     this->setShipName(other.getShipName());
     this->setShipType(other.getShipType());
@@ -41,141 +43,125 @@ Amphibious &Amphibious::operator=(const Amphibious &other)
 }
 
 // Shooting Function - Random fire in 8 directions
-void Amphibious::shootingShip(Battlefield &battlefield)
-{
-  std::cout << getShipName() << "is shooting\n";
+void Amphibious::shootingShip(Battlefield &battlefield) {
+  Logger logger;
+  std::string message = getShipName() + " is shooting";
+  logger.logEvent(message);
+  std::cout << getShipName() << " is shooting\n";
 
-  Position target = getPosition();
-  int direction = rand() % 8;
+  Position currentPos = this->getPosition();
 
-  switch (direction)
-  {
-  case 0:
-    target = target.Up(); // Up
-    break;
-  case 1:
-    target = target.Down(); // Down
-    break;
-  case 2:
-    target = target.Left(); // Left
-    break;
-  case 3:
-    target = target.Right(); // Right
-    break;
-  case 4:
-    target = target.UpLeft(); // Up Left
-    break;
-  case 5:
-    target = target.UpRight(); // Up Right
-    break;
-  case 6:
-    target = target.DownLeft(); // Down Left
-    break;
-  case 7:
-    target = target.DownRight(); // Down Right
-    break;
-  }
+  // Generate a random position within city block distance <= 5
+  Position shootingOffset;
+  do {
+    shootingOffset = Position().getRandomPositionFrom8Position();
+  } while (abs(shootingOffset.getXValuePosition()) +
+               abs(shootingOffset.getYValuePosition()) >
+           5);
 
-  // Check if new position is valid (not out of bounds)
-  if (battlefield.isValidPosition(target.getXValuePosition(), target.getYValuePosition()))
-  {
+  Position shootingTarget = currentPos + shootingOffset;
 
-    std::cout << getShipName() << " moved to ("
-              << target.getXValuePosition() << ", "
-              << target.getYValuePosition() << ")\n";
-  }
-  else
+  bool hit = battlefield.checkForEnemyShip(shootingTarget.getXValuePosition(),
+                                           shootingTarget.getYValuePosition());
 
-  {
-    std::cout << getShipName() << " missed the shot!\n";
+  // If an enemy ship is found, destroy it
+  if (hit) {
+    message = getShipName() + " has hit a ship!";
+    logger.logEvent(message);
+    std::cout << getShipName() << " has hit a ship!";
+  } else {
+    message = getShipName() + " missed at (" +
+              std::to_string(shootingTarget.getXValuePosition()) + ", " +
+              std::to_string(shootingTarget.getYValuePosition()) + ")";
+    logger.logEvent(message);
+    std::cout << getShipName() << " missed at ("
+              << shootingTarget.getXValuePosition() << ", "
+              << shootingTarget.getYValuePosition() << ")\n";
   }
 }
 
-void Amphibious::seeingShip(Battlefield &battlefield)
-{
-  std::cout << getShipName() << " is scanning surroundings\n";
+void Amphibious::seeingShip(Battlefield &battlefield) {
+  Logger logger;
+  std::string message = getShipName() + " is looking at its current position";
+  logger.logEvent(message);
+  std::cout << getShipName() << " is looking at its current position\n";
 
   Position current = getPosition();
-
-  for (int dx = -1; dx <= 1; ++dx)
-  {
-    for (int dy = -1; dy <= 1; ++dy)
-    {
-      Position checkPos = {current.getXValuePosition() + dx, current.getYValuePosition() + dy}; // Fixed access error
-
-      if (battlefield.isValidPosition(checkPos.getXValuePosition(), checkPos.getYValuePosition()))
-      {
-        std::cout << "Scanning (" << checkPos.getXValuePosition() << ", " << checkPos.getYValuePosition() << ")\n";
-        // Implement logic to detect enemy ships
-      }
-    }
-  }
+  message = getShipName() + " current position: (" +
+            std::to_string(current.getXValuePosition()) + "," +
+            std::to_string(current.getYValuePosition()) + ")";
+  logger.logEvent(message);
+  std::cout << getShipName() << " current position: ("
+            << current.getXValuePosition() << "," << current.getYValuePosition()
+            << ")";
 }
 
-void Amphibious::movingShip(Battlefield &battlefield)
-{
+void Amphibious::movingShip(Battlefield &battlefield) {
+  Logger logger;
+  std::string message = getShipName() + " is moving";
+  logger.logEvent(message);
   std::cout << getShipName() << " is moving\n";
 
-  Position newPos = getPosition();
+  Position possibleDirections[4] = {Position().Up(), Position().Down(),
+                                    Position().Left(), Position().Right()};
 
-  // Generate random movement direction (up, down, left, right)
-  int direction = rand() % 4;
-  switch (direction)
-  {
-  case 0:
-    newPos = Position(newPos.getXValuePosition(), newPos.getYValuePosition() - 1); // Move up
-    break;
-  case 1:
-    newPos = Position(newPos.getXValuePosition(), newPos.getYValuePosition() + 1); // Move down
-    break;
-  case 2:
-    newPos = Position(newPos.getXValuePosition() - 1, newPos.getYValuePosition()); // Move left
-    break;
-  case 3:
-    newPos = Position(newPos.getXValuePosition() + 1, newPos.getYValuePosition()); // Move right
-    break;
-  }
+  bool availableDirections[4] = {true, true, true, true};
+  int remainingDirections = 4;
 
-  // Check if new position is valid (not out of bounds)
-  if (battlefield.isValidPosition(newPos.getXValuePosition(), newPos.getYValuePosition()))
-  {
-    // Check if the ship is trying to move to a sea or land tile
-    if (battlefield.checkTerrain(newPos.getXValuePosition(), newPos.getYValuePosition()))
-    {
-      // It's a sea tile, so the ship can move
-      setPosition(newPos);
-      std::cout << getShipName() << " moved to (" << newPos.getXValuePosition() << ", "
-                << newPos.getYValuePosition() << ")\n";
+  while (remainingDirections > 0) {
+    int randomIndex;
+    do {
+      // srand(time(0));
+      randomIndex = rand() % 4;
+    } while (!availableDirections[randomIndex]);
+
+    Position randomDirection = possibleDirections[randomIndex];
+    Position newPosition = getPosition() + randomDirection;
+
+    if (battlefield.isValidPosition(newPosition.getXValuePosition(),
+                                    newPosition.getYValuePosition())) {
+      setPosition(newPosition);
+      message = getShipName() + " moved to (" +
+                std::to_string(newPosition.getXValuePosition()) + ", " +
+                std::to_string(newPosition.getYValuePosition()) + ")";
+      logger.logEvent(message);
+      std::cout << getShipName() << " moved to ("
+                << newPosition.getXValuePosition() << ", "
+                << newPosition.getYValuePosition() << ")\n";
+      return;
+    } else {
+      message = getShipName() + " could not move to (" +
+                std::to_string(newPosition.getXValuePosition()) + ", " +
+                std::to_string(newPosition.getYValuePosition()) +
+                "), it's either an island or out of bounds. Retrying";
+      // logger.logEvent(message);
+      std::cout << getShipName() << " could not move to ("
+                << newPosition.getXValuePosition() << ", "
+                << newPosition.getYValuePosition()
+                << "), it's either an island or out of bounds. Retrying\n";
     }
-    else
-    {
-      // It's a land tile, ship cannot move to land
-      std::cout << getShipName() << " could not move to (" << newPos.getXValuePosition() << ", "
-                << newPos.getYValuePosition() << "), land is blocked.\n";
-    }
+    availableDirections[randomIndex] = false;
+    remainingDirections--;
   }
-  else
-  {
-    // If the position is out of bounds
-    std::cout << getShipName() << " could not move (out of bounds).\n";
-  }
+  message = getShipName() + " is trapped and cannot move.";
+  logger.logEvent(message);
+  std::cout << getShipName() << " is trapped and cannot move.\n";
 }
 
-// Run Function - Executes ship actions
-void Amphibious::runShip(Battlefield &battlefield)
-{
+void Amphibious::runShip(Battlefield &battlefield) {
   seeingShip(battlefield);
   movingShip(battlefield);
   shootingShip(battlefield);
+  shootingShip(battlefield);
 }
 
-// Upgrade Function - Upgrade to SuperShip after 4 kills
-void Amphibious::upgradeShip()
-{
-  if (getShipDestroyedCount() >= 4)
-  {
+Ship *Amphibious::upgradeShip() {
+  if (getShipDestroyedCount() >= 4) {
+    std::string message = getShipName() + " has been upgraded to SuperShip!";
+    Logger().logEvent(message);
     std::cout << getShipName() << "has been upgraded to SuperShip!\n";
-    // Conver this Amphibious object to SuperShip
-    // This requires logif to replace the current instance in the simulation
+    Ship *supership = new SuperShip(std::move(*this));
+    return supership;
   }
+  return nullptr;
 }

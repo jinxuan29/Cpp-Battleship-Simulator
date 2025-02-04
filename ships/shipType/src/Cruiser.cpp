@@ -40,4 +40,4 @@ void Cruiser::ramShip(Battlefield &battlefield) { std::cout << "Cruiser ram"; }
 
 void Cruiser::runShip(Battlefield &battlefield) { std::cout << "Cruiser running"; }
 
-void Cruiser::upgradeShip() { std::cout << "Cruiser upgrading"; }
+Ship* Cruiser::upgradeShip() { std::cout << "Cruiser upgrading"; }

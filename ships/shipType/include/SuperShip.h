@@ -1,19 +1,19 @@
 #pragma once
 
+#include "../../../game/include/Battlefield.h"
 #include "../../action/MovingShip.h"
 #include "../../action/RamShip.h"
 #include "../../action/SeeingShip.h"
 #include "../../action/ShootingShip.h"
-#include "../../../game/include/Battlefield.h"
 #include <cstdlib> // For rand()
+#include <utility>
 
 class Battlefield;
 
 class SuperShip : public MovingShip,
                   public RamShip,
                   public SeeingShip,
-                  public ShootingShip
-{
+                  public ShootingShip {
 
 private:
   // Added: Helper function for shooting at a position
@@ -32,9 +32,7 @@ public:
 
   ~SuperShip();
 
-  SuperShip(const SuperShip &other);
-
-  SuperShip &operator=(const SuperShip &other);
+  SuperShip(Ship &&other);
 
   void movingShip(Battlefield &battlefield) override;
 
@@ -46,5 +44,5 @@ public:
 
   void runShip(Battlefield &battlefield) override;
 
-  void upgradeShip() override;
+  Ship *upgradeShip() override;
 };

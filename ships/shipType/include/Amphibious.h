@@ -5,6 +5,7 @@
 #include "../../action/ShootingShip.h"
 #include "../../action/SeeingShip.h"
 #include "../../../game/include/Battlefield.h"
+#include "SuperShip.h"
 #include <cstdlib> // For rand ()
 
 // can move in sea and land ifk if tht rammming or moving
@@ -40,6 +41,6 @@ public:
 
   void runShip(Battlefield &battlefield) override;
 
-  void upgradeShip() override;
+  Ship* upgradeShip() override;
 };
 #endif // AMPHIBIOUS_H

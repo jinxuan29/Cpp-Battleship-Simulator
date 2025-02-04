@@ -36,5 +36,5 @@ public:
 
   void runShip(Battlefield &battlefield) override;
 
-  void upgradeShip() override;
+  Ship *upgradeShip() override;
 };

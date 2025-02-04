@@ -12,29 +12,9 @@ SuperShip::SuperShip(const Position &position, int lives, int reviveCount,
 
 SuperShip::~SuperShip() { std::cout << "SuperShip Removed"; }
 
-SuperShip::SuperShip(const SuperShip &other)
-{
-  this->setPosition(other.getPosition());
-  this->setShipName(other.getShipName());
-  this->setShipType(other.getShipType());
-  this->setLives(other.getLives());
-  this->setReviveCount(other.getReviveCount());
-  this->setShipDestroyedCount(other.getShipDestroyedCount());
-}
-
-SuperShip &SuperShip::operator=(const SuperShip &other)
-{
-  if (this != &other)
-  {
-    this->setPosition(other.getPosition());
-    this->setShipName(other.getShipName());
-    this->setShipType(other.getShipType());
-    this->setLives(other.getLives());
-    this->setReviveCount(other.getReviveCount());
-    this->setShipDestroyedCount(other.getShipDestroyedCount());
+SuperShip::SuperShip(Ship&& other): Ship(std::move(other)){
+    setShipType("SuperShip");
   }
-  return *this;
-}
 
 void SuperShip::movingShip(Battlefield &battlefield)
 {
@@ -88,6 +68,6 @@ void SuperShip::ramShip(Battlefield &baattlefield){
   std::cout << "super ship ramming";
 }
 
-void SuperShip::upgradeShip(){
+Ship* SuperShip::upgradeShip(){
   std::cout << "super ship unable to upgrade";
 }
