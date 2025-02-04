@@ -13,9 +13,6 @@ Corvette::Corvette(const Position &position, int lives, int reviveCount,
                    int shipDestroyedCount, const std::string &shipName,
                    const std::string &shipType, const std::string &teamName,
                    bool isDestroyed)
-                   int shipDestroyedCount, const std::string &shipName,
-                   const std::string &shipType, const std::string &teamName,
-                   bool isDestroyed)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
            teamName, isDestroyed) {
     // Seed the random number generator
@@ -75,4 +72,12 @@ Position Corvette::getRandomTargetPosition() const {
     // Calculate the target position relative to the Corvette's current position
     return Position(this->getPosition().getXValuePosition() + target.getXValuePosition(), 
                     this->getPosition().getYValuePosition() + target.getYValuePosition());
+}
+
+void Corvette::runShip(){
+    shootingShip();
+}
+
+void Corvette::upgradeShip() {
+    std::cout << "Corvette is already the highest level ship!\n";
 }

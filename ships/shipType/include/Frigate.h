@@ -39,11 +39,14 @@ public:
     void shootingShip() override;
 
     // Upgrade to Corvette
-    void upgradeToCorvette();
+    void upgradeShip() override;
 
     // Get the next target position based on the shooting sequence
     Position getNextTargetPosition();
 
     // Check if the frigate should upgrade to Corvette
     bool shouldUpgrade() const;
+        
+    void runShip() override;
+
 };

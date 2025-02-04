@@ -20,6 +20,10 @@ public:
     Corvette &operator=(const Corvette &other);
 
     void shootingShip() override;
+    
+    void runShip() override;
+
+    void upgradeShip() override;
 
 private:
     // Helper function to generate a random target position

@@ -16,7 +16,7 @@ Frigate::~Frigate() { std::cout << "Frigate Removed\n"; }
 Frigate::Frigate(const Frigate &other) {
   this->setPosition(other.getPosition());
   this->setShipName(other.getShipName());
-  this->setShipType(other.getShipTypes());
+  this->setShipType(other.getShipType());
   this->setLives(other.getLives());
   this->setReviveCount(other.getReviveCount());
   this->setShipDestroyedCount(other.getShipDestroyedCount());
@@ -26,7 +26,7 @@ Frigate &Frigate::operator=(const Frigate &other) {
   if (this != &other) {
     this->setPosition(other.getPosition());
     this->setShipName(other.getShipName());
-    this->setShipType(other.getShipTypes());
+    this->setShipType(other.getShipType());
     this->setLives(other.getLives());
     this->setReviveCount(other.getReviveCount());
     this->setShipDestroyedCount(other.getShipDestroyedCount());
@@ -49,11 +49,11 @@ void Frigate::shootingShip() {
 
     // Check if the frigate should upgrade to Corvette
     if (shouldUpgrade()) {
-        upgradeToCorvette();
+        upgradeShip();
     }
 }
 
-void Frigate::upgradeToCorvette() {
+void Frigate::upgradeShip() {
     std::cout << "Frigate has destroyed " << shipsDestroyed << " ships and is now upgrading to Corvette!\n";
     // Update ship type and behavior (e.g., random shooting)
     this->setShipType("Corvette");
@@ -69,4 +69,8 @@ Position Frigate::getNextTargetPosition() {
 
 bool Frigate::shouldUpgrade() const {
     return shipsDestroyed >= UPGRADE_THRESHOLD;
+}
+
+void Frigate::runShip() {
+    shootingShip();
 }
