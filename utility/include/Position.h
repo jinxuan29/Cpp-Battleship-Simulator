@@ -1,14 +1,15 @@
 #pragma once
 
 #include <cstddef>
-class Position {
+class Position
+{
 private:
   int x;
   int y;
   bool isInitialized;
 
 public:
-  Position():isInitialized(false) {};
+  Position() : isInitialized(false) {};
 
   Position(const Position &other) : x(other.x), y(other.y), isInitialized(true) {};
 
@@ -41,7 +42,7 @@ public:
   // x and y valur of right
   Position Right();
 
-  // x and y value of down left 
+  // x and y value of down left
   Position DownLeft();
 
   // x and y valur of donw
@@ -56,7 +57,7 @@ public:
   // get random position (up down left right upright upleft downright downleft)
   Position getRandomPositionFrom8Position();
 
-  int getXValuePosition() const; 
+  int getXValuePosition() const;
 
   int getYValuePosition() const;
 

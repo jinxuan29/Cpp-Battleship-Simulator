@@ -10,11 +10,13 @@
 class SuperShip : public MovingShip,
                   public RamShip,
                   public SeeingShip,
-                  public ShootingShip {
-              
-private : 
-      // Added: Helper function for shooting at a position
-      bool shootAt(const Position &pos);
+                  public ShootingShip
+{
+
+private:
+  // Added: Helper function for shooting at a position
+  bool shootAt(const Position &pos);
+
 public:
   SuperShip();
 
