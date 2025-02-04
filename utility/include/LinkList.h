@@ -5,6 +5,8 @@
 #include <ostream>
 #include <stdexcept>
 
+class Battlefield;
+
 template <typename T> class LinkList {
 private:
   struct Node {
@@ -111,10 +113,10 @@ public:
     std::cout << "\n";
   }
 
-  void runShip() {
+  void runShip(Battlefield &battlefield) {
     Node *current = head;
     while (current) {
-      current->data->runShip();
+      current->data->runShip(battlefield);
       current->data->upgradeShip(); // inside do if shipDestroyCount > number...
       current = current->next;
     }

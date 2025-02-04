@@ -1,9 +1,13 @@
+#pragma once
 #include <iostream>
 #include <stdexcept>
 
-template <typename T> class Queue {
+template <typename T>
+class Queue
+{
 private:
-  struct Node {
+  struct Node
+  {
     T data;
     Node *next;
     Node(const T &value) : data(value), next(nullptr) {}
@@ -16,8 +20,10 @@ private:
 public:
   Queue() : front(nullptr), rear(nullptr), size(0) {}
 
-  ~Queue() {
-    while (front) {
+  ~Queue()
+  {
+    while (front)
+    {
       Node *temp = front;
       front = front->next;
       delete temp;
@@ -25,11 +31,15 @@ public:
   }
 
   // Add an element to the queue
-  void enqueue(const T &value) {
+  void enqueue(const T &value)
+  {
     Node *newNode = new Node(value);
-    if (!rear) {
+    if (!rear)
+    {
       front = rear = newNode;
-    } else {
+    }
+    else
+    {
       rear->next = newNode;
       rear = newNode;
     }
@@ -37,14 +47,17 @@ public:
   }
 
   // Remove an element from the queue
-  void dequeue() {
-    if (!front) {
+  void dequeue()
+  {
+    if (!front)
+    {
       throw std::out_of_range("Queue is empty");
     }
 
     Node *temp = front;
     front = front->next;
-    if (!front) {
+    if (!front)
+    {
       rear = nullptr;
     }
     delete temp;
@@ -52,20 +65,25 @@ public:
   }
 
   // Get the front element of the queue
-  T peek() const {
-    if (!front) {
+  T peek() const
+  {
+    if (!front)
+    {
       throw std::out_of_range("Queue is empty");
     }
     return front->data;
   }
 
   // Return the element at a specific index without removing it
-  T peekAt(int index) const {
-    if (index < 0 || index >= size) {
+  T peekAt(int index) const
+  {
+    if (index < 0 || index >= size)
+    {
       throw std::out_of_range("Index out of range");
     }
     Node *current = front;
-    for (int i = 0; i < index; i++) {
+    for (int i = 0; i < index; i++)
+    {
       current = current->next;
     }
     return current->data;
@@ -80,9 +98,11 @@ public:
   // only works for Ship class
 
   // Print the queue
-  void print() const {
+  void print() const
+  {
     Node *current = front;
-    while (current) {
+    while (current)
+    {
       std::cout << current->data->getShipName() << " ";
       current = current->next;
     }

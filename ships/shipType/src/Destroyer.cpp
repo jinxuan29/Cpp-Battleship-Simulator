@@ -34,14 +34,14 @@ Destroyer &Destroyer::operator=(const Destroyer &other) {
   return *this;
 }
 
-void Destroyer::movingShip() { std::cout << "Destroyer move"; }
+void Destroyer::movingShip(Battlefield &battlefield) { std::cout << "Destroyer move"; }
 
-void Destroyer::shootingShip() { std::cout << "Destroyer shoot"; }
+void Destroyer::shootingShip(Battlefield &battlefield) { std::cout << "Destroyer shoot"; }
 
-void Destroyer::seeingShip() { std::cout << "Destroyer see"; }
+void Destroyer::seeingShip(Battlefield &battlefield) { std::cout << "Destroyer see"; }
 
-void Destroyer::ramShip() { std::cout << "Destroyer ram"; }
+void Destroyer::ramShip(Battlefield &battlefield) { std::cout << "Destroyer ram"; }
 
-void Destroyer::runShip() { std::cout << "Destroyer running"; }
+void Destroyer::runShip(Battlefield &battlefield) { std::cout << "Destroyer running"; }
 
 void Destroyer::upgradeShip() { std::cout << "Destroyer upgrading"; }

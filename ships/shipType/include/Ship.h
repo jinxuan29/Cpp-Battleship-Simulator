@@ -3,6 +3,8 @@
 #include "../../../utility/include/Position.h"
 #include <iostream>
 
+class Battlefield;
+
 class Ship {
 private:
   Position position; // Position (x,y) of the ship
@@ -58,6 +60,6 @@ public:
   void setSymbol(char symbol);
   char getSymbol() const;
 
-  virtual void runShip() = 0;     // run ship set of action.
+  virtual void runShip(Battlefield &battlefield) = 0;     // run ship set of action.
   virtual void upgradeShip() = 0; // unsure to put it here ot battlefield class
 };

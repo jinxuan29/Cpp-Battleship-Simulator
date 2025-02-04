@@ -33,12 +33,12 @@ Battleship &Battleship::operator=(const Battleship &other) {
   return *this;
 }
 
-void Battleship::seeingShip() { std::cout << "Battleship see"; }
+void Battleship::seeingShip(Battlefield &battlefield) { std::cout << "Battleship see"; }
 
-void Battleship::movingShip() { std::cout << "BattleShip move"; }
+void Battleship::movingShip(Battlefield &battlefield) { std::cout << "BattleShip move"; }
 
-void Battleship::shootingShip() { std::cout << "Battleship shoot"; }
+void Battleship::shootingShip(Battlefield &battlefield) { std::cout << "Battleship shoot"; }
 
-void Battleship::runShip() { std::cout << "Battleship running"; }
+void Battleship::runShip(Battlefield &battlefield) { std::cout << "Battleship running"; }
 
 void Battleship::upgradeShip() { std::cout << "Battleship upgrading"; }

@@ -1,3 +1,4 @@
+#pragma once
 #include "../../ships/shipType/include//Ship.h"
 #include "../../ships/shipType/include//SuperShip.h"
 #include "../../ships/shipType/include/Amphibious.h"

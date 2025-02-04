@@ -1,7 +1,8 @@
 #pragma once
 
 #include "../shipType/include/Ship.h"
+#include "../../game/include/Battlefield.h"
 
 class MovingShip: virtual public Ship{
-    virtual void movingShip() = 0; 
+    virtual void movingShip(Battlefield &battlefield) = 0; 
 };
