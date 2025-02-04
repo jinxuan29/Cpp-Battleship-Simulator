@@ -2,8 +2,7 @@
 #include "../../ships/shipType/include/Ship.h"
 #include "../../utility/include/Logger.h"
 
-class Battlefield
-{
+class Battlefield {
 private:
   int width;              // width of the baattlefield (columns)
   int height;             // height of the battlefield (row)
@@ -18,16 +17,25 @@ public:
   Battlefield(char **grid, int width, int height);
   ~Battlefield();
 
+  // Getter methods for width and height
+  int getWidth() const;
+  int getHeight() const;
+
   void display() const; // print the battlefield
   bool checkTerrain(int x, int y) const;
-  void placeIsland(int x, int y, char symbol);                   // place all the island into battlefield
-  void setIslandPosition();                                      // set island position into battlefield
-  void printIslandPosition() const;                              // print all island position in (x,y) in battlefield
-  void placeShipArrayIntoBattlefield(Ship **ship, int numShips); // place array of ship into the battlefield
-  void placeShipIntoBattlefield(Ship *ship);                     // place ship (one only for respawn queue) back into battlefield
-  void updateBattlefield();                                      // update the current state of the battlefield
+  void placeIsland(int x, int y,
+                   char symbol); // place all the island into battlefield
+  void setIslandPosition();      // set island position into battlefield
+  void printIslandPosition()
+      const; // print all island position in (x,y) in battlefield
+  void placeShipArrayIntoBattlefield(
+      Ship **ship, int numShips); // place array of ship into the battlefield
+  void placeShipIntoBattlefield(Ship *ship); // place ship (one only for respawn
+                                             // queue) back into battlefield
+  void updateBattlefield(); // update the current state of the battlefield
   bool isValidPosition(int x, int y) const;
-  bool checkForEnemyShip(int x, int y); // Check if a ship is at (x, y)
+  bool checkForEnemyShip(int x, int y) const; // Check if a ship is at (x, y)
+  void removeShipAtPosition(int x, int y);    // Remove ship at given position
 
   /*
      on the ship shoot function check if it hits any ship using

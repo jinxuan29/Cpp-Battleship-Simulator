@@ -17,16 +17,15 @@ SuperShip::SuperShip(Ship&& other): Ship(std::move(other)){
   }
 
 void SuperShip::movingShip(Battlefield &battlefield)
+
 {
   std::cout << "move Ship";
 }
 
-void SuperShip::shootingShip(Battlefield &battlefield)
-{
+void SuperShip::shootingShip(Battlefield &battlefield) {
   std::cout << getShipName() << " is shooting at 3 random positions!\n";
 
-  for (int i = 0; i < 3; i++)
-  {
+  for (int i = 0; i < 3; i++) {
     // Generate random offsets in the range [-5,5]
     int randomX = (rand() % 11) - 5;
     int randomY = (rand() % 11) - 5;
@@ -36,33 +35,25 @@ void SuperShip::shootingShip(Battlefield &battlefield)
                        getPosition().getYValuePosition() + randomY);
 
     // Call the helper function to shoot at the target position
-    if (shootAt(targetPos))
-    {
+    if (shootAt(targetPos)) {
       std::cout << "Hit at (" << targetPos.getXValuePosition() << ", "
                 << targetPos.getYValuePosition() << ")!\n";
-    }
-    else
-    {
+    } else {
       std::cout << "Missed at (" << targetPos.getXValuePosition() << ", "
                 << targetPos.getYValuePosition() << ").\n";
     }
   }
 }
 
-void SuperShip::seeingShip(Battlefield &battlefield)
-{
+void SuperShip::seeingShip(Battlefield &battlefield) {
   std::cout << getShipName() << " is seeing!\n";
 }
 
-void SuperShip::runShip(Battlefield &battlefield)
-{
+void SuperShip::runShip(Battlefield &battlefield) {
   std::cout << getShipName() << " is running!\n";
 }
 
-bool SuperShip::shootAt(const Position &pos)
-{
-  return true;
-}
+bool SuperShip::shootAt(const Position &pos) { return true; }
 
 void SuperShip::ramShip(Battlefield &baattlefield){
   std::cout << "super ship ramming";
