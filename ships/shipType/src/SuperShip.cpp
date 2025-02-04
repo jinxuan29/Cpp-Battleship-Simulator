@@ -83,3 +83,11 @@ bool SuperShip::shootAt(const Position &pos)
 {
   return true;
 }
+
+void SuperShip::ramShip(Battlefield &baattlefield){
+  std::cout << "super ship ramming";
+}
+
+void SuperShip::upgradeShip(){
+  std::cout << "super ship unable to upgrade";
+}
