@@ -1,4 +1,5 @@
-#pragma once
+#ifndef AMPHIBIOUS_H
+#define AMPHIBIOUS_H
 
 #include "../../action/MovingShip.h"
 #include "../../action/ShootingShip.h"
@@ -41,3 +42,4 @@ public:
 
   void upgradeShip() override;
 };
+#endif // AMPHIBIOUS_H

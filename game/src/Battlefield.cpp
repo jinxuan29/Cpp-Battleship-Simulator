@@ -2,6 +2,38 @@
 #include <ctime>
 #include <iostream>
 
+bool Battlefield::checkForEnemyShip(int x, int y) const
+{
+  if (!isValidPosition(x, y))
+    return false; // Ensure within battlefield bounds
+
+  for (int i = 0; i < totalNumberOfShips; i++)
+  {
+    if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed())
+    {
+      Position pos = battlefieldShip[i]->getPosition();
+      if (pos.getXValuePosition() == x && pos.getYValuePosition() == y)
+      {
+        return true; // Ship found at (x, y), it's a hit!
+      }
+    }
+  }
+  return false; // No ship found, it's a miss
+}
+
+bool Battlefield::checkTerrain(int x, int y) const
+{
+  if (x < 0 || x >= width || y < 0 || y >= height)
+    return false; // Out of bounds check
+
+  return grid[y][x] == '0'; //  '0' means sea, '1' means land
+}
+
+bool Battlefield::isValidPosition(int x, int y) const
+{
+  return (x >= 0 && x < width && y >= 0 && y < height);
+}
+
 Battlefield::Battlefield(int width, int height) : width(width), height(height)
 {
   grid = new char *[height];
