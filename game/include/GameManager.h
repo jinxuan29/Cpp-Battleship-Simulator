@@ -1,3 +1,4 @@
+#pragma once
 #include "../../ships/shipType/include//Ship.h"
 #include "../../ships/shipType/include//SuperShip.h"
 #include "../../ships/shipType/include/Amphibious.h"
@@ -12,7 +13,8 @@
 #include "Team.h"
 #include <string>
 
-class GameManager {
+class GameManager
+{
 private:
   std::string filename;
   Ship **allShips;
@@ -20,15 +22,15 @@ private:
 
   // Battlefiled class related
   Battlefield
-      *battlefield; // pointer for battlefield, to initialize battlefield and
-                    // set the battlefield using the read file function
+      *battlefield;      // pointer for battlefield, to initialize battlefield and
+                         // set the battlefield using the read file function
   char **battlefieldMap; // 2d array of the battlefield
 
   // Team class related
   Team **teams;
-  std::string *teamName; // aray to store the teamname for each team
-  int *teamNumTypeShip; // array to store the total type of ship each teams has.
-                        // (index the same way as teamname)
+  std::string *teamName;         // aray to store the teamname for each team
+  int *teamNumTypeShip;          // array to store the total type of ship each teams has.
+                                 // (index the same way as teamname)
   std::string **numberOfPerShip; // 2d array to store number of each type of
                                  // ship each teams has .
 
@@ -51,9 +53,9 @@ public:
   void readFile(std::string filename);
   void addShipToActivityLinkList();
   // void displayShipActivityLinkList() const;
-  void runGame();                       // function to run the stimulation
-  void addDestroyedShipIntoQueue();     // add destroyed ship into queue
-  void removeDestroyShipFromLinkList(); // remove destroyed ship into link list
+  void runGame();                              // function to run the stimulation
+  void addDestroyedShipIntoQueue();            // add destroyed ship into queue
+  void removeDestroyShipFromLinkList();        // remove destroyed ship into link list
   void respawnShip(Battlefield &baattlefield); // respawn ship function (auto check for if ship are
-                      // destroyed and add back into the linked list)
+                                               // destroyed and add back into the linked list)
 };
