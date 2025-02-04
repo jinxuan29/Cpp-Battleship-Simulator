@@ -36,13 +36,13 @@ Corvette &Corvette::operator=(const Corvette &other) {
 
 void Corvette::shootingShip() {
     Position target = getRandomTargetPosition();
-    std::cout << "Corvette shooting at position: (" << target.x << ", " << target.y << ")\n";
+    std::cout << "Corvette shooting at position: (" << target.getXValuePosition() << ", " << target.getYValuePosition() << ")\n";
 
     // Simulate shooting logic (e.g., check if target is a ship, destroy it, etc.)
     // Log the action and result as part of the simulation
 }
 
-Position Corvette::getRandomTargetPosition() const {
+Position Corvette::getRandomTargetPosition() const { 
     // Define the 8 possible directions
     Position directions[8] = {
         Position(0, -1),  // up
@@ -60,5 +60,6 @@ Position Corvette::getRandomTargetPosition() const {
     Position target = directions[randomIndex];
 
     // Calculate the target position relative to the Corvette's current position
-    return Position(this->getPosition().x + target.x, this->getPosition().y + target.y);
+    return Position(this->getPosition().getXValuePosition() + target.getXValuePosition(), 
+                    this->getPosition().getYValuePosition() + target.getYValuePosition());
 }
