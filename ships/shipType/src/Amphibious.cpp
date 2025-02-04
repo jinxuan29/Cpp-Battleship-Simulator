@@ -40,47 +40,6 @@ Amphibious &Amphibious::operator=(const Amphibious &other)
   return *this;
 }
 
-// Move Function - Amphibious can move on both land and sea
-void Amphibious::movingShip()
-{
-  std::cout << getShipName() << "is moving\n";
-
-  Position newPos = getPosition();
-
-  // Generate random movement direction (up, down, left, right)
-  int direction = rand() % 4;
-  switch (direction)
-  {
-  case 0:
-    newPos = Position(newPos.getXValuePosition(), newPos.getYValuePosition() - 1);
-
-    break; // Move up
-  case 1:
-    newPos = Position(newPos.getXValuePosition(), newPos.getYValuePosition() - 1);
-
-    break; // Move down
-  case 2:
-    newPos = Position(newPos.getXValuePosition() - 1, newPos.getYValuePosition());
-
-    break; // Move left
-  case 3:
-    newPos = Position(newPos.getXValuePosition() - 1, newPos.getYValuePosition());
-
-    break; // Move right
-  }
-
-  // Check if new position is valid (not out of bounds)
-  if (Battlefield::isValidPosition(newPos))
-  {
-    setPosition(newPos);
-    std::cout << getShipName() << " moved to (" << newPos.x << ", " << newPos.y << ")\n";
-  }
-  else
-  {
-    std::cout << getShipName() << " could not move\n";
-  }
-}
-
 // Shooting Function - Random fire in 8 directions
 void Amphibious::shootingShip()
 {
@@ -92,63 +51,117 @@ void Amphibious::shootingShip()
   switch (direction)
   {
   case 0:
-    target.y -= 1;
-    break; // Up
+    target = target.Up(); // Up
+    break;
   case 1:
-    target.y += 1;
-    break; // Down
+    target = target.Down(); // Down
+    break;
   case 2:
-    target.x -= 1;
-    break; // Left
+    target = target.Left(); // Left
+    break;
   case 3:
-    target.x += 1;
-    break; // Right
+    target = target.Right(); // Right
+    break;
   case 4:
-    target.x -= 1;
-    target.y -= 1;
-    break; // Up Left
+    target = target.UpLeft(); // Up Left
+    break;
   case 5:
-    target.x += 1;
-    target.y -= 1;
-    break; // Up Right
+    target = target.UpRight(); // Up Right
+    break;
   case 6:
-    target.x -= 1;
-    target.y += 1;
-    break; // Down Left
+    target = target.DownLeft(); // Down Left
+    break;
   case 7:
-    target.x += 1;
-    target.y += 1;
-    break; // Down Right
+    target = target.DownRight(); // Down Right
+    break;
   }
+  Battlefield battlefield(10, 10);
 
-  if (Battlefield::isValidPosition(target))
+  // Check if new position is valid (not out of bounds)
+  if (battlefield.isValidPosition(target.getXValuePosition(), target.getYValuePosition()))
   {
-    std::cout << getShipName() << " fires at (" << target.x << ", " << target.y << ")\n";
-    // Implement logic to check if enemy ship is at this position and destroy it
+
+    std::cout << getShipName() << " moved to ("
+              << target.getXValuePosition() << ", "
+              << target.getYValuePosition() << ")\n";
   }
   else
+
   {
     std::cout << getShipName() << " missed the shot!\n";
   }
 }
 
-// Seeing Function - Amphibious scans a 3x3 area
 void Amphibious::seeingShip()
 {
-  std::cout << getShipName() << "is scanning surroundings\n";
+  std::cout << getShipName() << " is scanning surroundings\n";
 
-  Position current getPosition();
+  Position current = getPosition();
+  Battlefield battlefield(10, 10); // Create an instance of Battlefield
+
   for (int dx = -1; dx <= 1; ++dx)
   {
     for (int dy = -1; dy <= 1; ++dy)
     {
-      Position checkPos = {current.x + dx, current.y + dy};
-      if (Battlefield::isValidPosition(checkPos))
+      Position checkPos = {current.getXValuePosition() + dx, current.getYValuePosition() + dy}; // Fixed access error
+
+      if (battlefield.isValidPosition(checkPos.getXValuePosition(), checkPos.getYValuePosition()))
       {
-        std::cout << "Scanning (" << checkPos.x << ", " << checkPos.y << ")\n";
+        std::cout << "Scanning (" << checkPos.getXValuePosition() << ", " << checkPos.getYValuePosition() << ")\n";
         // Implement logic to detect enemy ships
       }
     }
+  }
+}
+
+void Amphibious::movingShip()
+{
+  std::cout << getShipName() << " is moving\n";
+
+  Position newPos = getPosition();
+
+  // Generate random movement direction (up, down, left, right)
+  int direction = rand() % 4;
+  switch (direction)
+  {
+  case 0:
+    newPos = Position(newPos.getXValuePosition(), newPos.getYValuePosition() - 1); // Move up
+    break;
+  case 1:
+    newPos = Position(newPos.getXValuePosition(), newPos.getYValuePosition() + 1); // Move down
+    break;
+  case 2:
+    newPos = Position(newPos.getXValuePosition() - 1, newPos.getYValuePosition()); // Move left
+    break;
+  case 3:
+    newPos = Position(newPos.getXValuePosition() + 1, newPos.getYValuePosition()); // Move right
+    break;
+  }
+
+  Battlefield battlefield(10, 10);
+
+  // Check if new position is valid (not out of bounds)
+  if (battlefield.isValidPosition(newPos.getXValuePosition(), newPos.getYValuePosition()))
+  {
+    // Check if the ship is trying to move to a sea or land tile
+    if (battlefield.checkTerrain(newPos.getXValuePosition(), newPos.getYValuePosition()))
+    {
+      // It's a sea tile, so the ship can move
+      setPosition(newPos);
+      std::cout << getShipName() << " moved to (" << newPos.getXValuePosition() << ", "
+                << newPos.getYValuePosition() << ")\n";
+    }
+    else
+    {
+      // It's a land tile, ship cannot move to land
+      std::cout << getShipName() << " could not move to (" << newPos.getXValuePosition() << ", "
+                << newPos.getYValuePosition() << "), land is blocked.\n";
+    }
+  }
+  else
+  {
+    // If the position is out of bounds
+    std::cout << getShipName() << " could not move (out of bounds).\n";
   }
 }
 
@@ -159,6 +172,7 @@ void Amphibious::runShip()
   movingShip();
   shootingShip();
 }
+
 // Upgrade Function - Upgrade to SuperShip after 4 kills
 void Amphibious::upgradeShip()
 {
