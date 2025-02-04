@@ -5,7 +5,9 @@
 #include <string>
 
 class Corvette : public ShootingShip {
+
 public:
+
   Corvette();
 
   Corvette(const Position &position, int lives, int reviveCount,
