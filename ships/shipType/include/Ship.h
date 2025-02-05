@@ -30,7 +30,7 @@ public:
 
   virtual ~Ship() = default;
 
-  //Ship(Ship &&other);
+  Ship(Ship &&other);
 
   void setPosition(const Position &positiion);
   void setPosition(int x, int y);

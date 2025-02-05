@@ -1,20 +1,17 @@
 #ifndef AMPHIBIOUS_H
 #define AMPHIBIOUS_H
 
-#include "../../action/MovingShip.h"
-#include "../../action/ShootingShip.h"
-#include "../../action/SeeingShip.h"
 #include "../../../game/include/Battlefield.h"
+#include "../../action/MovingShip.h"
+#include "../../action/SeeingShip.h"
+#include "../../action/ShootingShip.h"
 #include "SuperShip.h"
+#include <cstddef>
 #include <cstdlib> // For rand ()
 
 // can move in sea and land ifk if tht rammming or moving
-class Amphibious : public MovingShip, public ShootingShip, public SeeingShip
-{
-
-private:
-  // Helper functions
-  bool shootAt(const Position &pos);
+class Amphibious : public MovingShip, public ShootingShip, public SeeingShip {
+  Ship *upgradedShip=nullptr; 
 
 public:
   Amphibious();
@@ -33,14 +30,16 @@ public:
 
   Amphibious &operator=(const Amphibious &other);
 
+  Ship *getupgradedShip() const { return this->upgradedShip; };
+
   void movingShip(Battlefield &battlefield) override;
 
   void shootingShip(Battlefield &battlefield) override;
 
-  void seeingShip(Battlefield &battlefield) override;
+  Ship *seeingShip(Battlefield &battlefield) override;
 
   void runShip(Battlefield &battlefield) override;
 
-  Ship* upgradeShip() override;
+  Ship *upgradeShip() override;
 };
 #endif // AMPHIBIOUS_H

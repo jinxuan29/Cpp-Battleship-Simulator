@@ -5,9 +5,11 @@
 #include <string>
 
 class Corvette : public ShootingShip {
+private:
+  Ship *upgradedShip;
+  Position getRandomTargetPosition() const;
 
 public:
-
   Corvette();
 
   Corvette(const Position &position, int lives, int reviveCount,
@@ -27,7 +29,5 @@ public:
 
   Ship *upgradeShip() override;
 
-private:
-  // Helper function to generate a random target position
-  Position getRandomTargetPosition() const;
+  Ship *getupgradedShip() const { return this->upgradedShip; }
 };

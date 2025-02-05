@@ -4,18 +4,24 @@
 #include <iostream>
 #include <string>
 
-Amphibious::Amphibious() {};
+Amphibious::Amphibious(): Ship(Position(), 3, 0, 0, "", "Amphibious", "", false, '0') {};
 
 Amphibious::Amphibious(const Position &position, int lives, int reviveCount,
                        int shipDestroyedCount, const std::string &shipName,
                        const std::string &shipType, const std::string &teamName,
                        bool isDestroyed, const char symbol)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
-           teamName, isDestroyed, symbol) {}
+           teamName, isDestroyed, symbol),
+      upgradedShip(nullptr) {}
 
 Amphibious::~Amphibious() {
   Logger().logEvent("Amphibious Removed");
   std::cout << "Amphibious Removed";
+
+  if (this->upgradedShip!=nullptr) {
+    delete this->upgradedShip;
+    upgradedShip = nullptr;
+  }
 }
 
 Amphibious::Amphibious(const Amphibious &other) {
@@ -27,6 +33,7 @@ Amphibious::Amphibious(const Amphibious &other) {
   this->setShipDestroyedCount(other.getShipDestroyedCount());
   this->setTeamName(other.getTeamName());
   this->setIsDestroyed(other.getIsDestroyed());
+  this->upgradedShip = other.getupgradedShip();
 }
 
 Amphibious &Amphibious::operator=(const Amphibious &other) {
@@ -39,6 +46,7 @@ Amphibious &Amphibious::operator=(const Amphibious &other) {
     this->setShipDestroyedCount(other.getShipDestroyedCount());
     this->setTeamName(other.getTeamName());
     this->setIsDestroyed(other.getIsDestroyed());
+    this->upgradedShip = other.getupgradedShip();
   }
   return *this;
 }
@@ -62,12 +70,14 @@ void Amphibious::shootingShip(Battlefield &battlefield) {
 
   Position shootingTarget = currentPos + shootingOffset;
 
-  Ship* hit = battlefield.checkForEnemyShip(shootingTarget.getXValuePosition(),
-                                           shootingTarget.getYValuePosition());
+  Ship *hit = battlefield.checkForEnemyShip(shootingTarget.getXValuePosition(),
+                                            shootingTarget.getYValuePosition());
 
   // If an enemy ship is found, destroy it
-  if (hit) {
-    message = getShipName() + " has hit "+hit->getShipName() + " at "+ std::to_string(hit->getPosition().getXValuePosition())+ "," + std::to_string(hit->getPosition().getYValuePosition());
+  if (hit && (hit->getTeamName() != this->getTeamName())) {
+    message = getShipName() + " has hit " + hit->getShipName() + " at " +
+              std::to_string(hit->getPosition().getXValuePosition()) + "," +
+              std::to_string(hit->getPosition().getYValuePosition());
     logger.logEvent(message);
     std::cout << message;
     this->setShipDestroyedCount(getShipDestroyedCount() + 1);
@@ -83,7 +93,7 @@ void Amphibious::shootingShip(Battlefield &battlefield) {
   }
 }
 
-void Amphibious::seeingShip(Battlefield &battlefield) {
+Ship *Amphibious::seeingShip(Battlefield &battlefield) {
   Logger logger;
   std::string message = getShipName() + " is looking at its current position";
   logger.logEvent(message);
@@ -97,6 +107,7 @@ void Amphibious::seeingShip(Battlefield &battlefield) {
   std::cout << getShipName() << " current position: ("
             << current.getXValuePosition() << "," << current.getYValuePosition()
             << ")";
+  return nullptr;
 }
 
 void Amphibious::movingShip(Battlefield &battlefield) {
@@ -114,34 +125,33 @@ void Amphibious::movingShip(Battlefield &battlefield) {
   while (remainingDirections > 0) {
     int randomIndex;
     do {
-      // srand(time(0));
       randomIndex = rand() % 4;
     } while (!availableDirections[randomIndex]);
 
     Position randomDirection = possibleDirections[randomIndex];
     Position newPosition = getPosition() + randomDirection;
 
-    if (battlefield.isValidPosition(newPosition.getXValuePosition(),
-                                    newPosition.getYValuePosition())) {
+    int newX = newPosition.getXValuePosition();
+    int newY = newPosition.getYValuePosition();
+
+    if (battlefield.isValidPosition(newX, newY) &&
+        !battlefield.checkForEnemyShip(newX, newY)) {
       setPosition(newPosition);
-      message = getShipName() + " moved to (" +
-                std::to_string(newPosition.getXValuePosition()) + ", " +
-                std::to_string(newPosition.getYValuePosition()) + ")";
+      message = getShipName() + " moved to (" + std::to_string(newX) + ", " +
+                std::to_string(newY) + ")";
       logger.logEvent(message);
-      std::cout << getShipName() << " moved to ("
-                << newPosition.getXValuePosition() << ", "
-                << newPosition.getYValuePosition() << ")\n";
+      std::cout << getShipName() << " moved to (" << newX << ", " << newY
+                << ")\n";
       return;
     } else {
-      message = getShipName() + " could not move to (" +
-                std::to_string(newPosition.getXValuePosition()) + ", " +
-                std::to_string(newPosition.getYValuePosition()) +
-                "), it's either an island or out of bounds. Retrying";
-      // logger.logEvent(message);
-      std::cout << getShipName() << " could not move to ("
-                << newPosition.getXValuePosition() << ", "
-                << newPosition.getYValuePosition()
-                << "), it's either an island or out of bounds. Retrying\n";
+      message =
+          getShipName() + " could not move to (" + std::to_string(newX) + ", " +
+          std::to_string(newY) +
+          "), it's either occupied, an island, or out of bounds. Retrying";
+      logger.logEvent(message);
+      std::cout
+          << getShipName() << " could not move to (" << newX << ", " << newY
+          << "), it's either occupied, an island, or out of bounds. Retrying\n";
     }
     availableDirections[randomIndex] = false;
     remainingDirections--;
@@ -150,7 +160,6 @@ void Amphibious::movingShip(Battlefield &battlefield) {
   logger.logEvent(message);
   std::cout << getShipName() << " is trapped and cannot move.\n";
 }
-
 void Amphibious::runShip(Battlefield &battlefield) {
   seeingShip(battlefield);
   movingShip(battlefield);
@@ -159,15 +168,19 @@ void Amphibious::runShip(Battlefield &battlefield) {
 }
 
 Ship *Amphibious::upgradeShip() {
-  if (getShipDestroyedCount() >= 1) {
+  if (getShipDestroyedCount() >= 4) {
+    if (this->upgradedShip) {
+      delete this->upgradedShip;
+      upgradedShip = nullptr;
+    }
     std::string message = getShipName() + " has been upgraded to SuperShip!";
     Logger().logEvent(message);
     std::cout << getShipName() << "has been upgraded to SuperShip!\n";
-    Ship *supership =
-        new SuperShip(this->getPosition(), this->getLives(),
-                      this->getReviveCount(), 0, this->getShipName(),
-                      "SuperShip", this->getTeamName(), this->getIsDestroyed(), this->getSymbol());
-    return supership;
+    this->upgradedShip = new SuperShip(
+        this->getPosition(), this->getLives(), this->getReviveCount(), 0,
+        this->getShipName(), "SuperShip", this->getTeamName(),
+        this->getIsDestroyed(), this->getSymbol());
+    return getupgradedShip();
   }
   return nullptr;
 }

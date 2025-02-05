@@ -4,10 +4,13 @@
 #include "../../action/MovingShip.h"
 #include "../../action/SeeingShip.h"
 #include "../../action/ShootingShip.h"
+#include "../include/Destroyer.h"
 
 class Battleship : public MovingShip, public ShootingShip, public SeeingShip {
 
 private:
+  Ship *upgradedShip = nullptr;
+
 public:
   Battleship();
 
@@ -25,7 +28,9 @@ public:
 
   Battleship &operator=(const Battleship &other);
 
-  void seeingShip(Battlefield &battlefield) override;
+  Ship *getupgradedShip() const { return this->upgradedShip; };
+
+  Ship *seeingShip(Battlefield &battlefield) override;
 
   void movingShip(Battlefield &battlefield) override;
 

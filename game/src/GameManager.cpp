@@ -288,7 +288,7 @@ void GameManager::runGame() {
           ship = new Destroyer();
         } else if (shipType == "Frigate") {
           ship = new Frigate();
-        } else if (shipType == "SuperShip") {
+        } else if (shipType == "Supership") {
           ship = new SuperShip();
         } else if (shipType == "Battleship") {
           ship = new Battleship();
@@ -404,43 +404,44 @@ void GameManager::runGame() {
   }
 }
 
-  GameManager::~GameManager() {
-    if (battlefieldMap) {
-      for (int i = 0; i < height; i++) {
-        delete[] battlefieldMap[i];
-      }
-      delete[] battlefieldMap;
-      battlefieldMap = nullptr;
+GameManager::~GameManager() {
+  if (battlefieldMap) {
+    for (int i = 0; i < height; i++) {
+      delete[] battlefieldMap[i];
     }
+    delete[] battlefieldMap;
+    battlefieldMap = nullptr;
+  }
 
-    if (allShips) {
+  if (allShips) {
       delete[] allShips;
       allShips = nullptr;
     }
 
-    if (teams) {
-      for (int i = 0; i < numberOfTeams; i++) {
-        delete teams[i];
-      }
-      delete[] teams;
-      teams = nullptr;
+  if (teams) {
+    for (int i = 0; i < numberOfTeams; i++) {
+      delete teams[i];
     }
-
-    if (numberOfPerShip) {
-      for (int i = 0; i < numberOfTeams; i++) {
-        delete[] numberOfPerShip[i];
-      }
-      delete[] numberOfPerShip;
-      numberOfPerShip = nullptr;
-    }
-
-    if (teamName) {
-      delete[] teamName;
-      teamName = nullptr;
-    }
-
-    if (teamNumTypeShip) {
-      delete[] teamNumTypeShip;
-      teamNumTypeShip = nullptr;
-    }
+    delete[] teams;
+    teams = nullptr;
   }
+
+  if (numberOfPerShip) {
+    for (int i = 0; i < numberOfTeams; i++) {
+      delete[] numberOfPerShip[i];
+    }
+    delete[] numberOfPerShip;
+    numberOfPerShip = nullptr;
+  }
+
+  if (teamName) {
+    delete[] teamName;
+    teamName = nullptr;
+  }
+
+  if (teamNumTypeShip) {
+    delete[] teamNumTypeShip;
+    teamNumTypeShip = nullptr;
+  }
+
+}

@@ -2,30 +2,6 @@
 #include <ctime>
 #include <iostream>
 
-void Battlefield::removeShipAtPosition(int x, int y)
-{
-  for (int i = 0; i < totalNumberOfShips; i++)
-  {
-    if (battlefieldShip[i] != nullptr)
-    { // Ensure the pointer is valid
-      Position shipPos = battlefieldShip[i]->getPosition();
-      if (shipPos.getXValuePosition() == x && shipPos.getYValuePosition() == y)
-      {
-        std::cout << "Removing ship at (" << x << ", " << y << ").\n";
-
-        // Remove ship from battlefield (mark as nullptr)
-        delete battlefieldShip[i]; // Free memory
-        battlefieldShip[i] = nullptr;
-
-        // Remove the ship from the battlefield grid
-        grid[y][x] = '.'; // Assuming '.' represents empty water
-
-        return; // Exit after removing the ship
-      }
-    }
-  }
-}
-
 int Battlefield::getWidth() const
 {
   return width;
@@ -36,6 +12,37 @@ int Battlefield::getHeight() const
   return height;
 }
 
+//Ship* Battlefield::randomlyPickAShipFromBattlefield(){
+//  int activeShipsCount = 0;
+//  for (int i = 0; i < totalNumberOfShips; i++) {
+//    if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
+//      activeShipsCount++;
+//    }
+//  }
+//
+//  if (activeShipsCount == 0) {
+//    std::cout << "No active ships available on the battlefield.\n";
+//    return nullptr;  // No ships to pick from
+//  }
+//
+//  // Pick a random index among active ships
+//  int targetIndex = rand() % activeShipsCount;
+//  int currentIndex = 0;
+//
+//  // Iterate to find the target ship
+//  for (int i = 0; i < totalNumberOfShips; i++) {
+//    if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
+//      if (currentIndex == targetIndex) {
+//        std::cout << "Randomly picked ship: " << battlefieldShip[i]->getShipName() << "\n";
+//        Logger().logEvent("Randomly picked ship: " + battlefieldShip[i]->getShipName());
+//        return battlefieldShip[i];
+//      }
+//      currentIndex++;
+//    }
+//  }
+//  return nullptr;
+//}
+
 Ship* Battlefield::checkForEnemyShip(int x, int y) {
   if (!isValidPosition(x, y))
     return nullptr; // Ensure within battlefield bounds
@@ -43,12 +50,7 @@ Ship* Battlefield::checkForEnemyShip(int x, int y) {
   for (int i = 0; i < totalNumberOfShips; i++) {
     if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
       Position pos = battlefieldShip[i]->getPosition();
-      if (pos.getXValuePosition() == x && pos.getYValuePosition() == y) {
-        battlefieldShip[i]->setIsDestroyed(true);
-        std::string logmessage =
-            battlefieldShip[i]->getShipName() + " has been hit!";
-        Logger().logEvent(logmessage);
-        std::cout << battlefieldShip[i]->getShipName() << " has been hit!";
+      if (pos.getXValuePosition() == x && pos.getYValuePosition() == y) { 
         return battlefieldShip[i];
       }
     }
@@ -56,11 +58,11 @@ Ship* Battlefield::checkForEnemyShip(int x, int y) {
   return nullptr;
 }
 
-bool Battlefield::checkTerrain(int x, int y) const {
-  if (x < 0 || x >= width || y < 0 || y >= height)
-    return false; // Out of bounds check
-
-  return grid[y][x] == '0'; //  '0' means sea, '1' means land
+bool Battlefield::isIsland(int x, int y) const {
+  if (grid[y][x] == '0') {
+    return false;
+  }
+  return true; //  '0' means sea, '1' means land
 }
 
 bool Battlefield::isValidPosition(int x, int y) const {

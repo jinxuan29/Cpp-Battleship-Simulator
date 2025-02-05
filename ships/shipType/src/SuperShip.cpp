@@ -45,8 +45,9 @@ void SuperShip::shootingShip(Battlefield &battlefield) {
   }
 }
 
-void SuperShip::seeingShip(Battlefield &battlefield) {
+Ship* SuperShip::seeingShip(Battlefield &battlefield) {
   std::cout << getShipName() << " is seeing!\n";
+  return nullptr;
 }
 
 void SuperShip::runShip(Battlefield &battlefield) {
@@ -60,6 +61,5 @@ void SuperShip::ramShip(Battlefield &baattlefield){
 }
 
 Ship* SuperShip::upgradeShip(){
-  std::cout << "super ship unable to upgrade";
   return nullptr;
 }

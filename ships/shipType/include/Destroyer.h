@@ -5,10 +5,10 @@
 #include "../../action/SeeingShip.h"
 #include "../../action/ShootingShip.h"
 
-class Destroyer : public MovingShip,
-                  public RamShip,
-                  public SeeingShip,
-                  public ShootingShip {
+class Destroyer : public RamShip, public SeeingShip, public ShootingShip {
+private:
+  Ship *upgradedShip;
+
 public:
   Destroyer();
 
@@ -26,15 +26,17 @@ public:
 
   Destroyer &operator=(const Destroyer &other);
 
-  void movingShip(Battlefield &battlefield) override;
-
   void shootingShip(Battlefield &battlefield) override;
 
-  void seeingShip(Battlefield &battlefield) override;
+  Ship *seeingShip(Battlefield &battlefield) override;
 
   void ramShip(Battlefield &battlefield) override;
 
   void runShip(Battlefield &battlefield) override;
 
   Ship *upgradeShip() override;
+
+  Ship* getupgradedShip(){
+    return upgradedShip;
+  }
 };

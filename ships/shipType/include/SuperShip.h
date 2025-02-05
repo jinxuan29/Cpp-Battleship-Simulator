@@ -18,6 +18,7 @@ class SuperShip : public MovingShip,
 private:
   // Added: Helper function for shooting at a position
   bool shootAt(const Position &pos);
+  Ship* upgradedShip;
 
 public:
   SuperShip();
@@ -38,11 +39,14 @@ public:
 
   void shootingShip(Battlefield &battlefield) override;
 
-  void seeingShip(Battlefield &battlefield) override;
+  Ship *seeingShip(Battlefield &battlefield) override;
 
   void ramShip(Battlefield &battlefield) override;
 
   void runShip(Battlefield &battlefield) override;
 
   Ship *upgradeShip() override;
+
+  
+  Ship *getupgradedShip() const { return this->upgradedShip; };
 };

@@ -6,6 +6,7 @@
 #include <iterator>
 #include <ostream>
 #include <stdexcept>
+#include <utility>
 
 class Battlefield;
 
@@ -26,13 +27,13 @@ public:
   LinkList() : head(nullptr), tail(nullptr), size(0) {}
 
   ~LinkList() {
-    while (head) {
-      Node *temp = head;
-      head = head->next;
-      delete temp;
+    Node *current = head;
+    while (current != nullptr) {
+      Node *next = current->next;
+      delete current;       // Delete the Node
+      current = next;
     }
   }
-
   void push_back(const T &value) {
     Node *newNode = new Node(value);
     if (!head) {
@@ -131,8 +132,7 @@ public:
       std::cout << "Ship IsDestroyed:" << current->data->getIsDestroyed()
                 << std::endl;
       std::cout << "Ship Name: " << current->data->getShipName() << std::endl;
-      std::cout << "Ship Lives: "
-                << current->data->getLives() << std::endl;
+      std::cout << "Ship Lives: " << current->data->getLives() << std::endl;
       current = current->next;
     }
     std::cout << "\n";

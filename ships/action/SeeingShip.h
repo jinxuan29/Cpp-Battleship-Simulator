@@ -4,5 +4,5 @@
 #include "../../game/include/Battlefield.h"
 
 class SeeingShip: virtual public Ship{
-    virtual void seeingShip(Battlefield &battlefield) = 0; 
+    virtual Ship* seeingShip(Battlefield &battlefield) = 0; 
 };

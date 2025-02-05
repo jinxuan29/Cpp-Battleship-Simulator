@@ -1,10 +1,12 @@
 #pragma once
 
-#include "../../action/MovingShip.h"
 #include "../../action/RamShip.h"
 #include "../../action/SeeingShip.h"
+#include "../include/Destroyer.h"
 
-class Cruiser : public MovingShip, public RamShip, public SeeingShip {
+class Cruiser : public RamShip, public SeeingShip {
+private:
+  Ship *upgradedShip = nullptr;
 
 public:
   Cruiser();
@@ -23,15 +25,13 @@ public:
 
   Cruiser &operator=(const Cruiser &other);
 
-  Ship *upgradeShip(Ship *shipObj);
-
-  void movingShip(Battlefield &battlefield) override;
-
-  void seeingShip(Battlefield &battlefield) override;
+  Ship *seeingShip(Battlefield &battlefield) override;
 
   void ramShip(Battlefield &battlefield) override;
 
   void runShip(Battlefield &battlefield) override;
 
   Ship *upgradeShip() override;
+
+  Ship *getupgradedShip() const { return this->upgradedShip; };
 };

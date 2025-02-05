@@ -22,7 +22,7 @@ public:
   int getHeight() const;
 
   void display() const; // print the battlefield
-  bool checkTerrain(int x, int y) const;
+  bool isIsland(int x, int y) const; // check if position is an island
   void placeIsland(int x, int y,
                    char symbol); // place all the island into battlefield
   void setIslandPosition();      // set island position into battlefield
@@ -35,7 +35,7 @@ public:
   void updateBattlefield(); // update the current state of the battlefield
   bool isValidPosition(int x, int y) const;
   Ship* checkForEnemyShip(int x, int y); // Check if a ship is at (x, y)
-  void removeShipAtPosition(int x, int y);    // Remove ship at given position
+  //Ship* randomlyPickAShipFromBattlefield(); // randomly get a ship from the battlefield
 
   /*
      on the ship shoot function check if it hits any ship using
