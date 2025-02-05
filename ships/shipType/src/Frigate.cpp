@@ -7,9 +7,9 @@ Frigate::Frigate() : shotsFired(0), shipsDestroyed(0) {}
 Frigate::Frigate(const Position &position, int lives, int reviveCount,
                  int shipDestroyedCount, const std::string &shipName,
                  const std::string &shipType, const std::string &teamName,
-                 bool isDestroyed)
+                 bool isDestroyed,const char symbol)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
-           teamName, isDestroyed), shotsFired(0), shipsDestroyed(0) {}
+           teamName, isDestroyed,symbol) {}
 
 Frigate::~Frigate() { 
     std::cout << "Frigate Removed\n"; 

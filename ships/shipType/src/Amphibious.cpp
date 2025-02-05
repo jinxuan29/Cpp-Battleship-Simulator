@@ -8,9 +8,9 @@ Amphibious::Amphibious() {};
 Amphibious::Amphibious(const Position &position, int lives, int reviveCount,
                        int shipDestroyedCount, const std::string &shipName,
                        const std::string &shipType, const std::string &teamName,
-                       bool isDestroyed)
+                       bool isDestroyed, const char symbol)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
-           teamName, isDestroyed) {}
+           teamName, isDestroyed, symbol) {}
 
 Amphibious::~Amphibious() {
   Logger().logEvent("Amphibious Removed");
@@ -164,7 +164,7 @@ Ship *Amphibious::upgradeShip() {
     Ship *supership =
         new SuperShip(this->getPosition(), this->getLives(),
                       this->getReviveCount(), 0, this->getShipName(),
-                      "SuperShip", this->getTeamName(), this->getIsDestroyed());
+                      "SuperShip", this->getTeamName(), this->getIsDestroyed(), this->getSymbol());
     return supership;
   }
   return nullptr;

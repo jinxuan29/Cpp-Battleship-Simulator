@@ -6,9 +6,9 @@ Cruiser::Cruiser() {};
 Cruiser::Cruiser(const Position &position, int lives, int reviveCount,
                  int shipDestroyedCount, const std::string &shipName,
                  const std::string &shipType, const std::string &teamName,
-                 bool isDestroyed)
+                 bool isDestroyed, const char symbol)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
-           teamName, isDestroyed) {}
+           teamName, isDestroyed, symbol) {}
 
 Cruiser::~Cruiser() { std::cout << "Cruiser Removed"; }
 

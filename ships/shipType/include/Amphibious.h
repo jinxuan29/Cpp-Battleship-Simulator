@@ -25,7 +25,7 @@ public:
   Amphibious(const Position &position, int lives, int reviveCount,
              int shipDestroyedCount, const std::string &shipName,
              const std::string &shipType, const std::string &teamName,
-             bool isDestroyed);
+             bool isDestroyed, const char symbol);
 
   ~Amphibious();
 

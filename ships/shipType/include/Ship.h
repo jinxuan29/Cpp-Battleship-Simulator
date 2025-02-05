@@ -26,7 +26,7 @@ public:
   Ship(const Position &position, int lives, int reviveCount,
        int shipDestroyedCount, const std::string &shipName,
        const std::string &shipType, const std::string &teamName,
-       bool isDestroyed);
+       bool isDestroyed, char symbol);
 
   virtual ~Ship() = default;
 

@@ -140,9 +140,7 @@ public:
     while (current) {
       current->data->runShip(battlefield);
       Ship *ship2 = current->data->upgradeShip();
-      std::cout << "Ship upgrading";
       if (ship2) {
-        delete current->data;
         current->data = ship2;
       }
       current = current->next;
