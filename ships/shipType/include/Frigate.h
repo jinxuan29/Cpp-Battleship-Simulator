@@ -2,18 +2,22 @@
 
 #include "../../../utility/include/Position.h"
 #include "../../action/ShootingShip.h"
+#include "../include/Corvette.h"
 #include <iostream>
 
 class Frigate : public ShootingShip {
 private:
   Ship* upgradedShip;
-  int shotsFired;     // Tracks the number of shots fired
-  int shipsDestroyed; // Tracks the number of ships destroyed
-  static const int UPGRADE_THRESHOLD =
-      3; // Ships destroyed required for upgrade
+  int firingDirectionIndex;
+public:
+  Frigate();
 
-  // Shooting sequence: up, up-right, right, down-right, down, down-left,
-  // left,up-left
+  Frigate(const Position &position, int lives, int reviveCount,
+          int shipDestroyedCount, const std::string &shipName,
+          const std::string &shipType, const std::string &teamName,
+          bool isDestroyed, const char symbol);
+
+  ~Frigate();
 
   Position shootingSequence[8] = {
       Position(0, -1), // up
@@ -26,15 +30,7 @@ private:
       Position(-1, -1) // up-left
   };
 
-public:
-  Frigate();
 
-  Frigate(const Position &position, int lives, int reviveCount,
-          int shipDestroyedCount, const std::string &shipName,
-          const std::string &shipType, const std::string &teamName,
-          bool isDestroyed, const char symbol);
-
-  ~Frigate();
 
   Frigate(const Frigate &other);
 

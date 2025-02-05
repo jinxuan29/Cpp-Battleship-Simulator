@@ -5,10 +5,6 @@
 #include <string>
 
 class Corvette : public ShootingShip {
-private:
-  Ship *upgradedShip;
-  Position getRandomTargetPosition() const;
-
 public:
   Corvette();
 
@@ -29,5 +25,4 @@ public:
 
   Ship *upgradeShip() override;
 
-  Ship *getupgradedShip() const { return this->upgradedShip; }
 };

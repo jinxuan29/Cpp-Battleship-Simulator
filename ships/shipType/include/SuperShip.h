@@ -10,15 +10,7 @@
 
 class Battlefield;
 
-class SuperShip : public MovingShip,
-                  public RamShip,
-                  public SeeingShip,
-                  public ShootingShip {
-
-private:
-  // Added: Helper function for shooting at a position
-  bool shootAt(const Position &pos);
-  Ship* upgradedShip;
+class SuperShip : public RamShip, public SeeingShip, public ShootingShip {
 
 public:
   SuperShip();
@@ -35,8 +27,6 @@ public:
 
   SuperShip(Ship &&other);
 
-  void movingShip(Battlefield &battlefield) override;
-
   void shootingShip(Battlefield &battlefield) override;
 
   Ship *seeingShip(Battlefield &battlefield) override;
@@ -46,7 +36,4 @@ public:
   void runShip(Battlefield &battlefield) override;
 
   Ship *upgradeShip() override;
-
-  
-  Ship *getupgradedShip() const { return this->upgradedShip; };
 };
