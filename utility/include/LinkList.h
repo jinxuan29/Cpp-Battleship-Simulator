@@ -1,6 +1,7 @@
 #pragma once
 #include "../../ships/shipType/include/Ship.h"
 #include "Logger.h"
+#include "Queue.h"
 #include <iostream>
 #include <iterator>
 #include <ostream>
@@ -130,6 +131,8 @@ public:
       std::cout << "Ship IsDestroyed:" << current->data->getIsDestroyed()
                 << std::endl;
       std::cout << "Ship Name: " << current->data->getShipName() << std::endl;
+      std::cout << "Ship Lives: "
+                << current->data->getLives() << std::endl;
       current = current->next;
     }
     std::cout << "\n";

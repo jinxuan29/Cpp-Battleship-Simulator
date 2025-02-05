@@ -215,7 +215,7 @@ void GameManager::respawnShip(Battlefield &battlefield) {
                 << "Ship Respawn: " << nextShip->getShipName() << std::endl;
       battlefield.placeShipIntoBattlefield(nextShip);
       nextShip->setLives(nextShip->getLives() - 1);
-      Logger().logEvent( "Ship Lives: " + std::to_string(nextShip->getLives()));
+      Logger().logEvent("Ship Lives: " + std::to_string(nextShip->getLives()));
       std::cout << std::endl
                 << "Ship Lives: " << nextShip->getLives() << std::endl;
       shipActivityLinkList.push_back(nextShip);
@@ -337,6 +337,8 @@ void GameManager::runGame() {
     // TODO if ship hit another ship but that ship lives is ady 0 juz ignore it
     shipActivityLinkList.runShip(battlefield);
 
+    addDestroyedShipIntoQueue();
+
     // Remove destroyed ships from the link list
     removeDestroyShipFromLinkList();
 
@@ -344,8 +346,6 @@ void GameManager::runGame() {
     Logger().logEvent("Iteration " + std::to_string(i + 1));
     std::cout << "\n Remaining ships after removal:\n";
     shipActivityLinkList.print();
-
-    addDestroyedShipIntoQueue();
 
     // take the first two ship in queue to respawn. does not work on the first
     // round
@@ -358,6 +358,7 @@ void GameManager::runGame() {
   }
   int maxRemainingShips = -1;
   std::string winningTeam;
+  bool isDraw = false;
   for (int i = 0; i < numberOfTeams; i++) {
     int remainingShips = 0;
     Ship **teamShips = teams[i]->getTeamShipsArray();
@@ -373,62 +374,73 @@ void GameManager::runGame() {
     if (remainingShips > maxRemainingShips) {
       maxRemainingShips = remainingShips;
       winningTeam = teams[i]->getName();
+      isDraw = false; // Reset draw flag if we find a new max
+    } else if (remainingShips == maxRemainingShips && maxRemainingShips != -1) {
+      isDraw = true; // Set draw flag if there's a tie
     }
 
     std::cout << "Team " << teams[i]->getName() << " has " << remainingShips
               << " remaining ships.\n";
-    
-  Logger().logEvent("Team " + teams[i]->getName() + " has " + std::to_string(remainingShips) + " remaining ships.");
+    Logger().logEvent("Team " + teams[i]->getName() + " has " +
+                      std::to_string(remainingShips) + " remaining ships.");
   }
-
   // Output the winning team
-  if (maxRemainingShips > 0) {  
-  Logger().logEvent("\n Winning Team: " + winningTeam + " with " + std::to_string(maxRemainingShips) + " remaining ships.");
-    std::cout << "\n Winning Team: " << winningTeam << " with "
-              << maxRemainingShips << " remaining ships.\n";
+  if (maxRemainingShips > 0) {
+    if (isDraw) {
+      Logger().logEvent(
+          "No winning team. Both teams have the same amount of ships.");
+      std::cout
+          << "\nNo winning team. Both teams have the same amount of ships.\n";
+    } else {
+      Logger().logEvent("\nWinning Team: " + winningTeam + " with " +
+                        std::to_string(maxRemainingShips) +
+                        " remaining ships.");
+      std::cout << "\nWinning Team: " << winningTeam << " with "
+                << maxRemainingShips << " remaining ships.\n";
+    }
   } else {
-    Logger().logEvent("No winning team. All ships are destroyed");
-    std::cout << "\n No winning team. All ships are destroyed.\n";
+    Logger().logEvent("No winning team. All ships are destroyed.");
+    std::cout << "\nNo winning team. All ships are destroyed.\n";
   }
 }
 
-GameManager::~GameManager() {
-  if (battlefieldMap) {
-    for (int i = 0; i < height; i++) {
-      delete[] battlefieldMap[i];
-    }
-    delete[] battlefieldMap;
-    battlefieldMap = nullptr;
-  }
-
-  if (allShips) {
-        delete[] allShips;
-        allShips = nullptr;
+  GameManager::~GameManager() {
+    if (battlefieldMap) {
+      for (int i = 0; i < height; i++) {
+        delete[] battlefieldMap[i];
+      }
+      delete[] battlefieldMap;
+      battlefieldMap = nullptr;
     }
 
-  if (teams) {
-    for (int i = 0; i < numberOfTeams; i++) {
-      delete teams[i];
+    if (allShips) {
+      delete[] allShips;
+      allShips = nullptr;
     }
-    delete[] teams;
-    teams = nullptr;
-  }
 
-  if (numberOfPerShip) {
-    for (int i = 0; i < numberOfTeams; i++) {
-      delete[] numberOfPerShip[i];
+    if (teams) {
+      for (int i = 0; i < numberOfTeams; i++) {
+        delete teams[i];
+      }
+      delete[] teams;
+      teams = nullptr;
     }
-    delete[] numberOfPerShip;
-    numberOfPerShip = nullptr;
-  }
 
-  if (teamName) {
-    delete[] teamName;
-    teamName = nullptr;
-  }
+    if (numberOfPerShip) {
+      for (int i = 0; i < numberOfTeams; i++) {
+        delete[] numberOfPerShip[i];
+      }
+      delete[] numberOfPerShip;
+      numberOfPerShip = nullptr;
+    }
 
-  if (teamNumTypeShip) {
-    delete[] teamNumTypeShip;
-    teamNumTypeShip = nullptr;
+    if (teamName) {
+      delete[] teamName;
+      teamName = nullptr;
+    }
+
+    if (teamNumTypeShip) {
+      delete[] teamNumTypeShip;
+      teamNumTypeShip = nullptr;
+    }
   }
-}

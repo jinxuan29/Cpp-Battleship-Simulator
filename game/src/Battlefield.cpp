@@ -36,9 +36,9 @@ int Battlefield::getHeight() const
   return height;
 }
 
-bool Battlefield::checkForEnemyShip(int x, int y) {
+Ship* Battlefield::checkForEnemyShip(int x, int y) {
   if (!isValidPosition(x, y))
-    return false; // Ensure within battlefield bounds
+    return nullptr; // Ensure within battlefield bounds
 
   for (int i = 0; i < totalNumberOfShips; i++) {
     if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
@@ -49,11 +49,11 @@ bool Battlefield::checkForEnemyShip(int x, int y) {
             battlefieldShip[i]->getShipName() + " has been hit!";
         Logger().logEvent(logmessage);
         std::cout << battlefieldShip[i]->getShipName() << " has been hit!";
-        return true;
+        return battlefieldShip[i];
       }
     }
   }
-  return false;
+  return nullptr;
 }
 
 bool Battlefield::checkTerrain(int x, int y) const {

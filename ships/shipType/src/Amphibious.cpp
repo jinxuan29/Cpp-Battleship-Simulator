@@ -2,6 +2,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <iostream>
+#include <string>
 
 Amphibious::Amphibious() {};
 
@@ -61,15 +62,16 @@ void Amphibious::shootingShip(Battlefield &battlefield) {
 
   Position shootingTarget = currentPos + shootingOffset;
 
-  bool hit = battlefield.checkForEnemyShip(shootingTarget.getXValuePosition(),
+  Ship* hit = battlefield.checkForEnemyShip(shootingTarget.getXValuePosition(),
                                            shootingTarget.getYValuePosition());
 
   // If an enemy ship is found, destroy it
   if (hit) {
-    message = getShipName() + " has hit a ship!";
+    message = getShipName() + " has hit "+hit->getShipName() + " at "+ std::to_string(hit->getPosition().getXValuePosition())+ "," + std::to_string(hit->getPosition().getYValuePosition());
     logger.logEvent(message);
-    std::cout << getShipName() << " has hit a ship!";
+    std::cout << message;
     this->setShipDestroyedCount(getShipDestroyedCount() + 1);
+    hit->setIsDestroyed(true);
   } else {
     message = getShipName() + " missed at (" +
               std::to_string(shootingTarget.getXValuePosition()) + ", " +

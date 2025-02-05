@@ -34,7 +34,7 @@ public:
                                              // queue) back into battlefield
   void updateBattlefield(); // update the current state of the battlefield
   bool isValidPosition(int x, int y) const;
-  bool checkForEnemyShip(int x, int y); // Check if a ship is at (x, y)
+  Ship* checkForEnemyShip(int x, int y); // Check if a ship is at (x, y)
   void removeShipAtPosition(int x, int y);    // Remove ship at given position
 
   /*
