@@ -87,6 +87,8 @@ Ship *SuperShip::seeingShip(Battlefield &battlefield) {
 
 void SuperShip::runShip(Battlefield &battlefield) {
   std::cout << getShipName() << " is running!\n";
+  ramShip(battlefield);
+  shootingShip(battlefield);
 }
 
 void SuperShip::ramShip(Battlefield &battlefield) {
