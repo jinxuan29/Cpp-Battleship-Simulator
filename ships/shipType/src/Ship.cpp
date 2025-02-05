@@ -13,11 +13,11 @@ Ship::Ship(const Position &position, int lives, int reviveCount,
       shipDestroyedCount(shipDestroyedCount), shipName(shipName),
       shipType(shipType), teamName(teamName), isDestroyed(isDestroyed) {}
 
-Ship::Ship(Ship &&other)
-    : position(other.position), lives(other.lives),
-      reviveCount(other.reviveCount), shipDestroyedCount(0),
-      shipName(other.shipName), shipType(other.shipType),
-      teamName(other.teamName), isDestroyed(other.isDestroyed) {};
+//Ship::Ship(Ship &&other)
+//    : position(other.position), lives(other.lives),
+//      reviveCount(other.reviveCount), shipDestroyedCount(0),
+//      shipName(other.shipName), shipType(other.shipType),
+//      teamName(other.teamName), isDestroyed(other.isDestroyed) {};
 
 Position Ship::getPosition() const { return position; }
 void Ship::setPosition(const Position &position) { this->position = position; }

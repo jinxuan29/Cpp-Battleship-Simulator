@@ -69,6 +69,7 @@ void Amphibious::shootingShip(Battlefield &battlefield) {
     message = getShipName() + " has hit a ship!";
     logger.logEvent(message);
     std::cout << getShipName() << " has hit a ship!";
+    this->setShipDestroyedCount(getShipDestroyedCount() + 1);
   } else {
     message = getShipName() + " missed at (" +
               std::to_string(shootingTarget.getXValuePosition()) + ", " +
@@ -156,11 +157,14 @@ void Amphibious::runShip(Battlefield &battlefield) {
 }
 
 Ship *Amphibious::upgradeShip() {
-  if (getShipDestroyedCount() >= 4) {
+  if (getShipDestroyedCount() >= 1) {
     std::string message = getShipName() + " has been upgraded to SuperShip!";
     Logger().logEvent(message);
     std::cout << getShipName() << "has been upgraded to SuperShip!\n";
-    Ship *supership = new SuperShip(std::move(*this));
+    Ship *supership =
+        new SuperShip(this->getPosition(), this->getLives(),
+                      this->getReviveCount(), 0, this->getShipName(),
+                      "SuperShip", this->getTeamName(), this->getIsDestroyed());
     return supership;
   }
   return nullptr;

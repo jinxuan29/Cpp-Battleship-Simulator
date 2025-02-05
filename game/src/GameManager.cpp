@@ -402,9 +402,9 @@ GameManager::~GameManager() {
   }
 
   if (allShips) {
-    delete[] allShips;
-    allShips = nullptr;
-  }
+        delete[] allShips;
+        allShips = nullptr;
+    }
 
   if (teams) {
     for (int i = 0; i < numberOfTeams; i++) {
