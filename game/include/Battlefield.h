@@ -35,6 +35,9 @@ public:
   void updateBattlefield(); // update the current state of the battlefield
   bool isValidPosition(int x, int y) const;
   Ship* checkForEnemyShip(int x, int y); // Check if a ship is at (x, y)
+  bool replaceShipInBattlefieldShipByName(std::string& shipname, Ship* ship);
+  Ship** getBattlefieldShipArray();
+  void printBattlefieldShipArray();
   //Ship* randomlyPickAShipFromBattlefield(); // randomly get a ship from the battlefield
 
   /*

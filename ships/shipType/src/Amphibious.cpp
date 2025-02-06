@@ -4,24 +4,24 @@
 #include <iostream>
 #include <string>
 
-Amphibious::Amphibious(): Ship(Position(), 3, 0, 0, "", "Amphibious", "", false, '0') {};
+Amphibious::Amphibious()
+    : Ship(Position(), 3, 0, 0, "", "Amphibious", "", false, '0') {};
 
 Amphibious::Amphibious(const Position &position, int lives, int reviveCount,
                        int shipDestroyedCount, const std::string &shipName,
                        const std::string &shipType, const std::string &teamName,
                        bool isDestroyed, const char symbol)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
-           teamName, isDestroyed, symbol),
-      upgradedShip(nullptr) {}
+           teamName, isDestroyed, symbol) {}
 
 Amphibious::~Amphibious() {
-  Logger().logEvent("Amphibious Removed");
+  //Logger().logEvent("Amphibious Removed");
   std::cout << "Amphibious Removed";
 
-  if (this->upgradedShip!=nullptr) {
-    delete this->upgradedShip;
-    upgradedShip = nullptr;
-  }
+  ///if (this->upgradedShip != nullptr) {
+  ///  delete this->upgradedShip;
+  ///  upgradedShip = nullptr;
+  ///}
 }
 
 Amphibious::Amphibious(const Amphibious &other) {
@@ -168,19 +168,28 @@ void Amphibious::runShip(Battlefield &battlefield) {
 }
 
 Ship *Amphibious::upgradeShip() {
-  if (getShipDestroyedCount() >= 4) {
-    if (this->upgradedShip) {
-      delete this->upgradedShip;
-      upgradedShip = nullptr;
-    }
+
+  if (getShipDestroyedCount() >= 3) {
     std::string message = getShipName() + " has been upgraded to SuperShip!";
     Logger().logEvent(message);
-    std::cout << getShipName() << "has been upgraded to SuperShip!\n";
-    this->upgradedShip = new SuperShip(
-        this->getPosition(), this->getLives(), this->getReviveCount(), 0,
-        this->getShipName(), "SuperShip", this->getTeamName(),
-        this->getIsDestroyed(), this->getSymbol());
-    return upgradedShip;
+    std::cout << getShipName() << " has been upgraded to SuperShip!\n";
+
+    try {
+      this->upgradedShip = new SuperShip(
+          this->getPosition(), this->getLives(), this->getReviveCount(), 0,
+          this->getShipName(), "SuperShip", this->getTeamName(),
+          this->getIsDestroyed(), this->getSymbol());
+
+      return this->upgradedShip;
+    } catch (const std::bad_alloc &) {
+      std::cerr << "Memory allocation failed for SuperShip\n";
+      this->upgradedShip = nullptr;
+    } catch (...) {
+      std::cerr << "Unknown error occurred while upgrading to SuperShip\n";
+      this->upgradedShip = nullptr;
+    }
   }
+
+  std::cout << "null == no upgrade \n";
   return nullptr;
 }

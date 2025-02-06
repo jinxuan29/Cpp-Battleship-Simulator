@@ -4,10 +4,9 @@
 #include "../../action/RamShip.h"
 #include "../../action/SeeingShip.h"
 #include "../../action/ShootingShip.h"
+#include "../include/SuperShip.h"
 
 class Destroyer : public RamShip, public SeeingShip, public ShootingShip {
-private:
-  Ship *upgradedShip;
 
 public:
   Destroyer();

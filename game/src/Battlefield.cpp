@@ -337,6 +337,34 @@ void Battlefield::placeShipIntoBattlefield(Ship *ship) {
     delete[] emptyPositions[i];
   }
   delete[] emptyPositions;
+  emptyPositions = nullptr;
+}
+
+
+bool Battlefield::replaceShipInBattlefieldShipByName(std::string& shipName, Ship* newShip) {
+    for (int i = 0; i < totalNumberOfShips; i++) {
+        if (battlefieldShip[i] && battlefieldShip[i]->getShipName() == shipName) {
+          std::cout << "SHIP LOCATED AT " << i << "\n";
+            battlefieldShip[i] = newShip; 
+            return true;  
+        }
+    }
+    return false;  
+}
+
+Ship** Battlefield::getBattlefieldShipArray(){
+  return this->battlefieldShip;
+}
+
+void Battlefield::printBattlefieldShipArray(){
+std::cout << "Battlefield Ships:\n";
+    for (int i = 0; i < totalNumberOfShips; ++i) {
+        if (this->battlefieldShip[i]) {
+            std::cout <<battlefieldShip[i]->getShipName() << "\n" << battlefieldShip[i]->getShipType() << "\n";
+        } else {
+            std::cout << "Null ship at index " << i << "\n";
+        }
+    }
 }
 
 Battlefield::~Battlefield() {

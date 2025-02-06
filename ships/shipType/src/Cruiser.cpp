@@ -8,14 +8,14 @@ Cruiser::Cruiser(const Position &position, int lives, int reviveCount,
                  const std::string &shipType, const std::string &teamName,
                  bool isDestroyed, const char symbol)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
-           teamName, isDestroyed, symbol), upgradedShip(nullptr){}
+           teamName, isDestroyed, symbol){}
 
 Cruiser::~Cruiser() {
   std::cout << "Cruiser Removed";
-  if (this->upgradedShip!=nullptr) {
-    delete upgradedShip;
-    upgradedShip = nullptr;
-  }
+  //if (this->upgradedShip!=nullptr) {
+  //  delete upgradedShip;
+  //  upgradedShip = nullptr;
+  //}
 }
 
 Cruiser::Cruiser(const Cruiser &other) {
@@ -133,10 +133,10 @@ void Cruiser::runShip(Battlefield &battlefield) {
 
 Ship *Cruiser::upgradeShip() {
   if (getShipDestroyedCount() >= 3) {
-    if (this->upgradedShip) {
-      delete upgradedShip;
-      upgradedShip = nullptr;
-    }
+    //if (this->upgradedShip) {
+    //  delete upgradedShip;
+    //  upgradedShip = nullptr;
+    //}
     std::string message = getShipName() + " has been upgraded to Destroyer!";
     Logger().logEvent(message);
     std::cout << getShipName() << "has been upgraded to Destroyer!\n";

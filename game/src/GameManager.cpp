@@ -335,7 +335,7 @@ void GameManager::runGame() {
 
     battlefield.updateBattlefield();
     // TODO if ship hit another ship but that ship lives is ady 0 juz ignore it
-    shipActivityLinkList.runShip(battlefield);
+    shipActivityLinkList.RunShip(battlefield);
 
     addDestroyedShipIntoQueue();
 
@@ -366,7 +366,7 @@ void GameManager::runGame() {
 
     // Count remaining ships for the team
     for (int j = 0; j < numShips; j++) {
-      if (teamShips[j] && !teamShips[j]->getIsDestroyed()) {
+      if (teamShips[j] && !teamShips[j]->getIsDestroyed() && !(teamShips[j]->getLives()<1)) {
         remainingShips++;
       }
     }

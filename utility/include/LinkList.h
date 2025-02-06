@@ -1,22 +1,22 @@
 #pragma once
+#include "../../game/include/Battlefield.h"
 #include "../../ships/shipType/include/Ship.h"
 #include "Logger.h"
 #include "Queue.h"
+#include <cstddef>
 #include <iostream>
 #include <iterator>
 #include <ostream>
 #include <stdexcept>
 #include <utility>
 
-class Battlefield;
-
 template <typename T> class LinkList {
 private:
   struct Node {
-    T data;
+    Ship *data;
     Node *prev;
     Node *next;
-    Node(const T &value) : data(value), prev(nullptr), next(nullptr) {}
+    Node(Ship *value) : prev(nullptr), next(nullptr) { data = value; }
   };
 
   Node *head;
@@ -30,7 +30,7 @@ public:
     Node *current = head;
     while (current != nullptr) {
       Node *next = current->next;
-      delete current;       // Delete the Node
+      delete current; // Delete the Node
       current = next;
     }
   }
@@ -138,17 +138,76 @@ public:
     std::cout << "\n";
   }
 
-  void runShip(Battlefield &battlefield) {
+  void RunShip(Battlefield &battlefield) {
+    if (head == nullptr) {
+      std::cout << "Error: RunShip called on an empty linked list!\n";
+      return;
+    }
+
     Node *current = head;
     while (current) {
-      current->data->runShip(battlefield);
-      Ship *ship2 = current->data->upgradeShip();
-      if (ship2) {
-        delete current->data;
-        current->data = ship2;
+
+      if (!current) {
+        std::cout << "Error: Encountered null current pointer\n";
+        break;
       }
+
+      if(current->data->getLives() <1 && current->data->getIsDestroyed()){
+        std::cout << "Error: Ship Broken and Shold not be in link list";
+        break;
+      }
+
+      std::cout << current->data << "----1------\n";
+
+      if (current->data) {
+        try {
+          current->data->runShip(battlefield);
+          std::cout << "----1.5------\n";
+
+          Ship *ship2 = current->data->upgradeShip();
+
+          if (ship2 != nullptr) {
+            std::string currentShipName = current->data->getShipName();
+             battlefield.printBattlefieldShipArray();
+             std::cout << "\n after \n";
+            bool check = battlefield.replaceShipInBattlefieldShipByName(
+                currentShipName, ship2);
+            battlefield.printBattlefieldShipArray();
+            // battlefield.updateBattlefield();
+
+            if (check) {
+              std::cout << "-------------1.7----------- \n";
+              battlefield.printBattlefieldShipArray();
+              if (current->data != ship2 && current->data != nullptr) {
+                std::cout << "-------------1.8----------- \n";
+                battlefield.printBattlefieldShipArray();
+                delete current->data;
+                std::cout << "after delete data \n";
+               battlefield.printBattlefieldShipArray();
+              }
+              std::cout << "-------------1.9----------- \n";
+               battlefield.printBattlefieldShipArray();
+              current->data = ship2;
+
+              std::cout << "Successfully upgraded " << currentShipName << " to "
+                        << ship2->getShipName() << "\n";
+            } else {
+              std::cout << "Failed to replace ship in battlefield: "
+                        << currentShipName << "\n";
+            }
+          }
+        } catch (const std::exception &e) {
+          std::cout << "Error during ship operations: " << e.what() << "\n";
+        }
+      } else {
+        std::cout
+            << "Warning: Encountered a null data pointer in the linked list.\n";
+      }
+
       current = current->next;
+      std::cout << "----2------\n";
     }
+
     std::cout << "\n";
   }
 

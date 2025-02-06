@@ -20,6 +20,9 @@ private:
   bool isDestroyed;     // Check if ship is destroyed
   char symbol;          // Symbol of ship displayed in battlefield
 
+protected:
+  Ship *upgradedShip = nullptr;
+
 public:
   Ship();
 

@@ -3,7 +3,8 @@
 
 Ship::Ship()
     : position(Position()), lives(3), reviveCount(0), shipDestroyedCount(0),
-      shipName(""), shipType(""), teamName(""), isDestroyed(false), symbol('0') {}
+      shipName(""), shipType(""), teamName(""), isDestroyed(false),
+      symbol('0') {}
 
 Ship::Ship(const Position &position, int lives, int reviveCount,
            int shipDestroyedCount, const std::string &shipName,
@@ -11,7 +12,8 @@ Ship::Ship(const Position &position, int lives, int reviveCount,
            bool isDestroyed, char symbol)
     : position(position), lives(lives), reviveCount(reviveCount),
       shipDestroyedCount(shipDestroyedCount), shipName(shipName),
-      shipType(shipType), teamName(teamName), isDestroyed(isDestroyed), symbol(symbol) {}
+      shipType(shipType), teamName(teamName), isDestroyed(isDestroyed),
+      symbol(symbol) {}
 
 Ship::Ship(Ship &&other)
     : position(other.position), lives(other.lives),

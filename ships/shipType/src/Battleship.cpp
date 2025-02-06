@@ -10,14 +10,14 @@ Battleship::Battleship(const Position &position, int lives, int reviveCount,
                        const std::string &shipType, const std::string &teamName,
                        bool isDestroyed, const char symbol)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
-           teamName, isDestroyed, symbol),upgradedShip(nullptr){};
+           teamName, isDestroyed, symbol){};
 
 Battleship::~Battleship() {
   std::cout << "Battleship Removed";
-  if (this->upgradedShip!=nullptr) {
-    delete upgradedShip;
-    upgradedShip = nullptr;
-  }
+  //if (this->upgradedShip!=nullptr) {
+  //  delete upgradedShip;
+  //  upgradedShip = nullptr;
+  //}
 }
 
 Battleship::Battleship(const Battleship &other) {
@@ -167,13 +167,10 @@ Ship *Battleship::upgradeShip() {
     std::string message = getShipName() + " has been upgraded to Destroyer!";
     Logger().logEvent(message);
     Logger().logEvent(message);
-    if (upgradedShip) {
-      delete upgradedShip;
-      upgradedShip = nullptr;
-
-      delete upgradedShip;
-      upgradedShip = nullptr;
-    }
+    //if (upgradedShip) {
+    //  delete upgradedShip;
+    //  upgradedShip = nullptr;
+    //}
     std::cout << getShipName() << "has been upgraded to Destroyer!\n";
     this->upgradedShip = new Destroyer(
         Position(this->getPosition().getXValuePosition(),

@@ -5,4 +5,7 @@
 
 class SeeingShip: virtual public Ship{
     virtual Ship* seeingShip(Battlefield &battlefield) = 0; 
+ public:
+    
+    virtual ~SeeingShip() =default;
 };

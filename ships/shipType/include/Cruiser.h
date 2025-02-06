@@ -5,8 +5,6 @@
 #include "../include/Destroyer.h"
 
 class Cruiser : public RamShip, public SeeingShip {
-private:
-  Ship *upgradedShip = nullptr;
 
 public:
   Cruiser();

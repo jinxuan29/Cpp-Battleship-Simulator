@@ -5,4 +5,7 @@
 
 class ShootingShip: virtual public Ship{
     virtual void shootingShip(Battlefield &battlefield) = 0; 
+ public:
+    
+    virtual ~ShootingShip()= default;
 };

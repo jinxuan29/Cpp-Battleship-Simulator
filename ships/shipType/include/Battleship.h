@@ -8,8 +8,7 @@
 
 class Battleship : public MovingShip, public ShootingShip, public SeeingShip {
 
-private:
-  Ship *upgradedShip = nullptr;
+
 
 public:
   Battleship();

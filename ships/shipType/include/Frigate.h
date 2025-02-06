@@ -7,7 +7,6 @@
 
 class Frigate : public ShootingShip {
 private:
-  Ship* upgradedShip;
   int firingDirectionIndex;
 public:
   Frigate();
@@ -38,16 +37,8 @@ public:
 
   void shootingShip(Battlefield &battlefield) override;
 
-  // Upgrade to Corvette
   Ship *upgradeShip() override;
 
-  // Get the next target position based on the shooting sequence
-
-  Position getNextTargetPosition();
-
-  // Check if the frigate should upgrade to Corvette
-
-  bool shouldUpgrade() const;
 
   void runShip(Battlefield &battlefield) override;
  

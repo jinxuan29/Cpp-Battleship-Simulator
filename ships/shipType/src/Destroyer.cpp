@@ -10,15 +10,14 @@ Destroyer::Destroyer(const Position &position, int lives, int reviveCount,
                      const std::string &shipType, const std::string &teamName,
                      bool isDestroyed, const char symbol)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
-           teamName, isDestroyed, symbol),
-      upgradedShip(nullptr) {}
+           teamName, isDestroyed, symbol){}
 
 Destroyer::~Destroyer() {
   std::cout << "Destroyer Removed";
-  if (upgradedShip) {
-    delete upgradedShip;
-    upgradedShip = nullptr;
-  }
+  //if (upgradedShip) {
+  //  delete upgradedShip;
+  //  upgradedShip = nullptr;
+  //}
 }
 
 Destroyer::Destroyer(const Destroyer &other) {
@@ -177,12 +176,12 @@ void Destroyer::runShip(Battlefield &battlefield) {
 
 Ship *Destroyer::upgradeShip() {
   if (getShipDestroyedCount() >= 3) {  
-    std::string message = getShipName() + " has been upgraded to Destroyer!";
+    std::string message = getShipName() + " has been upgraded to SuperShip!";
     Logger().logEvent(message);
-    std::cout << getShipName() << "has been upgraded to Destroyer!\n";
-    this->upgradedShip = new Destroyer(
+    std::cout << getShipName() << "has been upgraded to SuperShip!\n";
+    this->upgradedShip = new SuperShip(
         this->getPosition(), this->getLives(), this->getReviveCount(), 0,
-        this->getShipName(), "Destroyer", this->getTeamName(),
+        this->getShipName(), "SuperShip", this->getTeamName(),
         this->getIsDestroyed(), this->getSymbol());
     return upgradedShip;
   }

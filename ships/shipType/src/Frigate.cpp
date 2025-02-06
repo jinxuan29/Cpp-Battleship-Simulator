@@ -2,21 +2,20 @@
 #include <cstdlib> // For rand()
 #include <iostream>
 
-Frigate::Frigate() : upgradedShip(nullptr), firingDirectionIndex(0) {}
+Frigate::Frigate() : firingDirectionIndex(0) {}
 
 Frigate::Frigate(const Position &position, int lives, int reviveCount,
                  int shipDestroyedCount, const std::string &shipName,
                  const std::string &shipType, const std::string &teamName,
                  bool isDestroyed, const char symbol)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
-           teamName, isDestroyed, symbol),
-      upgradedShip(nullptr), firingDirectionIndex(0) {}
+           teamName, isDestroyed, symbol), firingDirectionIndex(0) {}
 
 Frigate::~Frigate() {
-  if (this->upgradedShip != nullptr) {
-    delete upgradedShip;
-    upgradedShip = nullptr;
-  }
+  //if (this->upgradedShip != nullptr) {
+  //  delete upgradedShip;
+  //  upgradedShip = nullptr;
+  //}
   std::cout << "Frigate Removed\n";
 }
 
@@ -86,7 +85,7 @@ Ship *Frigate::upgradeShip() {
 
     upgradedShip =
         new Corvette(getPosition(), getLives(), getReviveCount(),
-                     getShipDestroyedCount(), getShipName(), "Corvette",
+                     0, getShipName(), "Corvette",
                      getTeamName(), getIsDestroyed(), getSymbol());
 
     return upgradedShip;

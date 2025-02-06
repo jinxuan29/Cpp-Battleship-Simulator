@@ -10,9 +10,8 @@
 #include <cstdlib> // For rand ()
 
 // can move in sea and land ifk if tht rammming or moving
-class Amphibious : public MovingShip, public ShootingShip, public SeeingShip {
-  Ship *upgradedShip=nullptr; 
-
+class Amphibious : public MovingShip, public ShootingShip, public SeeingShip { 
+private:
 public:
   Amphibious();
 
