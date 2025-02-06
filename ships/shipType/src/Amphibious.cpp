@@ -180,7 +180,7 @@ Ship *Amphibious::upgradeShip() {
         this->getPosition(), this->getLives(), this->getReviveCount(), 0,
         this->getShipName(), "SuperShip", this->getTeamName(),
         this->getIsDestroyed(), this->getSymbol());
-    return getupgradedShip();
+    return upgradedShip;
   }
   return nullptr;
 }

@@ -144,7 +144,7 @@ Ship *Cruiser::upgradeShip() {
         this->getPosition(), this->getLives(), this->getReviveCount(), 0,
         this->getShipName(), "Destroyer", this->getTeamName(),
         this->getIsDestroyed(), this->getSymbol());
-    return getupgradedShip();
+    return upgradedShip;
   }
   return nullptr;
 }
