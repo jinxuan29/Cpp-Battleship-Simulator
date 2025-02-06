@@ -144,6 +144,7 @@ public:
       current->data->runShip(battlefield);
       Ship *ship2 = current->data->upgradeShip();
       if (ship2) {
+        delete current->data;
         current->data = ship2;
       }
       current = current->next;
