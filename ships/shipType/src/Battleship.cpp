@@ -1,5 +1,4 @@
 #include "../include/Battleship.h"
-#include <cstddef>
 #include <iostream>
 
 Battleship::Battleship()

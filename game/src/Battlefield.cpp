@@ -197,7 +197,7 @@ void Battlefield::updateBattlefield() {
   display();
 }
 
-void Battlefield::placeShipArrayIntoBattlefield(Ship **ships, int numShips) {
+void Battlefield::placeShipIntoBattlefield(Ship **ships, int numShips) {
   ////srand(time(0));
   this->totalNumberOfShips = numShips;
   // add ship into the battlefield ship array

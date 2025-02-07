@@ -28,7 +28,7 @@ public:
   void setIslandPosition();      // set island position into battlefield
   void printIslandPosition()
       const; // print all island position in (x,y) in battlefield
-  void placeShipArrayIntoBattlefield(
+  void placeShipIntoBattlefield(
       Ship **ship, int numShips); // place array of ship into the battlefield
   void placeShipIntoBattlefield(Ship *ship); // place ship (one only for respawn
                                              // queue) back into battlefield

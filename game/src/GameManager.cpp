@@ -320,7 +320,7 @@ void GameManager::runGame() {
   }
 
   // Place all ships into the battlefield
-  battlefield.placeShipArrayIntoBattlefield(allShips, totalShipsAcrossAllTeams);
+  battlefield.placeShipIntoBattlefield(allShips, totalShipsAcrossAllTeams);
   battlefield.display();
 
   for (int i = 0; i < numberOfTeams; i++) {

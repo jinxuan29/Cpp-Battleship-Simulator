@@ -157,12 +157,12 @@ public:
         break;
       }
 
-      std::cout << current->data << "----1------\n";
+      // std::cout << current->data << "----1------\n";
 
       if (current->data) {
         try {
           current->data->runShip(battlefield);
-          std::cout << "----1.5------\n";
+          //       std::cout << "----1.5------\n";
 
           Ship *ship2 = current->data->upgradeShip();
 
@@ -176,24 +176,24 @@ public:
             bool check1 = false;
             for (int i = 0; i < arraySize; ++i) {
               if (shipArray[i]->getShipName() == current->data->getShipName()) {
-                shipArray[i] = ship2; 
-                std::cout << "Updated shipArray[" << i << "] to "
-                          << ship2->getShipName() << "\n";
+                shipArray[i] = ship2;
+                // std::cout << "Updated shipArray[" << i << "] to "
+                //           << ship2->getShipName() << "\n";
                 check1 = true;
                 break;
               }
             };
             if (check && check1) {
-              std::cout << "-------------1.7----------- \n";
+              // std::cout << "-------------1.7----------- \n";
               battlefield.printBattlefieldShipArray();
               if (current->data != ship2 && current->data != nullptr) {
-                std::cout << "-------------1.8----------- \n";
+                // std::cout << "-------------1.8----------- \n";
                 battlefield.printBattlefieldShipArray();
                 delete current->data;
-                std::cout << "after delete data \n";
+                // std::cout << "after delete data \n";
                 battlefield.printBattlefieldShipArray();
               }
-              std::cout << "-------------1.9----------- \n";
+              // std::cout << "-------------1.9----------- \n";
               battlefield.printBattlefieldShipArray();
               current->data = ship2;
 
@@ -213,7 +213,7 @@ public:
       }
 
       current = current->next;
-      std::cout << "----2------\n";
+      //     std::cout << "----2------\n";
     }
 
     std::cout << "\n";
