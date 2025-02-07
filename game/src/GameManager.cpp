@@ -167,6 +167,7 @@ void GameManager::addShipToActivityLinkList() {
 //                                 // despite being template
 // }
 
+//all ships pointer had to change as well since its pointing to null
 void GameManager::addDestroyedShipIntoQueue() {
   for (int i = 0; i < totalShipsAcrossAllTeams; i++) {
     if (allShips[i] && allShips[i]->getIsDestroyed() &&
@@ -303,6 +304,11 @@ void GameManager::runGame() {
           ship->setTeamName(teamName[i]);
           ship->setShipName(shipName);
           ship->setShipType(shipType);
+          ship->setShipDestroyedCount(0);
+          ship->setReviveCount(0);
+          ship->setLives(3);
+          ship->setIsDestroyed(false);
+          
           teams[i]->addShip(ship);      // Add the ship to the team
           allShips[shipIndex++] = ship; // Add the ship to the combined array
         } else {
@@ -335,7 +341,7 @@ void GameManager::runGame() {
 
     battlefield.updateBattlefield();
     // TODO if ship hit another ship but that ship lives is ady 0 juz ignore it
-    shipActivityLinkList.RunShip(battlefield);
+    shipActivityLinkList.RunShip(battlefield,this->allShips,this->totalShipsAcrossAllTeams);
 
     addDestroyedShipIntoQueue();
 

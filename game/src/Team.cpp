@@ -57,7 +57,7 @@ Team::~Team() {
   if (teamShips) {
     for (int i = 0; i < numShip; i++) {
       if (teamShips[i]) {
-        delete teamShips[i];
+        //delete teamShips[i];
         teamShips[i] = nullptr;
       }
     }

@@ -59,10 +59,10 @@ Ship* Battlefield::checkForEnemyShip(int x, int y) {
 }
 
 bool Battlefield::isIsland(int x, int y) const {
-  if (grid[y][x] == '0') {
-    return false;
+  if (grid[y][x] == '1') {
+    return true;
   }
-  return true; //  '0' means sea, '1' means land
+  return false;
 }
 
 bool Battlefield::isValidPosition(int x, int y) const {

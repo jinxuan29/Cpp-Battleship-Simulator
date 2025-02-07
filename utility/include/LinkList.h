@@ -138,7 +138,7 @@ public:
     std::cout << "\n";
   }
 
-  void RunShip(Battlefield &battlefield) {
+  void RunShip(Battlefield &battlefield, Ship **&shipArray, int arraySize) {
     if (head == nullptr) {
       std::cout << "Error: RunShip called on an empty linked list!\n";
       return;
@@ -152,7 +152,7 @@ public:
         break;
       }
 
-      if(current->data->getLives() <1 && current->data->getIsDestroyed()){
+      if (current->data->getLives() < 1 && current->data->getIsDestroyed()) {
         std::cout << "Error: Ship Broken and Shold not be in link list";
         break;
       }
@@ -168,14 +168,22 @@ public:
 
           if (ship2 != nullptr) {
             std::string currentShipName = current->data->getShipName();
-             battlefield.printBattlefieldShipArray();
-             std::cout << "\n after \n";
+            battlefield.printBattlefieldShipArray();
+            std::cout << "\n after \n";
             bool check = battlefield.replaceShipInBattlefieldShipByName(
                 currentShipName, ship2);
             battlefield.printBattlefieldShipArray();
-            // battlefield.updateBattlefield();
-
-            if (check) {
+            bool check1 = false;
+            for (int i = 0; i < arraySize; ++i) {
+              if (shipArray[i]->getShipName() == current->data->getShipName()) {
+                shipArray[i] = ship2; 
+                std::cout << "Updated shipArray[" << i << "] to "
+                          << ship2->getShipName() << "\n";
+                check1 = true;
+                break;
+              }
+            };
+            if (check && check1) {
               std::cout << "-------------1.7----------- \n";
               battlefield.printBattlefieldShipArray();
               if (current->data != ship2 && current->data != nullptr) {
@@ -183,10 +191,10 @@ public:
                 battlefield.printBattlefieldShipArray();
                 delete current->data;
                 std::cout << "after delete data \n";
-               battlefield.printBattlefieldShipArray();
+                battlefield.printBattlefieldShipArray();
               }
               std::cout << "-------------1.9----------- \n";
-               battlefield.printBattlefieldShipArray();
+              battlefield.printBattlefieldShipArray();
               current->data = ship2;
 
               std::cout << "Successfully upgraded " << currentShipName << " to "
