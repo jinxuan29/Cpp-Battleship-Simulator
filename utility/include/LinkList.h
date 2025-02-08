@@ -105,11 +105,10 @@ public:
     while (current) {
 
       Logger logger;
-      logger.logEvent("Symbol: " + current->data->getSymbol()); // Log symbol
+      logger.logEvent("Symbol: " + std::string(1,current->data->getSymbol()) + " "); // Log symbol
                                                                 //
       logger.logEvent("Ship Type: " +
                       current->data->getShipType()); // Log ship type
-      logger.logEvent("Ship Position: ");
       std::string position =
           "Position: (" +
           std::to_string(current->data->getPosition().getXValuePosition()) +

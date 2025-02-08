@@ -104,7 +104,7 @@ public:
     Node *current = front;
     while (current)
     {
-      Logger().logEvent(current->data->getShipName());
+      Logger().logEvent(current->data->getShipName() + " ");
       std::cout << current->data->getShipName() << " ";
       current = current->next;
     }

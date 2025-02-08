@@ -348,8 +348,6 @@ void GameManager::runGame() {
     // Remove destroyed ships from the link list
     removeDestroyShipFromLinkList();
 
-    // Debug: Print remaining ships
-    Logger().logEvent("Iteration " + std::to_string(i + 1));
     std::cout << "\n Remaining ships after removal:\n";
     shipActivityLinkList.print();
 

@@ -51,7 +51,7 @@ Ship *Battleship::seeingShip(Battlefield &battlefield) {
   message = getShipName() + " current position: (" +
             std::to_string(current.getXValuePosition()) + "," +
             std::to_string(current.getYValuePosition()) + ")";
-  logger.logEvent(message);
+ // logger.logEvent(message);
   std::cout << getShipName() << " current position: ("
             << current.getXValuePosition() << "," << current.getYValuePosition()
             << ")";
@@ -99,7 +99,7 @@ void Battleship::movingShip(Battlefield &battlefield) {
           getShipName() + " could not move to (" + std::to_string(newX) + ", " +
           std::to_string(newY) +
           "), it's either occupied, an island, or out of bounds. Retrying";
-      logger.logEvent(message);
+      //logger.logEvent(message);
       std::cout
           << getShipName() << " could not move to (" << newX << ", " << newY
           << "), it's either occupied, an island, or out of bounds. Retrying\n";
