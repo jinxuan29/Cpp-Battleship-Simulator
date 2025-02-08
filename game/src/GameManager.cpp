@@ -167,7 +167,7 @@ void GameManager::addShipToActivityLinkList() {
 //                                 // despite being template
 // }
 
-//all ships pointer had to change as well since its pointing to null
+// all ships pointer had to change as well since its pointing to null
 void GameManager::addDestroyedShipIntoQueue() {
   for (int i = 0; i < totalShipsAcrossAllTeams; i++) {
     if (allShips[i] && allShips[i]->getIsDestroyed() &&
@@ -308,7 +308,7 @@ void GameManager::runGame() {
           ship->setReviveCount(0);
           ship->setLives(3);
           ship->setIsDestroyed(false);
-          
+
           teams[i]->addShip(ship);      // Add the ship to the team
           allShips[shipIndex++] = ship; // Add the ship to the combined array
         } else {
@@ -341,7 +341,8 @@ void GameManager::runGame() {
 
     battlefield.updateBattlefield();
     // TODO if ship hit another ship but that ship lives is ady 0 juz ignore it
-    shipActivityLinkList.RunShip(battlefield,this->allShips,this->totalShipsAcrossAllTeams);
+    shipActivityLinkList.RunShip(battlefield, this->allShips,
+                                 this->totalShipsAcrossAllTeams);
 
     addDestroyedShipIntoQueue();
 
@@ -360,34 +361,74 @@ void GameManager::runGame() {
 
     i++;
   }
+  int *teamRemainingShips = new int[numberOfTeams](); // Initialize to zero
+  std::string *teamNames = new std::string[numberOfTeams];
+
+  // Count remaining ships for each team
+  for (int j = 0; j < totalShipsAcrossAllTeams; j++) {
+    if (allShips[j] && !allShips[j]->getIsDestroyed() &&
+        !(allShips[j]->getLives() < 1)) {
+      std::string teamName = allShips[j]->getTeamName();
+      bool found = false;
+
+      // Find the index of the team in the array
+      for (int k = 0; k < numberOfTeams; k++) {
+        if (teamNames[k] == teamName) {
+          teamRemainingShips[k]++;
+          found = true;
+          break;
+        }
+      }
+
+      // If the team is not yet in the array, add it
+      if (!found) {
+        for (int k = 0; k < numberOfTeams; k++) {
+          if (teamNames[k].empty()) {
+            teamNames[k] = teamName;
+            teamRemainingShips[k]++;
+            break;
+          }
+        }
+      }
+
+      // Log details of each remaining ship
+      Logger().logEvent(
+          "  Ship Name: " + allShips[j]->getShipName() + ", Symbol: " +
+          std::string(1, allShips[j]->getSymbol()) + ", Position: (" +
+          std::to_string(allShips[j]->getPosition().getXValuePosition()) +
+          ", " +
+          std::to_string(allShips[j]->getPosition().getYValuePosition()) + ")");
+      std::cout << "  Ship Name: " << allShips[j]->getShipName()
+                << ", Symbol: " << allShips[j]->getSymbol() << ", Position: ("
+                << allShips[j]->getPosition().getXValuePosition() << ", "
+                << allShips[j]->getPosition().getYValuePosition() << ")\n";
+    }
+  }
+
+  // Find the team with the most remaining ships
   int maxRemainingShips = -1;
   std::string winningTeam;
   bool isDraw = false;
-  for (int i = 0; i < numberOfTeams; i++) {
-    int remainingShips = 0;
-    Ship **teamShips = teams[i]->getTeamShipsArray();
-    int numShips = teams[i]->getNumShip();
 
-    // Count remaining ships for the team
-    for (int j = 0; j < numShips; j++) {
-      if (teamShips[j] && !teamShips[j]->getIsDestroyed() && !(teamShips[j]->getLives()<1)) {
-        remainingShips++;
+  for (int k = 0; k < numberOfTeams; k++) {
+    if (!teamNames[k].empty()) {
+      std::cout << "Team " << teamNames[k] << " has " << teamRemainingShips[k]
+                << " remaining ships.\n";
+      Logger().logEvent("Team " + teamNames[k] + " has " +
+                        std::to_string(teamRemainingShips[k]) +
+                        " remaining ships.");
+
+      if (teamRemainingShips[k] > maxRemainingShips) {
+        maxRemainingShips = teamRemainingShips[k];
+        winningTeam = teamNames[k];
+        isDraw = false; // Reset draw flag if we find a new max
+      } else if (teamRemainingShips[k] == maxRemainingShips &&
+                 maxRemainingShips != -1) {
+        isDraw = true; // Set draw flag if there's a tie
       }
     }
-
-    if (remainingShips > maxRemainingShips) {
-      maxRemainingShips = remainingShips;
-      winningTeam = teams[i]->getName();
-      isDraw = false; // Reset draw flag if we find a new max
-    } else if (remainingShips == maxRemainingShips && maxRemainingShips != -1) {
-      isDraw = true; // Set draw flag if there's a tie
-    }
-
-    std::cout << "Team " << teams[i]->getName() << " has " << remainingShips
-              << " remaining ships.\n";
-    Logger().logEvent("Team " + teams[i]->getName() + " has " +
-                      std::to_string(remainingShips) + " remaining ships.");
   }
+
   // Output the winning team
   if (maxRemainingShips > 0) {
     if (isDraw) {
@@ -406,8 +447,11 @@ void GameManager::runGame() {
     Logger().logEvent("No winning team. All ships are destroyed.");
     std::cout << "\nNo winning team. All ships are destroyed.\n";
   }
-}
 
+  // Clean up dynamically allocated arrays
+  delete[] teamRemainingShips;
+  delete[] teamNames;
+}
 GameManager::~GameManager() {
   if (battlefieldMap) {
     for (int i = 0; i < height; i++) {
@@ -418,9 +462,9 @@ GameManager::~GameManager() {
   }
 
   if (allShips) {
-      delete[] allShips;
-      allShips = nullptr;
-    }
+    delete[] allShips;
+    allShips = nullptr;
+  }
 
   if (teams) {
     for (int i = 0; i < numberOfTeams; i++) {
@@ -447,5 +491,4 @@ GameManager::~GameManager() {
     delete[] teamNumTypeShip;
     teamNumTypeShip = nullptr;
   }
-
 }

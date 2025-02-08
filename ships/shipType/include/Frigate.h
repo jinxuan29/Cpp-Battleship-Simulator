@@ -19,14 +19,14 @@ public:
   ~Frigate();
 
   Position shootingSequence[8] = {
-      Position(0, -1), // up
-      Position(1, -1), // up-right
-      Position(1, 0),  // right
-      Position(1, 1),  // down-right
-      Position(0, 1),  // down
-      Position(-1, 1), // down-left
-      Position(-1, 0), // left
-      Position(-1, -1) // up-left
+      Position().Up(), // up
+      Position().UpRight(), // up-right
+      Position().UpLeft(),  // up-left
+      Position().Down(),  // down
+      Position().DownRight(), //down-right
+      Position().DownLeft(), // down-left
+      Position().Left(), // left
+      Position().Right() // Right
   };
 
 
