@@ -44,7 +44,7 @@ Cruiser::Cruiser(const Position &position, int lives, int reviveCount,
            teamName, isDestroyed, symbol){}
 
 Cruiser::~Cruiser() {
-  std::cout << "Cruiser Removed";
+  std::cout << "Cruiser Removed \n";
   //if (this->upgradedShip!=nullptr) {
   //  delete upgradedShip;
   //  upgradedShip = nullptr;

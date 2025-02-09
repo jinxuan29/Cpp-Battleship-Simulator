@@ -45,7 +45,7 @@ Destroyer::Destroyer(const Position &position, int lives, int reviveCount,
            teamName, isDestroyed, symbol){}
 
 Destroyer::~Destroyer() {
-  std::cout << "Destroyer Removed";
+  std::cout << "Destroyer Removed \n";
   //if (upgradedShip) {
   //  delete upgradedShip;
   //  upgradedShip = nullptr;

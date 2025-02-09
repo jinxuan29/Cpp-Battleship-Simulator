@@ -43,7 +43,7 @@ Battleship::Battleship(const Position &position, int lives, int reviveCount,
            teamName, isDestroyed, symbol){};
 
 Battleship::~Battleship() {
-  std::cout << "Battleship Removed";
+  std::cout << "Battleship Removed \n";
   //if (this->upgradedShip!=nullptr) {
   //  delete upgradedShip;
   //  upgradedShip = nullptr;

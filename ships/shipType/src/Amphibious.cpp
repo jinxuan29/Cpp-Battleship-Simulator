@@ -49,7 +49,7 @@ Amphibious::Amphibious(const Position &position, int lives, int reviveCount,
 
 Amphibious::~Amphibious() {
   //Logger().logEvent("Amphibious Removed");
-  std::cout << "Amphibious Removed";
+  std::cout << "Amphibious Removed \n";
 
   ///if (this->upgradedShip != nullptr) {
   ///  delete this->upgradedShip;
