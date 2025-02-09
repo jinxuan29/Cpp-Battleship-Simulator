@@ -494,6 +494,12 @@ GameManager::~GameManager() {
   }
 
   if (allShips) {
+    for(int i = 0; i<totalShipsAcrossAllTeams; i++){
+      if(allShips[i] != nullptr){
+        delete allShips[i];
+        allShips[i] = nullptr;
+      }
+    }
     delete[] allShips;
     allShips = nullptr;
   }
