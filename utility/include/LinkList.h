@@ -1,3 +1,35 @@
+/**********|**********|**********|
+Program: LinkList.h
+
+Course: Object Oriented Programing and Data Structure 
+Trimester: 2410
+Name: Yen Jin Xuan
+ID: 242UC243R3
+Lecture Section: TC
+Tutorial Section: TT1L
+Email: yen.jin.xuan@student.mmu.edu.my
+Phone: 01633131910
+
+Course: Object Oriented Programing and Data Structure 
+Trimester: 2410
+Name: Nishant A/L Kesavan 
+ID: 241UC2407W
+Lecture Section: TC1L
+Tutorial Section: TT1L
+Email: NISHANT.KESAVAN@student.mmu.edu.my
+Phone: 019-8960477
+
+Course: Object Oriented Programing and Data Structure 
+Trimester: 2410
+Name: Raveen A/L PARAMASIWAM 
+ID: 241UC24180
+Lecture Section: TC1L
+Tutorial Section: TT1L
+Email: RAVEEN.AL.PARAMASIWAM@student.mmu.edu.my
+Phone: 017-6476584
+**********|**********|**********/
+
+
 #include "../../game/include/Battlefield.h"
 #include "../../ships/shipType/include/Ship.h"
 #include "Logger.h"
@@ -18,9 +50,9 @@ private:
         Node(Ship *value) : data(value), next(nullptr) {}
     };
 
-    Node *head;  // Pointer to the first node
-    Node *tail;  // Pointer to the last node
-    int size;    // Number of nodes in the list
+    Node *head;  
+    Node *tail;  
+    int size;    
 
 public:
     // Constructor
@@ -31,7 +63,7 @@ public:
         Node *current = head;
         while (current != nullptr) {
             Node *next = current->next;
-            delete current; // Delete the Node
+            delete current; 
             current = next;
         }
     }
@@ -40,10 +72,8 @@ public:
     void push_back(const T &value) {
         Node *newNode = new Node(value);
         if (!head) {
-            // If the list is empty, set both head and tail to the new node
             head = tail = newNode;
         } else {
-            // Append the new node to the end and update the tail
             tail->next = newNode;
             tail = newNode;
         }
@@ -54,10 +84,8 @@ public:
     void push_front(const T &value) {
         Node *newNode = new Node(value);
         if (!head) {
-            // If the list is empty, set both head and tail to the new node
             head = tail = newNode;
         } else {
-            // Insert the new node at the front and update the head
             newNode->next = head;
             head = newNode;
         }
@@ -85,21 +113,17 @@ public:
         Node *current = head;
         Node *previous = nullptr;
 
-        // Traverse to the desired position
         for (int i = 0; i < position; i++) {
             previous = current;
             current = current->next;
         }
 
-        // Update pointers
         if (previous) {
             previous->next = current->next;
         } else {
-            // Removing the head node
             head = current->next;
         }
 
-        // If removing the tail node, update the tail pointer
         if (current == tail) {
             tail = previous;
         }
