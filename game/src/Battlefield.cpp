@@ -1,7 +1,7 @@
 /**********|**********|**********|
-Program: Battlefield.cpp 
+Program: Battlefield.cpp
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
 Name: Yen Jin Xuan
 ID: 242UC243R3
@@ -10,25 +10,24 @@ Tutorial Section: TT1L
 Email: yen.jin.xuan@student.mmu.edu.my
 Phone: 01633131910
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Nishant A/L Kesavan 
+Name: Nishant A/L Kesavan
 ID: 241UC2407W
 Lecture Section: TC1L
 Tutorial Section: TT1L
 Email: NISHANT.KESAVAN@student.mmu.edu.my
 Phone: 019-8960477
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Raveen A/L PARAMASIWAM 
+Name: Raveen A/L PARAMASIWAM
 ID: 241UC24180
 Lecture Section: TC1L
 Tutorial Section: TT1L
 Email: RAVEEN.AL.PARAMASIWAM@student.mmu.edu.my
 Phone: 017-6476584
 **********|**********|**********/
-
 
 #include "../include/Battlefield.h"
 #include <ctime>
@@ -44,45 +43,49 @@ int Battlefield::getHeight() const
   return height;
 }
 
-//Ship* Battlefield::randomlyPickAShipFromBattlefield(){
-//  int activeShipsCount = 0;
-//  for (int i = 0; i < totalNumberOfShips; i++) {
-//    if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
-//      activeShipsCount++;
-//    }
-//  }
+// Ship* Battlefield::randomlyPickAShipFromBattlefield(){
+//   int activeShipsCount = 0;
+//   for (int i = 0; i < totalNumberOfShips; i++) {
+//     if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
+//       activeShipsCount++;
+//     }
+//   }
 //
-//  if (activeShipsCount == 0) {
-//    std::cout << "No active ships available on the battlefield.\n";
-//    return nullptr;  // No ships to pick from
-//  }
+//   if (activeShipsCount == 0) {
+//     std::cout << "No active ships available on the battlefield.\n";
+//     return nullptr;  // No ships to pick from
+//   }
 //
-//  // Pick a random index among active ships
-//  int targetIndex = rand() % activeShipsCount;
-//  int currentIndex = 0;
+//   // Pick a random index among active ships
+//   int targetIndex = rand() % activeShipsCount;
+//   int currentIndex = 0;
 //
-//  // Iterate to find the target ship
-//  for (int i = 0; i < totalNumberOfShips; i++) {
-//    if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
-//      if (currentIndex == targetIndex) {
-//        std::cout << "Randomly picked ship: " << battlefieldShip[i]->getShipName() << "\n";
-//        Logger().logEvent("Randomly picked ship: " + battlefieldShip[i]->getShipName());
-//        return battlefieldShip[i];
-//      }
-//      currentIndex++;
-//    }
-//  }
-//  return nullptr;
-//}
+//   // Iterate to find the target ship
+//   for (int i = 0; i < totalNumberOfShips; i++) {
+//     if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
+//       if (currentIndex == targetIndex) {
+//         std::cout << "Randomly picked ship: " << battlefieldShip[i]->getShipName() << "\n";
+//         Logger().logEvent("Randomly picked ship: " + battlefieldShip[i]->getShipName());
+//         return battlefieldShip[i];
+//       }
+//       currentIndex++;
+//     }
+//   }
+//   return nullptr;
+// }
 
-Ship* Battlefield::checkForEnemyShip(int x, int y) {
+Ship *Battlefield::checkForShip(int x, int y)
+{
   if (!isValidPosition(x, y))
     return nullptr; // Ensure within battlefield bounds
 
-  for (int i = 0; i < totalNumberOfShips; i++) {
-    if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
+  for (int i = 0; i < totalNumberOfShips; i++)
+  {
+    if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed())
+    {
       Position pos = battlefieldShip[i]->getPosition();
-      if (pos.getXValuePosition() == x && pos.getYValuePosition() == y) { 
+      if (pos.getXValuePosition() == x && pos.getYValuePosition() == y)
+      {
         return battlefieldShip[i];
       }
     }
@@ -90,34 +93,43 @@ Ship* Battlefield::checkForEnemyShip(int x, int y) {
   return nullptr;
 }
 
-bool Battlefield::isIsland(int x, int y) const {
-  if (grid[y][x] == '1') {
+bool Battlefield::isIsland(int x, int y) const
+{
+  if (grid[y][x] == '1')
+  {
     return true;
   }
   return false;
 }
 
-bool Battlefield::isValidPosition(int x, int y) const {
+bool Battlefield::isValidPosition(int x, int y) const
+{
   return (x >= 0 && x < width && y >= 0 && y < height);
 }
 
-Battlefield::Battlefield(int width, int height) : width(width), height(height) {
+Battlefield::Battlefield(int width, int height) : width(width), height(height)
+{
   grid = new char *[height];
-  for (int i = 0; i < height; i++) {
+  for (int i = 0; i < height; i++)
+  {
     grid[i] = new char[width];
 
-    for (int j = 0; j < width; j++) {
+    for (int j = 0; j < width; j++)
+    {
       grid[i][j] = '0';
     }
   }
 }
 
 Battlefield::Battlefield(char **grid, int width, int height)
-    : width(width), height(height), numberOfIsland(0), islandPosition(nullptr) {
+    : width(width), height(height), numberOfIsland(0), islandPosition(nullptr)
+{
   this->grid = new char *[height];
-  for (int i = 0; i < height; i++) {
+  for (int i = 0; i < height; i++)
+  {
     this->grid[i] = new char[width];
-    for (int j = 0; j < width; j++) {
+    for (int j = 0; j < width; j++)
+    {
       this->grid[i][j] = grid[i][j];
     }
   }
@@ -127,9 +139,12 @@ Battlefield::Battlefield(char **grid, int width, int height)
 //   this->grid = grid;
 // }
 
-void Battlefield::display() const {
-  for (int i = 0; i < height; ++i) {
-    for (int j = 0; j < width; ++j) {
+void Battlefield::display() const
+{
+  for (int i = 0; i < height; ++i)
+  {
+    for (int j = 0; j < width; ++j)
+    {
       Logger().logEvent(this->grid[i][j]);
       std::cout << this->grid[i][j] << ' ';
     }
@@ -138,11 +153,15 @@ void Battlefield::display() const {
   }
 }
 
-void Battlefield::setIslandPosition() {
+void Battlefield::setIslandPosition()
+{
   int numberOfIsland = 0;
-  for (int i = 0; i < height; i++) {
-    for (int j = 0; j < width; j++) {
-      if (this->grid[i][j] == '1') {
+  for (int i = 0; i < height; i++)
+  {
+    for (int j = 0; j < width; j++)
+    {
+      if (this->grid[i][j] == '1')
+      {
         numberOfIsland++;
       }
     }
@@ -150,13 +169,17 @@ void Battlefield::setIslandPosition() {
   this->numberOfIsland = numberOfIsland;
   // get island position and store inside islandposition array
   this->islandPosition = new int *[numberOfIsland];
-  for (int i = 0; i < numberOfIsland; i++) {
+  for (int i = 0; i < numberOfIsland; i++)
+  {
     this->islandPosition[i] = new int[2];
   }
   int currentIndex = 0;
-  for (int i = 0; i < height; i++) {
-    for (int j = 0; j < width; j++) {
-      if (this->grid[i][j] == '1') {
+  for (int i = 0; i < height; i++)
+  {
+    for (int j = 0; j < width; j++)
+    {
+      if (this->grid[i][j] == '1')
+      {
         this->islandPosition[currentIndex][0] = j;
         this->islandPosition[currentIndex][1] = i;
         currentIndex++;
@@ -167,10 +190,12 @@ void Battlefield::setIslandPosition() {
 
 // only works after running the setIslandPosition function
 // starts from 0 instead of 1
-void Battlefield::printIslandPosition() const {
+void Battlefield::printIslandPosition() const
+{
   Logger().logEvent("Island Positions");
   std::cout << "Island Positions:\n";
-  for (int i = 0; i < this->numberOfIsland; i++) {
+  for (int i = 0; i < this->numberOfIsland; i++)
+  {
     Logger().logEvent(std::to_string(this->islandPosition[i][0]) + ":" +
                       std::to_string(this->islandPosition[i][1]));
     std::cout << this->islandPosition[i][0] << ":" << this->islandPosition[i][1]
@@ -178,32 +203,43 @@ void Battlefield::printIslandPosition() const {
   }
 }
 
-void Battlefield::placeIsland(int x, int y, char symbol) {
+void Battlefield::placeIsland(int x, int y, char symbol)
+{
   grid[x][y] = symbol;
   display();
 }
 
-void Battlefield::updateBattlefield() {
+void Battlefield::updateBattlefield()
+{
   // rewrite the grid change all symbol back to 0 except islands (1)
-  for (int i = 0; i < height; i++) {
-    for (int j = 0; j < width; j++) {
-      if (this->grid[i][j] != '1') {
+  for (int i = 0; i < height; i++)
+  {
+    for (int j = 0; j < width; j++)
+    {
+      if (this->grid[i][j] != '1')
+      {
         this->grid[i][j] = '0';
       }
     }
   }
 
-  for (int i = 0; i < totalNumberOfShips; i++) {
-    if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
+  for (int i = 0; i < totalNumberOfShips; i++)
+  {
+    if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed())
+    {
       Position pos = battlefieldShip[i]->getPosition();
       if (pos.getXValuePosition() >= 0 && pos.getXValuePosition() < width &&
-          pos.getYValuePosition() >= 0 && pos.getYValuePosition() < height) {
+          pos.getYValuePosition() >= 0 && pos.getYValuePosition() < height)
+      {
         bool isOnIsland = false;
-        if (battlefieldShip[i]->getShipType() == "Amphibious") {
+        if (battlefieldShip[i]->getShipType() == "Amphibious")
+        {
           // check if amphibious is on island
-          for (int j = 0; j < numberOfIsland; j++) {
+          for (int j = 0; j < numberOfIsland; j++)
+          {
             if (islandPosition[j][0] == pos.getXValuePosition() &&
-                islandPosition[j][1] == pos.getYValuePosition()) {
+                islandPosition[j][1] == pos.getYValuePosition())
+            {
               isOnIsland = true;
               break;
             }
@@ -211,11 +247,14 @@ void Battlefield::updateBattlefield() {
         }
 
         // If the ship is Amphibious and on an island, display the ship's symbol
-        if (isOnIsland) {
+        if (isOnIsland)
+        {
           this->grid[pos.getYValuePosition()][pos.getXValuePosition()] =
               battlefieldShip[i]->getSymbol();
-        } else if (this->grid[pos.getYValuePosition()]
-                             [pos.getXValuePosition()] != '1') {
+        }
+        else if (this->grid[pos.getYValuePosition()]
+                           [pos.getXValuePosition()] != '1')
+        {
           // Otherwise, display the ship's symbol only if the position is not an
           // island
           this->grid[pos.getYValuePosition()][pos.getXValuePosition()] =
@@ -229,32 +268,40 @@ void Battlefield::updateBattlefield() {
   display();
 }
 
-void Battlefield::placeShipIntoBattlefield(Ship **ships, int numShips) {
+void Battlefield::placeShipIntoBattlefield(Ship **ships, int numShips)
+{
   ////srand(time(0));
   this->totalNumberOfShips = numShips;
   // add ship into the battlefield ship array
   battlefieldShip = new Ship *[numShips]();
-  for (int i = 0; i < numShips; i++) {
+  for (int i = 0; i < numShips; i++)
+  {
     battlefieldShip[i] = ships[i];
   }
 
   int emptyPositions = 0;
-  for (int i = 0; i < height; i++) {
-    for (int j = 0; j < width; j++) {
-      if (grid[i][j] == '0') {
+  for (int i = 0; i < height; i++)
+  {
+    for (int j = 0; j < width; j++)
+    {
+      if (grid[i][j] == '0')
+      {
         emptyPositions++;
       }
     }
   }
 
-  if (emptyPositions < numShips) {
+  if (emptyPositions < numShips)
+  {
     Logger().logEvent("Error: Not enough empty positions to place all ships.");
     std::cerr << "Error: Not enough empty positions to place all ships.\n";
     return;
   }
 
-  for (int i = 0; i < numShips; i++) {
-    if (!ships[i]) {
+  for (int i = 0; i < numShips; i++)
+  {
+    if (!ships[i])
+    {
       std::string error =
           "Error: Ship at index " + std::to_string(i) + " is null.";
       Logger().logEvent(error);
@@ -266,23 +313,28 @@ void Battlefield::placeShipIntoBattlefield(Ship **ships, int numShips) {
     int attempts = 0;
     const int maxAttempts = width * height;
 
-    while (!placed && attempts < maxAttempts) {
+    while (!placed && attempts < maxAttempts)
+    {
 
       int y = rand() % height;
       int x = rand() % width;
 
       bool isIsland = false;
 
-      for (int j = 0; j < numberOfIsland; j++) {
-        if (islandPosition[j][0] == x && islandPosition[j][1] == y) {
+      for (int j = 0; j < numberOfIsland; j++)
+      {
+        if (islandPosition[j][0] == x && islandPosition[j][1] == y)
+        {
           isIsland = true;
           break;
         }
       }
 
       // allow amphibious to land on island
-      if (ships[i]->getShipType() == "Amphibious") {
-        if (grid[y][x] == '0' || isIsland) {
+      if (ships[i]->getShipType() == "Amphibious")
+      {
+        if (grid[y][x] == '0' || isIsland)
+        {
           grid[y][x] = ships[i]->getSymbol();
           placed = true;
 
@@ -290,7 +342,8 @@ void Battlefield::placeShipIntoBattlefield(Ship **ships, int numShips) {
         }
       }
 
-      else if (!isIsland && grid[y][x] == '0') {
+      else if (!isIsland && grid[y][x] == '0')
+      {
         grid[y][x] = ships[i]->getSymbol();
         placed = true;
 
@@ -300,7 +353,8 @@ void Battlefield::placeShipIntoBattlefield(Ship **ships, int numShips) {
       attempts++;
     }
 
-    if (!placed) {
+    if (!placed)
+    {
       std::string error = "Error: Could not place ship " + std::to_string(i) +
                           " after " + std::to_string(maxAttempts) +
                           " attempts.";
@@ -311,39 +365,49 @@ void Battlefield::placeShipIntoBattlefield(Ship **ships, int numShips) {
   }
 }
 
-void Battlefield::placeShipIntoBattlefield(Ship *ship) {
-  if (!ship) {
+void Battlefield::placeShipIntoBattlefield(Ship *ship)
+{
+  if (!ship)
+  {
     std::cerr << "Error: Ship is null.\n";
     return;
   }
 
   // If Amphibous Ship then include island as well into empty count
   int emptyCount = 0;
-  for (int i = 0; i < height; i++) {
-    for (int j = 0; j < width; j++) {
+  for (int i = 0; i < height; i++)
+  {
+    for (int j = 0; j < width; j++)
+    {
       if (grid[i][j] == '0' ||
-          (ship->getShipType() == "Amphibious" && grid[i][j] == '1')) {
+          (ship->getShipType() == "Amphibious" && grid[i][j] == '1'))
+      {
         emptyCount++;
       }
     }
   }
 
-  if (emptyCount == 0) {
+  if (emptyCount == 0)
+  {
     Logger().logEvent("Error: No empty positions available to place the ship.");
     std::cerr << "Error: No empty positions available to place the ship.\n";
     return;
   }
 
   int **emptyPositions = new int *[emptyCount];
-  for (int i = 0; i < emptyCount; i++) {
+  for (int i = 0; i < emptyCount; i++)
+  {
     emptyPositions[i] = new int[2];
   }
 
   int index = 0;
-  for (int i = 0; i < height; i++) {
-    for (int j = 0; j < width; j++) {
+  for (int i = 0; i < height; i++)
+  {
+    for (int j = 0; j < width; j++)
+    {
       if (grid[i][j] == '0' ||
-          (ship->getShipType() == "Amphibious" && grid[i][j] == '1')) {
+          (ship->getShipType() == "Amphibious" && grid[i][j] == '1'))
+      {
         emptyPositions[index][0] = i;
         emptyPositions[index][1] = j;
         index++;
@@ -365,58 +429,74 @@ void Battlefield::placeShipIntoBattlefield(Ship *ship) {
                     std::to_string(y) + ")");
   std::cout << "Ship placed at (" << x << ", " << y << ")\n";
 
-  for (int i = 0; i < emptyCount; i++) {
+  for (int i = 0; i < emptyCount; i++)
+  {
     delete[] emptyPositions[i];
   }
   delete[] emptyPositions;
   emptyPositions = nullptr;
 }
 
-
-bool Battlefield::replaceShipInBattlefieldShipByName(std::string& shipName, Ship* newShip) {
-    for (int i = 0; i < totalNumberOfShips; i++) {
-        if (battlefieldShip[i] && battlefieldShip[i]->getShipName() == shipName) {
-          std::cout << "SHIP LOCATED AT " << i << "\n";
-            battlefieldShip[i] = newShip; 
-            return true;  
-        }
+bool Battlefield::replaceShipInBattlefieldShipByName(std::string &shipName, Ship *newShip)
+{
+  for (int i = 0; i < totalNumberOfShips; i++)
+  {
+    if (battlefieldShip[i] && battlefieldShip[i]->getShipName() == shipName)
+    {
+      std::cout << "SHIP LOCATED AT " << i << "\n";
+      battlefieldShip[i] = newShip;
+      return true;
     }
-    return false;  
+  }
+  return false;
 }
 
-Ship** Battlefield::getBattlefieldShipArray(){
+Ship **Battlefield::getBattlefieldShipArray()
+{
   return this->battlefieldShip;
 }
 
-void Battlefield::printBattlefieldShipArray(){
-std::cout << "Battlefield Ships:\n";
-    for (int i = 0; i < totalNumberOfShips; ++i) {
-        if (this->battlefieldShip[i]) {
-            std::cout <<battlefieldShip[i]->getShipName() << "\n" << battlefieldShip[i]->getShipType() << "\n";
-        } else {
-            std::cout << "Null ship at index " << i << "\n";
-        }
+void Battlefield::printBattlefieldShipArray()
+{
+  std::cout << "Battlefield Ships:\n";
+  for (int i = 0; i < totalNumberOfShips; ++i)
+  {
+    if (this->battlefieldShip[i])
+    {
+      std::cout << battlefieldShip[i]->getShipName() << "\n"
+                << battlefieldShip[i]->getShipType() << "\n";
     }
+    else
+    {
+      std::cout << "Null ship at index " << i << "\n";
+    }
+  }
 }
 
-Battlefield::~Battlefield() {
-  if (this->grid) {
-    for (int i = 0; i < height; i++) {
+Battlefield::~Battlefield()
+{
+  if (this->grid)
+  {
+    for (int i = 0; i < height; i++)
+    {
       delete[] this->grid[i];
     }
     delete[] this->grid;
     this->grid = nullptr;
   }
 
-  if (this->islandPosition) {
-    for (int i = 0; i < this->numberOfIsland; i++) {
+  if (this->islandPosition)
+  {
+    for (int i = 0; i < this->numberOfIsland; i++)
+    {
       delete[] this->islandPosition[i];
     }
     delete[] this->islandPosition;
     this->islandPosition = nullptr;
   }
 
-  if (this->battlefieldShip) {
+  if (this->battlefieldShip)
+  {
     delete[] battlefieldShip;
     this->battlefieldShip = nullptr;
   }

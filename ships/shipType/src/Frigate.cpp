@@ -1,7 +1,7 @@
 /**********|**********|**********|
 Program: Frigate.cpp
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
 Name: Yen Jin Xuan
 ID: 242UC243R3
@@ -10,26 +10,24 @@ Tutorial Section: TT1L
 Email: yen.jin.xuan@student.mmu.edu.my
 Phone: 01633131910
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Nishant A/L Kesavan 
+Name: Nishant A/L Kesavan
 ID: 241UC2407W
 Lecture Section: TC1L
 Tutorial Section: TT1L
 Email: NISHANT.KESAVAN@student.mmu.edu.my
 Phone: 019-8960477
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Raveen A/L PARAMASIWAM 
+Name: Raveen A/L PARAMASIWAM
 ID: 241UC24180
 Lecture Section: TC1L
 Tutorial Section: TT1L
 Email: RAVEEN.AL.PARAMASIWAM@student.mmu.edu.my
 Phone: 017-6476584
 **********|**********|**********/
-
-
 
 #include "../include/Frigate.h"
 #include <cstdlib> // For rand()
@@ -42,17 +40,20 @@ Frigate::Frigate(const Position &position, int lives, int reviveCount,
                  const std::string &shipType, const std::string &teamName,
                  bool isDestroyed, const char symbol)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
-           teamName, isDestroyed, symbol), firingDirectionIndex(0) {}
+           teamName, isDestroyed, symbol),
+      firingDirectionIndex(0) {}
 
-Frigate::~Frigate() {
-  //if (this->upgradedShip != nullptr) {
-  //  delete upgradedShip;
-  //  upgradedShip = nullptr;
-  //}
+Frigate::~Frigate()
+{
+  // if (this->upgradedShip != nullptr) {
+  //   delete upgradedShip;
+  //   upgradedShip = nullptr;
+  // }
   std::cout << "Frigate Removed\n";
 }
 
-Frigate::Frigate(const Frigate &other) {
+Frigate::Frigate(const Frigate &other)
+{
   this->setPosition(other.getPosition());
   this->setShipName(other.getShipName());
   this->setShipType(other.getShipType());
@@ -63,8 +64,10 @@ Frigate::Frigate(const Frigate &other) {
   this->firingDirectionIndex = other.firingDirectionIndex;
 }
 
-Frigate &Frigate::operator=(const Frigate &other) {
-  if (this != &other) {
+Frigate &Frigate::operator=(const Frigate &other)
+{
+  if (this != &other)
+  {
     this->setPosition(other.getPosition());
     this->setShipName(other.getShipName());
     this->setShipType(other.getShipType());
@@ -77,7 +80,8 @@ Frigate &Frigate::operator=(const Frigate &other) {
   return *this;
 }
 
-void Frigate::shootingShip(Battlefield &battlefield) {
+void Frigate::shootingShip(Battlefield &battlefield)
+{
   Logger logger;
   std::string message = getShipName() + " is preparing to shoot.";
   logger.logEvent(message);
@@ -86,10 +90,11 @@ void Frigate::shootingShip(Battlefield &battlefield) {
   Position currentPos = getPosition();
   Position targetPos = currentPos + shootingSequence[firingDirectionIndex];
 
-  Ship *target = battlefield.checkForEnemyShip(targetPos.getXValuePosition(),
-                                               targetPos.getYValuePosition());
+  Ship *target = battlefield.checkForShip(targetPos.getXValuePosition(),
+                                          targetPos.getYValuePosition());
 
-  if (target && target->getTeamName() != getTeamName()) {
+  if (target && target->getTeamName() != getTeamName())
+  {
     message = getShipName() + " has hit " + target->getShipName() + " at (" +
               std::to_string(targetPos.getXValuePosition()) + ", " +
               std::to_string(targetPos.getYValuePosition()) + ")";
@@ -98,7 +103,9 @@ void Frigate::shootingShip(Battlefield &battlefield) {
 
     target->setIsDestroyed(true);
     setShipDestroyedCount(getShipDestroyedCount() + 1);
-  } else {
+  }
+  else
+  {
     message = getShipName() + " missed at (" +
               std::to_string(targetPos.getXValuePosition()) + ", " +
               std::to_string(targetPos.getYValuePosition()) + ")";
@@ -109,8 +116,10 @@ void Frigate::shootingShip(Battlefield &battlefield) {
   firingDirectionIndex = (firingDirectionIndex + 1) % 8;
 }
 
-Ship *Frigate::upgradeShip() {
-  if (getShipDestroyedCount() >= 3) {
+Ship *Frigate::upgradeShip()
+{
+  if (getShipDestroyedCount() >= 3)
+  {
     Logger logger;
     std::string message = getShipName() + " has been upgraded to Corvette!";
     logger.logEvent(message);
