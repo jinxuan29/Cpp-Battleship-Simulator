@@ -36,9 +36,8 @@ Phone: 017-6476584
 #include "../shipType/include/Ship.h"
 #include "../../game/include/Battlefield.h"
 
-class ShootingShip: virtual public Ship{
-    virtual void shootingShip(Battlefield &battlefield) = 0; 
+class ShootingShip: virtual public Ship{ 
  public:
-    
+    virtual void shootingShip(Battlefield &battlefield) = 0; 
     virtual ~ShootingShip()= default;
 };

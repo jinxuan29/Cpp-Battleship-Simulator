@@ -35,8 +35,8 @@ Phone: 017-6476584
 #include "../shipType/include/Ship.h"
 #include "../../game/include/Battlefield.h"
 
-class MovingShip: virtual public Ship{
-    virtual void movingShip(Battlefield &battlefield) = 0; 
+class MovingShip: virtual public Ship{ 
     public:
+    virtual void movingShip(Battlefield &battlefield) = 0; 
     virtual ~MovingShip() = default;
 };

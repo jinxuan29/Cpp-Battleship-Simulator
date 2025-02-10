@@ -36,9 +36,8 @@ Phone: 017-6476584
 #include "../shipType/include/Ship.h"
 #include "../../game/include/Battlefield.h"
 
-class RamShip: virtual public Ship{
-    virtual void ramShip(Battlefield &battlefield) = 0; 
+class RamShip: virtual public Ship{ 
  public:
-    
+    virtual void ramShip(Battlefield &battlefield) = 0; 
     virtual ~RamShip() = default;
 };

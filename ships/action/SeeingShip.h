@@ -35,9 +35,8 @@ Phone: 017-6476584
 #include "../shipType/include/Ship.h"
 #include "../../game/include/Battlefield.h"
 
-class SeeingShip: virtual public Ship{
-    virtual Ship* seeingShip(Battlefield &battlefield) = 0; 
+class SeeingShip: virtual public Ship{ 
  public:
-    
+    virtual Ship* seeingShip(Battlefield &battlefield) = 0; 
     virtual ~SeeingShip() =default;
 };
