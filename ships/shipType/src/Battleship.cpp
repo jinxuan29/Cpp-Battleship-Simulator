@@ -1,7 +1,7 @@
 /**********|**********|**********|
-Program: Battleship.cpp 
+Program: Battleship.cpp
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
 Name: Yen Jin Xuan
 ID: 242UC243R3
@@ -10,18 +10,18 @@ Tutorial Section: TT1L
 Email: yen.jin.xuan@student.mmu.edu.my
 Phone: 01633131910
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Nishant A/L Kesavan 
+Name: Nishant A/L Kesavan
 ID: 241UC2407W
 Lecture Section: TC1L
 Tutorial Section: TT1L
 Email: NISHANT.KESAVAN@student.mmu.edu.my
 Phone: 019-8960477
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Raveen A/L PARAMASIWAM 
+Name: Raveen A/L PARAMASIWAM
 ID: 241UC24180
 Lecture Section: TC1L
 Tutorial Section: TT1L
@@ -41,17 +41,19 @@ Battleship::Battleship(const Position &position, int lives, int reviveCount,
                        const std::string &shipType, const std::string &teamName,
                        bool isDestroyed, const char symbol)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
-           teamName, isDestroyed, symbol){};
+           teamName, isDestroyed, symbol) {};
 
-Battleship::~Battleship() {
+Battleship::~Battleship()
+{
   std::cout << "Battleship Removed \n";
-  //if (this->upgradedShip!=nullptr) {
-  //  delete upgradedShip;
-  //  upgradedShip = nullptr;
-  //}
+  // if (this->upgradedShip!=nullptr) {
+  //   delete upgradedShip;
+  //   upgradedShip = nullptr;
+  // }
 }
 
-Battleship::Battleship(const Battleship &other) {
+Battleship::Battleship(const Battleship &other)
+{
   this->setPosition(other.getPosition());
   this->setShipName(other.getShipName());
   this->setShipType(other.getShipType());
@@ -61,8 +63,10 @@ Battleship::Battleship(const Battleship &other) {
   this->upgradedShip = other.upgradedShip;
 }
 
-Battleship &Battleship::operator=(const Battleship &other) {
-  if (this != &other) {
+Battleship &Battleship::operator=(const Battleship &other)
+{
+  if (this != &other)
+  {
     this->setPosition(other.getPosition());
     this->setShipName(other.getShipName());
     this->setShipType(other.getShipType());
@@ -73,7 +77,8 @@ Battleship &Battleship::operator=(const Battleship &other) {
   return *this;
 }
 
-Ship *Battleship::seeingShip(Battlefield &battlefield) {
+Ship *Battleship::seeingShip(Battlefield &battlefield)
+{
   Logger logger;
   std::string message = getShipName() + " is looking at its current position";
   logger.logEvent(message);
@@ -83,14 +88,15 @@ Ship *Battleship::seeingShip(Battlefield &battlefield) {
   message = getShipName() + " current position: (" +
             std::to_string(current.getXValuePosition()) + "," +
             std::to_string(current.getYValuePosition()) + ")";
- // logger.logEvent(message);
+  // logger.logEvent(message);
   std::cout << getShipName() << " current position: ("
             << current.getXValuePosition() << "," << current.getYValuePosition()
             << ")";
   return nullptr;
 }
 
-void Battleship::movingShip(Battlefield &battlefield) {
+void Battleship::movingShip(Battlefield &battlefield)
+{
   Logger logger;
   std::string message = getShipName() + " is moving";
   logger.logEvent(message);
@@ -102,9 +108,11 @@ void Battleship::movingShip(Battlefield &battlefield) {
   bool availableDirections[4] = {true, true, true, true};
   int remainingDirections = 4;
 
-  while (remainingDirections > 0) {
+  while (remainingDirections > 0)
+  {
     int randomIndex;
-    do {
+    do
+    {
       randomIndex = rand() % 4;
     } while (!availableDirections[randomIndex]);
 
@@ -117,7 +125,8 @@ void Battleship::movingShip(Battlefield &battlefield) {
     // Check for out of bounds, islands, and occupied positions
     if (battlefield.isValidPosition(newX, newY) &&
         !battlefield.isIsland(newX, newY) &&
-        !battlefield.checkForEnemyShip(newX, newY)) {
+        !battlefield.checkForShip(newX, newY))
+    {
 
       setPosition(newPosition);
       message = getShipName() + " moved to (" + std::to_string(newX) + ", " +
@@ -126,12 +135,14 @@ void Battleship::movingShip(Battlefield &battlefield) {
       std::cout << getShipName() << " moved to (" << newX << ", " << newY
                 << ")\n";
       return;
-    } else {
+    }
+    else
+    {
       message =
           getShipName() + " could not move to (" + std::to_string(newX) + ", " +
           std::to_string(newY) +
           "), it's either occupied, an island, or out of bounds. Retrying";
-      //logger.logEvent(message);
+      // logger.logEvent(message);
       std::cout
           << getShipName() << " could not move to (" << newX << ", " << newY
           << "), it's either occupied, an island, or out of bounds. Retrying\n";
@@ -145,7 +156,8 @@ void Battleship::movingShip(Battlefield &battlefield) {
   std::cout << getShipName() << " is trapped and cannot move.\n";
 }
 
-void Battleship::shootingShip(Battlefield &battlefield) {
+void Battleship::shootingShip(Battlefield &battlefield)
+{
   Logger logger;
   std::string message = getShipName() + " is shooting";
   logger.logEvent(message);
@@ -155,7 +167,8 @@ void Battleship::shootingShip(Battlefield &battlefield) {
 
   // Generate a random position within city block distance <= 5
   Position shootingOffset;
-  do {
+  do
+  {
     shootingOffset = Position().getRandomPositionFrom8Position();
   } while (abs(shootingOffset.getXValuePosition()) +
                abs(shootingOffset.getYValuePosition()) >
@@ -163,11 +176,12 @@ void Battleship::shootingShip(Battlefield &battlefield) {
 
   Position shootingTarget = currentPos + shootingOffset;
 
-  Ship *hit = battlefield.checkForEnemyShip(shootingTarget.getXValuePosition(),
-                                            shootingTarget.getYValuePosition());
+  Ship *hit = battlefield.checkForShip(shootingTarget.getXValuePosition(),
+                                       shootingTarget.getYValuePosition());
 
   // If an enemy ship is found, destroy it
-  if (hit && (hit->getTeamName() != this->getTeamName())) {
+  if (hit && (hit->getTeamName() != this->getTeamName()))
+  {
     message = getShipName() + " has hit " + hit->getShipName() + " at " +
               std::to_string(hit->getPosition().getXValuePosition()) + "," +
               std::to_string(hit->getPosition().getYValuePosition());
@@ -175,7 +189,9 @@ void Battleship::shootingShip(Battlefield &battlefield) {
     std::cout << message;
     this->setShipDestroyedCount(getShipDestroyedCount() + 1);
     hit->setIsDestroyed(true);
-  } else {
+  }
+  else
+  {
     message = getShipName() + " missed at (" +
               std::to_string(shootingTarget.getXValuePosition()) + ", " +
               std::to_string(shootingTarget.getYValuePosition()) + ")";
@@ -186,22 +202,25 @@ void Battleship::shootingShip(Battlefield &battlefield) {
   }
 }
 
-void Battleship::runShip(Battlefield &battlefield) {
+void Battleship::runShip(Battlefield &battlefield)
+{
   seeingShip(battlefield);
   movingShip(battlefield);
   shootingShip(battlefield);
   shootingShip(battlefield);
 }
 
-Ship *Battleship::upgradeShip() {
-  if (getShipDestroyedCount() >= 4) {
+Ship *Battleship::upgradeShip()
+{
+  if (getShipDestroyedCount() >= 4)
+  {
     std::string message = getShipName() + " has been upgraded to Destroyer!";
     Logger().logEvent(message);
     Logger().logEvent(message);
-    //if (upgradedShip) {
-    //  delete upgradedShip;
-    //  upgradedShip = nullptr;
-    //}
+    // if (upgradedShip) {
+    //   delete upgradedShip;
+    //   upgradedShip = nullptr;
+    // }
     std::cout << getShipName() << "has been upgraded to Destroyer!\n";
     this->upgradedShip = new Destroyer(std::move(*this));
     return upgradedShip;

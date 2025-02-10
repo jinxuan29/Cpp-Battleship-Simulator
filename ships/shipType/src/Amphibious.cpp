@@ -1,7 +1,7 @@
 /**********|**********|**********|
 Program: Amphibious.cpp
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
 Name: Yen Jin Xuan
 ID: 242UC243R3
@@ -10,26 +10,24 @@ Tutorial Section: TT1L
 Email: yen.jin.xuan@student.mmu.edu.my
 Phone: 01633131910
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Nishant A/L Kesavan 
+Name: Nishant A/L Kesavan
 ID: 241UC2407W
 Lecture Section: TC1L
 Tutorial Section: TT1L
 Email: NISHANT.KESAVAN@student.mmu.edu.my
 Phone: 019-8960477
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Raveen A/L PARAMASIWAM 
+Name: Raveen A/L PARAMASIWAM
 ID: 241UC24180
 Lecture Section: TC1L
 Tutorial Section: TT1L
 Email: RAVEEN.AL.PARAMASIWAM@student.mmu.edu.my
 Phone: 017-6476584
 **********|**********|**********/
-
-
 
 #include "../include/Amphibious.h"
 #include <cstdlib>
@@ -49,13 +47,13 @@ Amphibious::Amphibious(const Position &position, int lives, int reviveCount,
            teamName, isDestroyed, symbol) {}
 
 Amphibious::~Amphibious() {
-  //Logger().logEvent("Amphibious Removed");
+  // Logger().logEvent("Amphibious Removed");
   std::cout << "Amphibious Removed \n";
 
-  ///if (this->upgradedShip != nullptr) {
-  ///  delete this->upgradedShip;
-  ///  upgradedShip = nullptr;
-  ///}
+  /// if (this->upgradedShip != nullptr) {
+  ///   delete this->upgradedShip;
+  ///   upgradedShip = nullptr;
+  /// }
 }
 
 Amphibious::Amphibious(const Amphibious &other) {
@@ -104,8 +102,8 @@ void Amphibious::shootingShip(Battlefield &battlefield) {
 
   Position shootingTarget = currentPos + shootingOffset;
 
-  Ship *hit = battlefield.checkForEnemyShip(shootingTarget.getXValuePosition(),
-                                            shootingTarget.getYValuePosition());
+  Ship *hit = battlefield.checkForShip(shootingTarget.getXValuePosition(),
+                                       shootingTarget.getYValuePosition());
 
   // If an enemy ship is found, destroy it
   if (hit && (hit->getTeamName() != this->getTeamName())) {
@@ -169,7 +167,7 @@ void Amphibious::movingShip(Battlefield &battlefield) {
     int newY = newPosition.getYValuePosition();
 
     if (battlefield.isValidPosition(newX, newY) &&
-        !battlefield.checkForEnemyShip(newX, newY)) {
+        !battlefield.checkForShip(newX, newY)) {
       setPosition(newPosition);
       message = getShipName() + " moved to (" + std::to_string(newX) + ", " +
                 std::to_string(newY) + ")";

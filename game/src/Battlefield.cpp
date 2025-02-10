@@ -1,7 +1,7 @@
 /**********|**********|**********|
-Program: Battlefield.cpp 
+Program: Battlefield.cpp
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
 Name: Yen Jin Xuan
 ID: 242UC243R3
@@ -10,18 +10,18 @@ Tutorial Section: TT1L
 Email: yen.jin.xuan@student.mmu.edu.my
 Phone: 01633131910
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Nishant A/L Kesavan 
+Name: Nishant A/L Kesavan
 ID: 241UC2407W
 Lecture Section: TC1L
 Tutorial Section: TT1L
 Email: NISHANT.KESAVAN@student.mmu.edu.my
 Phone: 019-8960477
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Raveen A/L PARAMASIWAM 
+Name: Raveen A/L PARAMASIWAM
 ID: 241UC24180
 Lecture Section: TC1L
 Tutorial Section: TT1L
@@ -29,45 +29,39 @@ Email: RAVEEN.AL.PARAMASIWAM@student.mmu.edu.my
 Phone: 017-6476584
 **********|**********|**********/
 
-
 #include "../include/Battlefield.h"
 #include <ctime>
 #include <iostream>
 
-int Battlefield::getWidth() const
-{
-  return width;
-}
+int Battlefield::getWidth() const { return width; }
 
-int Battlefield::getHeight() const
-{
-  return height;
-}
+int Battlefield::getHeight() const { return height; }
 
-//Ship* Battlefield::randomlyPickAShipFromBattlefield(){
-//  int activeShipsCount = 0;
-//  for (int i = 0; i < totalNumberOfShips; i++) {
-//    if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
-//      activeShipsCount++;
-//    }
-//  }
+// Ship* Battlefield::randomlyPickAShipFromBattlefield(){
+//   int activeShipsCount = 0;
+//   for (int i = 0; i < totalNumberOfShips; i++) {
+//     if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
+//       activeShipsCount++;
+//     }
+//   }
 //
-//  if (activeShipsCount == 0) {
-//    std::cout << "No active ships available on the battlefield.\n";
-//    return nullptr;  // No ships to pick from
-//  }
+//   if (activeShipsCount == 0) {
+//     std::cout << "No active ships available on the battlefield.\n";
+//     return nullptr;  // No ships to pick from
+//   }
 //
-//  // Pick a random index among active ships
-//  int targetIndex = rand() % activeShipsCount;
-//  int currentIndex = 0;
+//   // Pick a random index among active ships
+//   int targetIndex = rand() % activeShipsCount;
+//   int currentIndex = 0;
 //
 //  // Iterate to find the target ship
 //  for (int i = 0; i < totalNumberOfShips; i++) {
 //    if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
 //      if (currentIndex == targetIndex) {
-//        std::cout << "Randomly picked ship: " << battlefieldShip[i]->getShipName() << "\n";
-//        Logger().logEvent("Randomly picked ship: " + battlefieldShip[i]->getShipName());
-//        return battlefieldShip[i];
+//        std::cout << "Randomly picked ship: " <<
+//        battlefieldShip[i]->getShipName() << "\n"; Logger().logEvent("Randomly
+//        picked ship: " + battlefieldShip[i]->getShipName()); return
+//        battlefieldShip[i];
 //      }
 //      currentIndex++;
 //    }
@@ -75,14 +69,14 @@ int Battlefield::getHeight() const
 //  return nullptr;
 //}
 
-Ship* Battlefield::checkForEnemyShip(int x, int y) {
+Ship *Battlefield::checkForShip(int x, int y) {
   if (!isValidPosition(x, y))
     return nullptr; // Ensure within battlefield bounds
 
   for (int i = 0; i < totalNumberOfShips; i++) {
     if (battlefieldShip[i] && !battlefieldShip[i]->getIsDestroyed()) {
       Position pos = battlefieldShip[i]->getPosition();
-      if (pos.getXValuePosition() == x && pos.getYValuePosition() == y) { 
+      if (pos.getXValuePosition() == x && pos.getYValuePosition() == y) {
         return battlefieldShip[i];
       }
     }
@@ -372,31 +366,30 @@ void Battlefield::placeShipIntoBattlefield(Ship *ship) {
   emptyPositions = nullptr;
 }
 
-
-bool Battlefield::replaceShipInBattlefieldShipByName(std::string& shipName, Ship* newShip) {
-    for (int i = 0; i < totalNumberOfShips; i++) {
-        if (battlefieldShip[i] && battlefieldShip[i]->getShipName() == shipName) {
-          //std::cout << "SHIP LOCATED AT " << i << "\n";
-            battlefieldShip[i] = newShip; 
-            return true;  
-        }
+bool Battlefield::replaceShipInBattlefieldShipByName(std::string &shipName,
+                                                     Ship *newShip) {
+  for (int i = 0; i < totalNumberOfShips; i++) {
+    if (battlefieldShip[i] && battlefieldShip[i]->getShipName() == shipName) {
+      // std::cout << "SHIP LOCATED AT " << i << "\n";
+      battlefieldShip[i] = newShip;
+      return true;
     }
-    return false;  
+  }
+  return false;
 }
 
-Ship** Battlefield::getBattlefieldShipArray(){
-  return this->battlefieldShip;
-}
+Ship **Battlefield::getBattlefieldShipArray() { return this->battlefieldShip; }
 
-void Battlefield::printBattlefieldShipArray(){
-std::cout << "Battlefield Ships:\n";
-    for (int i = 0; i < totalNumberOfShips; ++i) {
-        if (this->battlefieldShip[i]) {
-            std::cout <<battlefieldShip[i]->getShipName() << "\n" << battlefieldShip[i]->getShipType() << "\n";
-        } else {
-            std::cout << "Null ship at index " << i << "\n";
-        }
+void Battlefield::printBattlefieldShipArray() {
+  std::cout << "Battlefield Ships:\n";
+  for (int i = 0; i < totalNumberOfShips; ++i) {
+    if (this->battlefieldShip[i]) {
+      std::cout << battlefieldShip[i]->getShipName() << "\n"
+                << battlefieldShip[i]->getShipType() << "\n";
+    } else {
+      std::cout << "Null ship at index " << i << "\n";
     }
+  }
 }
 
 Battlefield::~Battlefield() {

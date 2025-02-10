@@ -1,7 +1,7 @@
 /**********|**********|**********|
 Program: Corvette.cpp
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
 Name: Yen Jin Xuan
 ID: 242UC243R3
@@ -10,26 +10,24 @@ Tutorial Section: TT1L
 Email: yen.jin.xuan@student.mmu.edu.my
 Phone: 01633131910
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Nishant A/L Kesavan 
+Name: Nishant A/L Kesavan
 ID: 241UC2407W
 Lecture Section: TC1L
 Tutorial Section: TT1L
 Email: NISHANT.KESAVAN@student.mmu.edu.my
 Phone: 019-8960477
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Raveen A/L PARAMASIWAM 
+Name: Raveen A/L PARAMASIWAM
 ID: 241UC24180
 Lecture Section: TC1L
 Tutorial Section: TT1L
 Email: RAVEEN.AL.PARAMASIWAM@student.mmu.edu.my
 Phone: 017-6476584
 **********|**********|**********/
-
-
 
 #include "../include/Corvette.h"
 #include <cstdlib> // For rand() and srand()
@@ -86,13 +84,12 @@ void Corvette::shootingShip(Battlefield &battlefield) {
     logger.logEvent(message);
     std::cout << message << std::endl;
 
-    Position currentPos = getPosition();
+  Position currentPos = getPosition();
 
-    
-    Position targetPos = currentPos + Position().getRandomPositionFrom8Position(); 
+  Position targetPos = currentPos + Position().getRandomPositionFrom8Position();
 
-    Ship *target = battlefield.checkForEnemyShip(targetPos.getXValuePosition(),
-                                                 targetPos.getYValuePosition());
+  Ship *target = battlefield.checkForShip(targetPos.getXValuePosition(),
+                                          targetPos.getYValuePosition());
 
     if (target && target->getTeamName() != getTeamName()) {
         message = getShipName() + " has hit " + target->getShipName() + " at (" +

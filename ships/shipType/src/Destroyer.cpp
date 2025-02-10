@@ -1,7 +1,7 @@
 /**********|**********|**********|
 Program: Destroyer.cpp
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
 Name: Yen Jin Xuan
 ID: 242UC243R3
@@ -10,26 +10,24 @@ Tutorial Section: TT1L
 Email: yen.jin.xuan@student.mmu.edu.my
 Phone: 01633131910
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Nishant A/L Kesavan 
+Name: Nishant A/L Kesavan
 ID: 241UC2407W
 Lecture Section: TC1L
 Tutorial Section: TT1L
 Email: NISHANT.KESAVAN@student.mmu.edu.my
 Phone: 019-8960477
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Raveen A/L PARAMASIWAM 
+Name: Raveen A/L PARAMASIWAM
 ID: 241UC24180
 Lecture Section: TC1L
 Tutorial Section: TT1L
 Email: RAVEEN.AL.PARAMASIWAM@student.mmu.edu.my
 Phone: 017-6476584
 **********|**********|**********/
-
-
 
 #include "../include/Destroyer.h"
 #include <iostream>
@@ -43,14 +41,14 @@ Destroyer::Destroyer(const Position &position, int lives, int reviveCount,
                      const std::string &shipType, const std::string &teamName,
                      bool isDestroyed, const char symbol)
     : Ship(position, lives, reviveCount, shipDestroyedCount, shipName, shipType,
-           teamName, isDestroyed, symbol){}
+           teamName, isDestroyed, symbol) {}
 
 Destroyer::~Destroyer() {
   std::cout << "Destroyer Removed \n";
-  //if (upgradedShip) {
-  //  delete upgradedShip;
-  //  upgradedShip = nullptr;
-  //}
+  // if (upgradedShip) {
+  //   delete upgradedShip;
+  //   upgradedShip = nullptr;
+  // }
 }
 
 Destroyer::Destroyer(const Destroyer &other) {
@@ -99,8 +97,8 @@ void Destroyer::shootingShip(Battlefield &battlefield) {
 
   Position shootingTarget = currentPos + shootingOffset;
 
-  Ship *hit = battlefield.checkForEnemyShip(shootingTarget.getXValuePosition(),
-                                            shootingTarget.getYValuePosition());
+  Ship *hit = battlefield.checkForShip(shootingTarget.getXValuePosition(),
+                                       shootingTarget.getYValuePosition());
 
   if (hit && (hit->getTeamName() != this->getTeamName())) {
     message = getShipName() + " has hit " + hit->getShipName() + " at " +
@@ -137,7 +135,7 @@ Ship *Destroyer::seeingShip(Battlefield &battlefield) {
 
       if (battlefield.isValidPosition(newX, newY) &&
           !battlefield.isIsland(newX, newY)) {
-        Ship *enemy = battlefield.checkForEnemyShip(newX, newY);
+        Ship *enemy = battlefield.checkForShip(newX, newY);
         if (enemy && enemy->getTeamName() != this->getTeamName()) {
           message =
               getShipName() + " spotted enemy ship: " + enemy->getShipName();
@@ -182,7 +180,7 @@ void Destroyer::ramShip(Battlefield &battlefield) {
 
         if (battlefield.isValidPosition(newX, newY) &&
             !battlefield.isIsland(newX, newY) &&
-            !battlefield.checkForEnemyShip(newX, newY)) {
+            !battlefield.checkForShip(newX, newY)) {
 
           bestMove = Position(newX, newY);
           moved = true;
@@ -213,7 +211,7 @@ void Destroyer::runShip(Battlefield &battlefield) {
 }
 
 Ship *Destroyer::upgradeShip() {
-  if (getShipDestroyedCount() >= 3) {  
+  if (getShipDestroyedCount() >= 3) {
     std::string message = getShipName() + " has been upgraded to SuperShip!";
     Logger().logEvent(message);
     std::cout << getShipName() << "has been upgraded to SuperShip!\n";

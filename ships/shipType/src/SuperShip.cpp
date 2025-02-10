@@ -1,7 +1,7 @@
 /**********|**********|**********|
-Program: SuperShip.cpp 
+Program: SuperShip.cpp
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
 Name: Yen Jin Xuan
 ID: 242UC243R3
@@ -10,26 +10,24 @@ Tutorial Section: TT1L
 Email: yen.jin.xuan@student.mmu.edu.my
 Phone: 01633131910
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Nishant A/L Kesavan 
+Name: Nishant A/L Kesavan
 ID: 241UC2407W
 Lecture Section: TC1L
 Tutorial Section: TT1L
 Email: NISHANT.KESAVAN@student.mmu.edu.my
 Phone: 019-8960477
 
-Course: Object Oriented Programing and Data Structure 
+Course: Object Oriented Programing and Data Structure
 Trimester: 2410
-Name: Raveen A/L PARAMASIWAM 
+Name: Raveen A/L PARAMASIWAM
 ID: 241UC24180
 Lecture Section: TC1L
 Tutorial Section: TT1L
 Email: RAVEEN.AL.PARAMASIWAM@student.mmu.edu.my
 Phone: 017-6476584
 **********|**********|**********/
-
-
 
 #include "../include/SuperShip.h"
 #include <iostream>
@@ -50,7 +48,8 @@ SuperShip::SuperShip(Ship &&other) : Ship(std::move(other)) {
   this->setShipDestroyedCount(0);
 }
 
-void SuperShip::shootingShip(Battlefield &battlefield) {
+void SuperShip::shootingShip(Battlefield &battlefield)
+{
   Logger logger;
   std::string message =
       getShipName() + " is preparing to shoot at 3 random locations.";
@@ -60,14 +59,16 @@ void SuperShip::shootingShip(Battlefield &battlefield) {
   Position currentPos = getPosition();
 
   // Shoot 3 random locations
-  for (int i = 0; i < 3; i++) {
+  for (int i = 0; i < 3; i++)
+  {
     Position targetPos =
         currentPos + Position().getRandomPositionFrom8Position();
 
-    Ship *target = battlefield.checkForEnemyShip(targetPos.getXValuePosition(),
-                                                 targetPos.getYValuePosition());
+    Ship *target = battlefield.checkForShip(targetPos.getXValuePosition(),
+                                            targetPos.getYValuePosition());
 
-    if (target && target->getTeamName() != getTeamName()) {
+    if (target && target->getTeamName() != getTeamName())
+    {
       message = getShipName() + " has hit " + target->getShipName() + " at (" +
                 std::to_string(targetPos.getXValuePosition()) + ", " +
                 std::to_string(targetPos.getYValuePosition()) + ")";
@@ -76,7 +77,9 @@ void SuperShip::shootingShip(Battlefield &battlefield) {
 
       target->setIsDestroyed(true);
       setShipDestroyedCount(getShipDestroyedCount() + 1);
-    } else {
+    }
+    else
+    {
       message = getShipName() + " missed at (" +
                 std::to_string(targetPos.getXValuePosition()) + ", " +
                 std::to_string(targetPos.getYValuePosition()) + ")";
@@ -86,7 +89,8 @@ void SuperShip::shootingShip(Battlefield &battlefield) {
   }
 }
 
-Ship *SuperShip::seeingShip(Battlefield &battlefield) {
+Ship *SuperShip::seeingShip(Battlefield &battlefield)
+{
   Logger logger;
   std::string message = getShipName() + " is scanning for enemy ships.";
   logger.logEvent(message);
@@ -95,15 +99,19 @@ Ship *SuperShip::seeingShip(Battlefield &battlefield) {
   Position currentPos = getPosition();
 
   // Scan 3x3 area
-  for (int dx = -1; dx <= 1; dx++) {
-    for (int dy = -1; dy <= 1; dy++) {
+  for (int dx = -1; dx <= 1; dx++)
+  {
+    for (int dy = -1; dy <= 1; dy++)
+    {
       int newX = currentPos.getXValuePosition() + dx;
       int newY = currentPos.getYValuePosition() + dy;
 
       if (battlefield.isValidPosition(newX, newY) &&
-          !battlefield.isIsland(newX, newY)) {
-        Ship *enemy = battlefield.checkForEnemyShip(newX, newY);
-        if (enemy && enemy->getTeamName() != this->getTeamName()) {
+          !battlefield.isIsland(newX, newY))
+      {
+        Ship *enemy = battlefield.checkForShip(newX, newY);
+        if (enemy && enemy->getTeamName() != this->getTeamName())
+        {
           message =
               getShipName() + " spotted enemy ship: " + enemy->getShipName();
           logger.logEvent(message);
@@ -119,13 +127,15 @@ Ship *SuperShip::seeingShip(Battlefield &battlefield) {
   return nullptr;
 }
 
-void SuperShip::runShip(Battlefield &battlefield) {
+void SuperShip::runShip(Battlefield &battlefield)
+{
   std::cout << getShipName() << " is running!\n";
   ramShip(battlefield);
   shootingShip(battlefield);
 }
 
-void SuperShip::ramShip(Battlefield &battlefield) {
+void SuperShip::ramShip(Battlefield &battlefield)
+{
   Logger logger;
   std::string message = getShipName() + " is preparing to ram.";
   logger.logEvent(message);
@@ -135,7 +145,8 @@ void SuperShip::ramShip(Battlefield &battlefield) {
   Position currentPos = getPosition();
   Position bestMove = currentPos;
 
-  if (target) {
+  if (target)
+  {
     bestMove = target->getPosition();
 
     target->setIsDestroyed(true);
@@ -144,23 +155,29 @@ void SuperShip::ramShip(Battlefield &battlefield) {
     message = getShipName() + " has rammed " + target->getShipName() + "!";
     logger.logEvent(message);
     std::cout << message << std::endl;
-  } else {
+  }
+  else
+  {
     bool moved = false;
-    for (int dx = -1; dx <= 1 && !moved; dx++) {
-      for (int dy = -1; dy <= 1 && !moved; dy++) {
+    for (int dx = -1; dx <= 1 && !moved; dx++)
+    {
+      for (int dy = -1; dy <= 1 && !moved; dy++)
+      {
         int newX = currentPos.getXValuePosition() + dx;
         int newY = currentPos.getYValuePosition() + dy;
 
         if (battlefield.isValidPosition(newX, newY) &&
             !battlefield.isIsland(newX, newY) &&
-            !battlefield.checkForEnemyShip(newX, newY)) {
+            !battlefield.checkForShip(newX, newY))
+        {
           bestMove = Position(newX, newY);
           moved = true;
         }
       }
     }
 
-    if (!moved) {
+    if (!moved)
+    {
       message = getShipName() + " is trapped and cannot move.";
       logger.logEvent(message);
       std::cout << message << std::endl;
@@ -176,7 +193,8 @@ void SuperShip::ramShip(Battlefield &battlefield) {
   std::cout << message << std::endl;
 }
 
-Ship *SuperShip::upgradeShip() {
+Ship *SuperShip::upgradeShip()
+{
   std::cout << "Unable to Upgrade Anymore";
   return nullptr;
 }
