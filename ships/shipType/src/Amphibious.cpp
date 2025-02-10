@@ -36,6 +36,7 @@ Phone: 017-6476584
 #include <ctime>
 #include <iostream>
 #include <string>
+#include <utility>
 
 Amphibious::Amphibious()
     : Ship(Position(), 3, 0, 0, "", "Amphibious", "", false, '0') {};
@@ -208,10 +209,7 @@ Ship *Amphibious::upgradeShip() {
     std::cout << getShipName() << " has been upgraded to SuperShip!\n";
 
     try {
-      this->upgradedShip = new SuperShip(
-          this->getPosition(), this->getLives(), this->getReviveCount(), 0,
-          this->getShipName(), "SuperShip", this->getTeamName(),
-          this->getIsDestroyed(), this->getSymbol());
+      this->upgradedShip = new SuperShip(std::move(*this));
 
       return this->upgradedShip;
     } catch (const std::bad_alloc &) {
@@ -223,6 +221,5 @@ Ship *Amphibious::upgradeShip() {
     }
   }
 
-  std::cout << "null == no upgrade \n";
   return nullptr;
 }

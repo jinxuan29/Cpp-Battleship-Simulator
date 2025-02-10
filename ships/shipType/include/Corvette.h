@@ -49,6 +49,8 @@ public:
 
   Corvette(const Corvette &other);
 
+  Corvette(Ship &&other);
+
   Corvette &operator=(const Corvette &other);
 
   void shootingShip(Battlefield &battlefield) override;

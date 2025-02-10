@@ -34,6 +34,7 @@ Phone: 017-6476584
 #include "../include/Destroyer.h"
 #include <iostream>
 #include <string>
+#include <utility>
 
 Destroyer::Destroyer() {}
 
@@ -73,6 +74,11 @@ Destroyer &Destroyer::operator=(const Destroyer &other) {
     this->upgradedShip = other.upgradedShip;
   }
   return *this;
+}
+
+Destroyer::Destroyer(Ship &&other) : Ship(std::move(other)) {
+  this->setShipType("Destroyer");
+  this->setShipDestroyedCount(0);
 }
 
 void Destroyer::shootingShip(Battlefield &battlefield) {
@@ -211,10 +217,7 @@ Ship *Destroyer::upgradeShip() {
     std::string message = getShipName() + " has been upgraded to SuperShip!";
     Logger().logEvent(message);
     std::cout << getShipName() << "has been upgraded to SuperShip!\n";
-    this->upgradedShip = new SuperShip(
-        this->getPosition(), this->getLives(), this->getReviveCount(), 0,
-        this->getShipName(), "SuperShip", this->getTeamName(),
-        this->getIsDestroyed(), this->getSymbol());
+    this->upgradedShip = new SuperShip(std::move(*this));
     return upgradedShip;
   }
   return nullptr;

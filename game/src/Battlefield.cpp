@@ -376,7 +376,7 @@ void Battlefield::placeShipIntoBattlefield(Ship *ship) {
 bool Battlefield::replaceShipInBattlefieldShipByName(std::string& shipName, Ship* newShip) {
     for (int i = 0; i < totalNumberOfShips; i++) {
         if (battlefieldShip[i] && battlefieldShip[i]->getShipName() == shipName) {
-          std::cout << "SHIP LOCATED AT " << i << "\n";
+          //std::cout << "SHIP LOCATED AT " << i << "\n";
             battlefieldShip[i] = newShip; 
             return true;  
         }

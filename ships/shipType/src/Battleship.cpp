@@ -31,6 +31,7 @@ Phone: 017-6476584
 
 #include "../include/Battleship.h"
 #include <iostream>
+#include <utility>
 
 Battleship::Battleship()
     : Ship(Position(), 3, 0, 0, "", "Battleship", "", false, '0') {};
@@ -202,12 +203,7 @@ Ship *Battleship::upgradeShip() {
     //  upgradedShip = nullptr;
     //}
     std::cout << getShipName() << "has been upgraded to Destroyer!\n";
-    this->upgradedShip = new Destroyer(
-        Position(this->getPosition().getXValuePosition(),
-                 this->getPosition().getYValuePosition()),
-        this->getLives(), this->getReviveCount(), this->getShipDestroyedCount(),
-        this->getShipName(), "Destroyer", this->getTeamName(),
-        this->getIsDestroyed(), this->getSymbol());
+    this->upgradedShip = new Destroyer(std::move(*this));
     return upgradedShip;
   }
   return nullptr;

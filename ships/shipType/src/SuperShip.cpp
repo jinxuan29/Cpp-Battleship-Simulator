@@ -46,7 +46,8 @@ SuperShip::SuperShip(const Position &position, int lives, int reviveCount,
 SuperShip::~SuperShip() { std::cout << "SuperShip Removed \n"; }
 
 SuperShip::SuperShip(Ship &&other) : Ship(std::move(other)) {
-  setShipType("SuperShip");
+  this->setShipType("SuperShip");
+  this->setShipDestroyedCount(0);
 }
 
 void SuperShip::shootingShip(Battlefield &battlefield) {

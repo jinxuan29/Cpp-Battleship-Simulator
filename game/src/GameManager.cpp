@@ -248,6 +248,7 @@ void GameManager::respawnShip(Battlefield &battlefield) {
                 << "Ship Respawn: " << nextShip->getShipName() << std::endl;
       battlefield.placeShipIntoBattlefield(nextShip);
       nextShip->setLives(nextShip->getLives() - 1);
+      nextShip->setReviveCount(nextShip->getReviveCount()+1);
       Logger().logEvent("Ship Lives: " + std::to_string(nextShip->getLives()));
       std::cout << std::endl
                 << "Ship Lives: " << nextShip->getLives() << std::endl;

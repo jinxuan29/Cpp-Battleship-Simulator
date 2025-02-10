@@ -75,6 +75,11 @@ Corvette &Corvette::operator=(const Corvette &other) {
   return *this;
 }
 
+Corvette::Corvette(Ship &&other) : Ship(std::move(other)) {
+  this->setShipType("Corvette");
+  this->setShipDestroyedCount(0);
+}
+
 void Corvette::shootingShip(Battlefield &battlefield) {
     Logger logger;
     std::string message = getShipName() + " is preparing to shoot.";

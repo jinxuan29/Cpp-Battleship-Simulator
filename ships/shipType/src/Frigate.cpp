@@ -34,6 +34,7 @@ Phone: 017-6476584
 #include "../include/Frigate.h"
 #include <cstdlib> // For rand()
 #include <iostream>
+#include <utility>
 
 Frigate::Frigate() : firingDirectionIndex(0) {}
 
@@ -117,9 +118,7 @@ Ship *Frigate::upgradeShip() {
     std::cout << message << std::endl;
 
     upgradedShip =
-        new Corvette(getPosition(), getLives(), getReviveCount(),
-                     0, getShipName(), "Corvette",
-                     getTeamName(), getIsDestroyed(), getSymbol());
+        new Corvette(std::move(*this));
 
     return upgradedShip;
   }

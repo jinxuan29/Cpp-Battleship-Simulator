@@ -52,7 +52,7 @@ Ship::Ship(Ship &&other)
     : position(other.position), lives(other.lives),
       reviveCount(other.reviveCount), shipDestroyedCount(0),
       shipName(other.shipName), shipType(other.shipType),
-      teamName(other.teamName), isDestroyed(other.isDestroyed) {};
+      teamName(other.teamName), isDestroyed(other.isDestroyed), symbol(other.getSymbol()) {};
 
 Position Ship::getPosition() const { return position; }
 void Ship::setPosition(const Position &position) { this->position = position; }

@@ -58,6 +58,8 @@ public:
 
   Destroyer &operator=(const Destroyer &other);
 
+  Destroyer(Ship &&other);
+
   void shootingShip(Battlefield &battlefield) override;
 
   Ship *seeingShip(Battlefield &battlefield) override;

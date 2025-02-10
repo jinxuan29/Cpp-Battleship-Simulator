@@ -33,6 +33,7 @@ Phone: 017-6476584
 
 #include "../include/Cruiser.h"
 #include <iostream>
+#include <utility>
 
 Cruiser::Cruiser(): Ship(Position(), 3, 0, 0, "", "Cruiser", "", false, '0') {};;
 
@@ -173,10 +174,7 @@ Ship *Cruiser::upgradeShip() {
     std::string message = getShipName() + " has been upgraded to Destroyer!";
     Logger().logEvent(message);
     std::cout << getShipName() << "has been upgraded to Destroyer!\n";
-    this->upgradedShip = new Destroyer(
-        this->getPosition(), this->getLives(), this->getReviveCount(), 0,
-        this->getShipName(), "Destroyer", this->getTeamName(),
-        this->getIsDestroyed(), this->getSymbol());
+    this->upgradedShip = new Destroyer(std::move(*this));
     return upgradedShip;
   }
   return nullptr;
